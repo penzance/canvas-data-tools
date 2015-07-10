@@ -1,0 +1,5 @@
+PASSWORD = 'hosted_data_password'
+DBNAME = 'redshift_database_name'
+USER = 'redshift_database_user'
+HOST = 'redshift_database_hostname'
+PORT = 'redshift_database_port'
