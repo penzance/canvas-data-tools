@@ -38,7 +38,7 @@ downloads all the files for the latest dump:
       System.err.println("There's a problem with something in the setup, perhaps your API key?");
       return;
     } catch (final UnexpectedApiResponseException unexpectedResponse) {
-      System.err.println("The server responsed, but not with the expected success code.");
+      System.err.println("The server responded, but not with the expected success code.");
       System.err.println("Got code " + unexpectedResponse.getStatus() + " instead.");
       return;
     }
@@ -57,7 +57,7 @@ downloads all the files for the latest dump:
         } catch (final IOException ioException) {
           System.err.println("Failed to download the file");
         } catch (final UnexpectedApiResponseException unexpectedResponse) {
-          System.err.println("The server responsed, but not with the expected success code.");
+          System.err.println("The server responded, but not with the expected success code.");
           System.err.println("Got code " + unexpectedResponse.getStatus() + " instead.");
         }
       }
