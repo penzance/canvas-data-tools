@@ -20,6 +20,7 @@ import edu.harvard.canvas_data.client.tables.CanvasDataTable;
 import edu.harvard.canvas_data.client.tables.ParsedWithErrorsException;
 import edu.harvard.canvas_data.client.tables.TableClient;
 import edu.harvard.canvas_data.verifier.TextComparison;
+import edu.harvard.canvas_data.verifier.VerificationException;
 import edu.harvard.canvas_data.verifier.VerificationUtils;
 
 public class DumpManager {

@@ -1,11 +1,10 @@
-package edu.harvard.canvas_data.parser;
+package edu.harvard.canvas_data.verifier;
 
 import java.io.File;
 
 import edu.harvard.canvas_data.client.api.CanvasDataArtifact;
 import edu.harvard.canvas_data.client.api.CanvasDataFile;
 import edu.harvard.canvas_data.client.tables.ParsedWithErrorsException;
-import edu.harvard.canvas_data.verifier.TextComparison;
 
 public class VerificationException extends Exception {
 

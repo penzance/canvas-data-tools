@@ -8,6 +8,7 @@ import edu.harvard.canvas_data.client.api.ApiClient;
 import edu.harvard.canvas_data.client.api.CanvasDataDump;
 import edu.harvard.canvas_data.client.api.UnexpectedApiResponseException;
 import edu.harvard.canvas_data.client.tables.TableClient;
+import edu.harvard.canvas_data.verifier.VerificationException;
 
 public class DownloadDailyFlatFiles {
 
