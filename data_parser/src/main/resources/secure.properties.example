@@ -1,0 +1,11 @@
+# Canvas Data Portal flat file download. Generate a key and secret from the
+# Canvas root account settings page.
+canvas_data_api_key=API_KEY
+canvas_data_api_secret=API_SECRET
+canvas_data_host=beta.inshosteddata.com
+
+# Temporary storage during file download and processing
+canvas_data_scratch_directory=/tmp/canvas_data
+
+# Archival storage for downloaded files.
+canvas_data_archive_directory=/path/to/archive/directory
