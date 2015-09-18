@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -101,10 +102,8 @@ public class RestUtils {
       throw new UnexpectedApiResponseException(response.getStatus());
     }
     final File downloaded = response.getEntity(File.class);
-    System.out.println("Downloaded entity: " + downloaded);
-    Files.move(downloaded.toPath(), dest.toPath());
+    Files.move(downloaded.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
     downloaded.renameTo(dest);
-    System.out.println("Moved to: " + dest);
     try (final FileWriter out = new FileWriter(downloaded)) {
       out.flush();
     }
