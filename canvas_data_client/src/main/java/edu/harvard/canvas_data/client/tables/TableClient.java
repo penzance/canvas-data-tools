@@ -20,7 +20,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.harvard.canvas_data.client.DataSet;
+import edu.harvard.canvas_data.client.DataTable;
+import edu.harvard.canvas_data.client.collation.ListDataTable;
 import edu.harvard.canvas_data.client.tables.schema.TableSchema;
 
 public class TableClient {
@@ -34,238 +35,238 @@ public class TableClient {
     return schema;
   }
 
-  public DataSet<DateDim> parseDateDimCanvasDataFile(final File gzipFile)
+  public DataTable<DateDim> parseDateDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, DateDim.class);
   }
 
-  public DataSet<CourseDim> parseCourseDimCanvasDataFile(final File gzipFile)
+  public DataTable<CourseDim> parseCourseDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, CourseDim.class);
   }
 
-  public DataSet<AccountDim> parseAccountDimCanvasDataFile(final File gzipFile)
+  public DataTable<AccountDim> parseAccountDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, AccountDim.class);
   }
 
-  public DataSet<UserDim> parseUserDimCanvasDataFile(final File gzipFile)
+  public DataTable<UserDim> parseUserDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, UserDim.class);
   }
 
-  public DataSet<UserExpandedDim> parseUserExpandedDimCanvasDataFile(final File gzipFile)
+  public DataTable<UserExpandedDim> parseUserExpandedDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, UserExpandedDim.class);
   }
 
-  public DataSet<PseudonymDim> parsePseudonymDimCanvasDataFile(final File gzipFile)
+  public DataTable<PseudonymDim> parsePseudonymDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, PseudonymDim.class);
   }
 
-  public DataSet<PseudonymFact> parsePseudonymFactCanvasDataFile(final File gzipFile)
+  public DataTable<PseudonymFact> parsePseudonymFactCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, PseudonymFact.class);
   }
 
-  public DataSet<AssignmentDim> parseAssignmentDimCanvasDataFile(final File gzipFile)
+  public DataTable<AssignmentDim> parseAssignmentDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, AssignmentDim.class);
   }
 
-  public DataSet<AssignmentFact> parseAssignmentFactCanvasDataFile(final File gzipFile)
+  public DataTable<AssignmentFact> parseAssignmentFactCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, AssignmentFact.class);
   }
 
-  public DataSet<SubmissionDim> parseSubmissionDimCanvasDataFile(final File gzipFile)
+  public DataTable<SubmissionDim> parseSubmissionDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, SubmissionDim.class);
   }
 
-  public DataSet<SubmissionFact> parseSubmissionFactCanvasDataFile(final File gzipFile)
+  public DataTable<SubmissionFact> parseSubmissionFactCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, SubmissionFact.class);
   }
 
-  public DataSet<SubmissionCommentParticipantFact> parseSubmissionCommentParticipantFactCanvasDataFile(
+  public DataTable<SubmissionCommentParticipantFact> parseSubmissionCommentParticipantFactCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, SubmissionCommentParticipantFact.class);
   }
 
-  public DataSet<SubmissionCommentParticipantDim> parseSubmissionCommentParticipantDimCanvasDataFile(
+  public DataTable<SubmissionCommentParticipantDim> parseSubmissionCommentParticipantDimCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, SubmissionCommentParticipantDim.class);
   }
 
-  public DataSet<SubmissionCommentFact> parseSubmissionCommentFactCanvasDataFile(
+  public DataTable<SubmissionCommentFact> parseSubmissionCommentFactCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, SubmissionCommentFact.class);
   }
 
-  public DataSet<SubmissionCommentDim> parseSubmissionCommentDimCanvasDataFile(final File gzipFile)
-      throws IOException, ParsedWithErrorsException {
+  public DataTable<SubmissionCommentDim> parseSubmissionCommentDimCanvasDataFile(
+      final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, SubmissionCommentDim.class);
   }
 
-  public DataSet<ConversationDim> parseConversationDimCanvasDataFile(final File gzipFile)
+  public DataTable<ConversationDim> parseConversationDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, ConversationDim.class);
   }
 
-  public DataSet<ConversationMessageDim> parseConversationMessageDimCanvasDataFile(
+  public DataTable<ConversationMessageDim> parseConversationMessageDimCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, ConversationMessageDim.class);
   }
 
-  public DataSet<ConversationMessageParticipantFact> parseConversationMessageParticipantFactCanvasDataFile(
+  public DataTable<ConversationMessageParticipantFact> parseConversationMessageParticipantFactCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, ConversationMessageParticipantFact.class);
   }
 
-  public DataSet<DiscussionTopicDim> parseDiscussionTopicDimCanvasDataFile(final File gzipFile)
+  public DataTable<DiscussionTopicDim> parseDiscussionTopicDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, DiscussionTopicDim.class);
   }
 
-  public DataSet<DiscussionTopicFact> parseDiscussionTopicFactCanvasDataFile(final File gzipFile)
+  public DataTable<DiscussionTopicFact> parseDiscussionTopicFactCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, DiscussionTopicFact.class);
   }
 
-  public DataSet<DiscussionEntryDim> parseDiscussionEntryDimCanvasDataFile(final File gzipFile)
+  public DataTable<DiscussionEntryDim> parseDiscussionEntryDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, DiscussionEntryDim.class);
   }
 
-  public DataSet<DiscussionEntryFact> parseDiscussionEntryFactCanvasDataFile(final File gzipFile)
+  public DataTable<DiscussionEntryFact> parseDiscussionEntryFactCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, DiscussionEntryFact.class);
   }
 
-  public DataSet<EnrollmentTermDim> parseEnrollmentTermDimCanvasDataFile(final File gzipFile)
+  public DataTable<EnrollmentTermDim> parseEnrollmentTermDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, EnrollmentTermDim.class);
   }
 
-  public DataSet<CourseSectionDim> parseCourseSectionDimCanvasDataFile(final File gzipFile)
+  public DataTable<CourseSectionDim> parseCourseSectionDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, CourseSectionDim.class);
   }
 
-  public DataSet<RoleDim> parseRoleDimCanvasDataFile(final File gzipFile)
+  public DataTable<RoleDim> parseRoleDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, RoleDim.class);
   }
 
-  public DataSet<RoleExpandedDim> parseRoleExpandedDimCanvasDataFile(final File gzipFile)
+  public DataTable<RoleExpandedDim> parseRoleExpandedDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, RoleExpandedDim.class);
   }
 
-  public DataSet<EnrollmentDim> parseEnrollmentDimCanvasDataFile(final File gzipFile)
+  public DataTable<EnrollmentDim> parseEnrollmentDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, EnrollmentDim.class);
   }
 
-  public DataSet<EnrollmentFact> parseEnrollmentFactCanvasDataFile(final File gzipFile)
+  public DataTable<EnrollmentFact> parseEnrollmentFactCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, EnrollmentFact.class);
   }
 
-  public DataSet<EnrollmentRollupDim> parseEnrollmentRollupDimCanvasDataFile(final File gzipFile)
+  public DataTable<EnrollmentRollupDim> parseEnrollmentRollupDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, EnrollmentRollupDim.class);
   }
 
-  public DataSet<GroupDim> parseGroupDimCanvasDataFile(final File gzipFile)
+  public DataTable<GroupDim> parseGroupDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, GroupDim.class);
   }
 
-  public DataSet<GroupFact> parseGroupFactCanvasDataFile(final File gzipFile)
+  public DataTable<GroupFact> parseGroupFactCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, GroupFact.class);
   }
 
-  public DataSet<GroupMembershipFact> parseGroupMembershipFactCanvasDataFile(final File gzipFile)
+  public DataTable<GroupMembershipFact> parseGroupMembershipFactCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, GroupMembershipFact.class);
   }
 
-  public DataSet<CourseUiNavigationDimDim> parseCourseUiNavigationDimDimCanvasDataFile(
+  public DataTable<CourseUiNavigationDimDim> parseCourseUiNavigationDimDimCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, CourseUiNavigationDimDim.class);
   }
 
-  public DataSet<CourseUiCanvasNavigationDim> parseCourseUiCanvasNavigationDimCanvasDataFile(
+  public DataTable<CourseUiCanvasNavigationDim> parseCourseUiCanvasNavigationDimCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, CourseUiCanvasNavigationDim.class);
   }
 
-  public DataSet<CourseUiCanvasNavigationExpandedDim> parseCourseUiCanvasNavigationExpandedDimCanvasDataFile(
+  public DataTable<CourseUiCanvasNavigationExpandedDim> parseCourseUiCanvasNavigationExpandedDimCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, CourseUiCanvasNavigationExpandedDim.class);
   }
 
-  public DataSet<CourseUiNavigationItemDim> parseCourseUiNavigationItemDimCanvasDataFile(
+  public DataTable<CourseUiNavigationItemDim> parseCourseUiNavigationItemDimCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, CourseUiNavigationItemDim.class);
   }
 
-  public DataSet<CourseUiNavigationItemFact> parseCourseUiNavigationItemFactCanvasDataFile(
+  public DataTable<CourseUiNavigationItemFact> parseCourseUiNavigationItemFactCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, CourseUiNavigationItemFact.class);
   }
 
-  public DataSet<QuizSubmissionFact> parseQuizSubmissionFactCanvasDataFile(final File gzipFile)
+  public DataTable<QuizSubmissionFact> parseQuizSubmissionFactCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, QuizSubmissionFact.class);
   }
 
-  public DataSet<QuizDim> parseQuizDimCanvasDataFile(final File gzipFile)
+  public DataTable<QuizDim> parseQuizDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, QuizDim.class);
   }
 
-  public DataSet<Requests> parseRequestsCanvasDataFile(final File gzipFile)
+  public DataTable<Requests> parseRequestsCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, Requests.class);
   }
 
-  public DataSet<ExternalToolActivationDim> parseExternalToolActivationDimCanvasDataFile(
+  public DataTable<ExternalToolActivationDim> parseExternalToolActivationDimCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, ExternalToolActivationDim.class);
   }
 
-  public DataSet<ExternalToolActivationFact> parseExternalToolActivationFactCanvasDataFile(
+  public DataTable<ExternalToolActivationFact> parseExternalToolActivationFactCanvasDataFile(
       final File gzipFile) throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, ExternalToolActivationFact.class);
   }
 
-  public DataSet<WikiDim> parseWikiDimCanvasDataFile(final File gzipFile)
+  public DataTable<WikiDim> parseWikiDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, WikiDim.class);
   }
 
-  public DataSet<WikiFact> parseWikiFactCanvasDataFile(final File gzipFile)
+  public DataTable<WikiFact> parseWikiFactCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, WikiFact.class);
   }
 
-  public DataSet<WikiPageDim> parseWikiPageDimCanvasDataFile(final File gzipFile)
+  public DataTable<WikiPageDim> parseWikiPageDimCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, WikiPageDim.class);
   }
 
-  public DataSet<WikiPageFact> parseWikiPageFactCanvasDataFile(final File gzipFile)
+  public DataTable<WikiPageFact> parseWikiPageFactCanvasDataFile(final File gzipFile)
       throws IOException, ParsedWithErrorsException {
     return parseCanvasDataFile(gzipFile, WikiPageFact.class);
   }
 
-  public DataSet<? extends CanvasDataTable> parseCanvasDataFile(final String table, final File gzipFile)
-      throws IOException, ParsedWithErrorsException {
+  public DataTable<? extends CanvasDataTable> parseCanvasDataFile(final String table,
+      final File gzipFile) throws IOException, ParsedWithErrorsException {
     switch (table) {
     case "date_dim":
       return parseDateDimCanvasDataFile(gzipFile);
@@ -364,7 +365,7 @@ public class TableClient {
     }
   }
 
-  private <T extends CanvasDataTable> DataSet<T> parseCanvasDataFile(final File gzipFile,
+  private <T extends CanvasDataTable> DataTable<T> parseCanvasDataFile(final File gzipFile,
       final Class<T> tableType) throws IOException, ParsedWithErrorsException {
     final List<ParseError> errors = new ArrayList<ParseError>();
     final InputStream in = new GZIPInputStream(new FileInputStream(gzipFile));
@@ -386,7 +387,7 @@ public class TableClient {
         }
       }
     }
-    final DataSet<T> dataSet = new DataSet<T>(records);
+    final DataTable<T> dataSet = new ListDataTable<T>(records);
     if (errors.size() == 0) {
       return dataSet;
     } else {

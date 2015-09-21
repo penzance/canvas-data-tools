@@ -1,4 +1,4 @@
-package edu.harvard.canvas_data.client;
+package edu.harvard.canvas_data.client.collation;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -6,32 +6,31 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.Iterator;
 import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.csv.CSVPrinter;
 
+import edu.harvard.canvas_data.client.DataTable;
 import edu.harvard.canvas_data.client.tables.CanvasDataTable;
 
-public class DataSet<T extends CanvasDataTable> {
+public class ListDataTable<T extends CanvasDataTable> implements DataTable<T> {
 
   private final List<T> records;
 
-  public DataSet(final List<T> records) {
+  public ListDataTable(final List<T> records) {
     this.records = records;
   }
 
-  public List<T> getRecords() {
-    return records;
-  }
-
+  @Override
   public void writeCanvasDataFormat(final File outputFile, final boolean gzip) throws IOException {
     outputFile.getParentFile().mkdirs();
     Writer out = null;
     try {
       if (gzip) {
-        out = new OutputStreamWriter(new GZIPOutputStream(
-            new FileOutputStream(outputFile)), CanvasDataTable.CANVAS_DATA_ENCODING);
+        out = new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(outputFile)),
+            CanvasDataTable.CANVAS_DATA_ENCODING);
       } else {
         out = new FileWriter(outputFile);
       }
@@ -46,6 +45,16 @@ public class DataSet<T extends CanvasDataTable> {
         out.close();
       }
     }
+  }
+
+  @Override
+  public Iterator<T> iterator() {
+    return records.iterator();
+  }
+
+  @Override
+  public long size() {
+    return records.size();
   }
 
 }
