@@ -10,7 +10,7 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import edu.harvard.canvas_data.client.DataSet;
+import edu.harvard.canvas_data.client.DataTable;
 import edu.harvard.canvas_data.client.api.ApiClient;
 import edu.harvard.canvas_data.client.api.CanvasDataArtifact;
 import edu.harvard.canvas_data.client.api.CanvasDataDump;
@@ -88,7 +88,7 @@ public class DumpManager {
         try {
           System.out.println("Verifying " + f);
           final File tmpFile = Files.createTempFile(file.getFilename(), ".tsv").toFile();
-          final DataSet<? extends CanvasDataTable> dataSet = tables.parseCanvasDataFile(table, f);
+          final DataTable<? extends CanvasDataTable> dataSet = tables.parseCanvasDataFile(table, f);
           dataSet.writeCanvasDataFormat(tmpFile, false);
           final TextComparison<File, File> comparison = VerificationUtils.compareText(f, tmpFile);
           if (!comparison.identical()) {
