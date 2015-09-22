@@ -68,7 +68,7 @@ public class RestUtils {
     final Mac hmac;
     try {
       hmac = Mac.getInstance("HmacSHA256");
-    } catch(final NoSuchAlgorithmException e) {
+    } catch (final NoSuchAlgorithmException e) {
       throw new CanvasDataConfigurationException(e);
     }
     final SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
@@ -82,11 +82,10 @@ public class RestUtils {
 
     final WebResource request = client.resource(url);
     final ClientResponse response = request
-        .header("Authorization", "HMACAuth " + key + ":" + signature)
-        .header("Date", dateHeader)
+        .header("Authorization", "HMACAuth " + key + ":" + signature).header("Date", dateHeader)
         .get(ClientResponse.class);
     if (response.getStatus() != expectedStatus) {
-      throw new UnexpectedApiResponseException(response.getStatus());
+      throw new UnexpectedApiResponseException(response.getStatus(), url);
     }
     return response;
   }
@@ -99,7 +98,7 @@ public class RestUtils {
     final WebResource request = client.resource(url);
     final ClientResponse response = request.get(ClientResponse.class);
     if (response.getStatus() != expectedStatus) {
-      throw new UnexpectedApiResponseException(response.getStatus());
+      throw new UnexpectedApiResponseException(response.getStatus(), url);
     }
     final File downloaded = response.getEntity(File.class);
     Files.move(downloaded.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);

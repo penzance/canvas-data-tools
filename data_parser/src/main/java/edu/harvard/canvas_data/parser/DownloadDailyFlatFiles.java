@@ -22,21 +22,32 @@ public class DownloadDailyFlatFiles {
           config.getCanvasApiKey(), config.getCanvasApiSecret());
       final TableClient tables = client.getTableClient();
       for (final CanvasDataDump dumpSummary : api.getDumps()) {
-        final CanvasDataDump dump = api.getDump(dumpSummary.getDumpId());
-        final DumpManager dumpManager = new DumpManager(dump, config);
-        if (dumpManager.needToSaveDump()) {
-          dumpManager.saveDumpToTempDirectory(api);
-          dumpManager.verifyDump(tables);
-          dumpManager.archiveDump(tables);
+        try {
+          final CanvasDataDump dump = api.getDump(dumpSummary.getDumpId());
+          final DumpManager dumpManager = new DumpManager(dump, config);
+          if (dumpManager.needToSaveDump()) {
+            final long start = System.currentTimeMillis();
+            dumpManager.saveDumpToTempDirectory(api);
+            final long end = System.currentTimeMillis();
+            System.out.println("Downloaded in " + ((end - start) / 1000) + " seconds");
+            dumpManager.verifyDump(tables);
+            dumpManager.archiveDump(tables);
+          }
+        }catch (final IOException e) {
+          e.printStackTrace();
+        }catch (final UnexpectedApiResponseException e) {
+          System.err.println("Unexpected response " + e.getStatus() + " from " + e.getUrl());
+          e.printStackTrace();
+        } catch (final VerificationException e) {
+          System.err.println("Verification failures");
+          e.printStackTrace();
         }
       }
     } catch (final IOException | CanvasDataConfigurationException e) {
       e.printStackTrace();
     } catch (final UnexpectedApiResponseException e) {
-      System.err.println("Unexpected response " + e.getStatus());
+      System.err.println("Unexpected response " + e.getStatus() + " from " + e.getUrl());
       e.printStackTrace();
-    } catch (final VerificationException e) {
-      System.err.println("Verification failures");
     }
   }
 }
