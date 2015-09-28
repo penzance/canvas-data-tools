@@ -19,6 +19,10 @@ public class DataSetInfoTable {
     this.files.addAll(fileInfo);
   }
 
+  public void addFileInfo(final DataSetInfoFile fileInfo) {
+    this.files.add(fileInfo);
+  }
+
   public String getName() {
     return name;
   }

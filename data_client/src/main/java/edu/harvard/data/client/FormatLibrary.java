@@ -10,14 +10,38 @@ import java.util.Map;
 import org.apache.commons.csv.CSVFormat;
 
 public class FormatLibrary {
-  public enum Format { CanvasDataFlatFiles, DecompressedCanvasDataFlatFiles };
+  public enum Format {
+    CanvasDataFlatFiles("canvas"), DecompressedCanvasDataFlatFiles("canvas_expanded");
+
+    private String label;
+
+    private Format(final String label) {
+      this.label = label;
+    }
+
+    public String getLabel() {
+      return label;
+    }
+
+    public static Format fromLabel(final String label) {
+      switch (label) {
+      case "canvas":
+        return CanvasDataFlatFiles;
+      case "canvas_expanded":
+        return DecompressedCanvasDataFlatFiles;
+      default:
+        return Format.valueOf(label);
+      }
+    }
+  };
 
   private final Map<Format, TableFormat> formatMap;
 
   public FormatLibrary() {
     this.formatMap = new HashMap<Format, TableFormat>();
     formatMap.put(Format.CanvasDataFlatFiles, createCanvasDataFlatFileFormat());
-    formatMap.put(Format.DecompressedCanvasDataFlatFiles, createDecompressedCanvasDataFlatFileFormat());
+    formatMap.put(Format.DecompressedCanvasDataFlatFiles,
+        createDecompressedCanvasDataFlatFileFormat());
   }
 
   public TableFormat getFormat(final Format format) {
@@ -41,7 +65,7 @@ public class FormatLibrary {
   private static final String CANVAS_FILE_ENCODING = "UTF-8";
 
   private TableFormat createCanvasDataFlatFileFormat() {
-    final TableFormat canvasFormat = new TableFormat();
+    final TableFormat canvasFormat = new TableFormat(Format.CanvasDataFlatFiles);
     canvasFormat.setTimestampFormat(CANVAS_TIMESTAMP_FORMAT);
     canvasFormat.setDateFormat(CANVAS_DATE_FORMAT);
     canvasFormat.setIncludeHeaders(false);
@@ -52,7 +76,7 @@ public class FormatLibrary {
   }
 
   private TableFormat createDecompressedCanvasDataFlatFileFormat() {
-    final TableFormat canvasFormat = new TableFormat();
+    final TableFormat canvasFormat = new TableFormat(Format.DecompressedCanvasDataFlatFiles);
     canvasFormat.setTimestampFormat(CANVAS_TIMESTAMP_FORMAT);
     canvasFormat.setDateFormat(CANVAS_DATE_FORMAT);
     canvasFormat.setIncludeHeaders(false);

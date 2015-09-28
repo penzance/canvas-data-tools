@@ -83,11 +83,11 @@ public class GenerateCanvasTables {
     out.println("  }");
     out.println();
     out.println("  @Override");
-    out.println("  public TableWriter<? extends DataTable> getDelimitedTableWriter(String table, TableFormat format, Path file) throws IOException {");
+    out.println("  public TableWriter<? extends DataTable> getDelimitedTableWriter(String table, TableFormat format, Path directory) throws IOException {");
     out.println("    switch(table) {");
     for (final String name : tableNames) {
       out.println("    case \"" + name + "\":");
-      out.println("      return new DelimitedTableWriter<" + className(name) + ">(" + className(name) + ".class, format, file);");
+      out.println("      return new DelimitedTableWriter<" + className(name) + ">(" + className(name) + ".class, format, directory, \"" + name + "\");");
     }
     out.println("    }");
     out.println("    return null;");

@@ -40,6 +40,7 @@ public class CanvasDataFile {
 
   public DataSetInfoFile download(final Path dest)
       throws IOException, UnexpectedApiResponseException {
+    Files.createDirectories(dest.getParent());
     rest.downloadFile(url, dest, 200);
     return new DataSetInfoFile(filename, getLineCount(dest));
   }

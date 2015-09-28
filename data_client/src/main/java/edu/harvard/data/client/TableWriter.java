@@ -7,4 +7,8 @@ public interface TableWriter<T extends DataTable> extends Closeable {
 
   void add(DataTable a) throws IOException;
 
+  DataSetInfoTable getTableInfo();
+
+  String getName();
+
 }

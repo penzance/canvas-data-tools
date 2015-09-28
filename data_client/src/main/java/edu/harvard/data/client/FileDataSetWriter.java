@@ -32,24 +32,20 @@ public class FileDataSetWriter implements DataSetWriter {
     if (!Files.exists(tableDir)) {
       Files.createDirectories(tableDir);
     }
-    String filename;
-    switch(format.getCompression()) {
-    case Gzip:
-      filename = table + ".gz";
-      break;
-    default:
-      filename = table;
-    }
-    final TableWriter<T> writer = (TableWriter<T>) factory.getDelimitedTableWriter(table, format, tableDir.resolve(filename));
+    final TableWriter<T> writer = (TableWriter<T>) factory.getDelimitedTableWriter(table, format, tableDir);
     writers.put(table, writer);
     return writer;
   }
 
   @Override
   public void close() throws IOException {
+    final DataSetInfo info = new DataSetInfo(DataSetInfo.getFileName(directory));
+    info.setFormat(format.getFormat());
     for (final TableWriter<? extends DataTable> table : writers.values()) {
+      info.addTable(table.getName(), table.getTableInfo());
       table.close();
     }
+    info.write();
   }
 
   @Override

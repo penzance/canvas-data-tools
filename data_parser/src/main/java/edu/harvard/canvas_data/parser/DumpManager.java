@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.PosixFilePermission;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import edu.harvard.data.client.DataConfigurationException;
 import edu.harvard.data.client.DataSetInfo;
 import edu.harvard.data.client.DataSetInfoFile;
 import edu.harvard.data.client.DataSetInfoTable;
@@ -17,6 +19,7 @@ import edu.harvard.data.client.FormatLibrary;
 import edu.harvard.data.client.canvas.api.CanvasApiClient;
 import edu.harvard.data.client.canvas.api.CanvasDataArtifact;
 import edu.harvard.data.client.canvas.api.CanvasDataDump;
+import edu.harvard.data.client.canvas.api.CanvasDataFile;
 import edu.harvard.data.client.canvas.api.UnexpectedApiResponseException;
 
 public class DumpManager {
@@ -61,25 +64,33 @@ public class DumpManager {
 
 
   public void saveDumpToTempDirectory(final CanvasApiClient api, final CanvasDataDump dump)
-      throws IOException, UnexpectedApiResponseException {
+      throws IOException, UnexpectedApiResponseException, DataConfigurationException {
     saveDump(api, getScratchDumpDir(dump), dump);
   }
 
   public void saveDump(final CanvasApiClient api, final Path directory, final CanvasDataDump dump)
-      throws IOException, UnexpectedApiResponseException {
+      throws IOException, UnexpectedApiResponseException, DataConfigurationException {
     final Date downloadStart = new Date();
     final DataSetInfo dataSetInfo = new DataSetInfo(DataSetInfo.getFileName(directory));
     dataSetInfo.setFormat(FormatLibrary.Format.CanvasDataFlatFiles);
     Files.createDirectories(directory);
     final Map<String, CanvasDataArtifact> artifactsByTable = dump.getArtifactsByTable();
-    for (final String table : artifactsByTable.keySet()) {
+    final List<String> tables = new ArrayList<String>(artifactsByTable.keySet());
+    for (final String table : tables) {
       final Path tableDir = directory.resolve(table);
-      System.out.println("Dumping " + table + " to " + tableDir);
       final CanvasDataArtifact artifact = artifactsByTable.get(table);
+      System.out.println("Dumping " + table + " to " + tableDir);
       final DataSetInfoTable tableInfo = new DataSetInfoTable(table);
       dataSetInfo.addTable(artifact.getTableName(), tableInfo);
-      final List<DataSetInfoFile> fileInfo = artifact.downloadAllFiles(tableDir);
-      tableInfo.addFileInfo(fileInfo);
+      for (final CanvasDataFile file : artifact.getFiles()) {
+        final CanvasDataDump refreshedDump = api.getDump(dump.getDumpId());
+        for (final CanvasDataFile f : refreshedDump.getArtifactsByTable().get(table).getFiles()) {
+          if (f.getFilename().equals(file.getFilename())) {
+            final DataSetInfoFile fileInfo = f.download(tableDir.resolve(f.getFilename()));
+            tableInfo.addFileInfo(fileInfo);
+          }
+        }
+      }
     }
     final Path dumpInfoFile = getScratchDumpDir(dump).resolve("dump_info.json");
     final Date downloadEnd = new Date();

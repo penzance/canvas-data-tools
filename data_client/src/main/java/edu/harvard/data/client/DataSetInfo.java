@@ -37,7 +37,7 @@ public class DataSetInfo {
 
   public DataSetInfo(@JsonProperty("format") final FormatLibrary.Format format) {
     this.format = format;
-    this.tables= new HashMap<String, DataSetInfoTable>();
+    this.tables = new HashMap<String, DataSetInfoTable>();
   }
 
   public static DataSetInfo read(final Path file)

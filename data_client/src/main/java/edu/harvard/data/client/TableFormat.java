@@ -6,7 +6,9 @@ import java.time.format.DateTimeFormatter;
 
 import org.apache.commons.csv.CSVFormat;
 
-public class TableFormat implements Cloneable {
+import edu.harvard.data.client.FormatLibrary.Format;
+
+public class TableFormat {
 
   public enum Compression { None, Gzip };
 
@@ -16,8 +18,10 @@ public class TableFormat implements Cloneable {
   private String encoding;
   private CSVFormat csvFormat;
   private Compression compression;
+  private final Format format;
 
-  public TableFormat() {
+  public TableFormat(final FormatLibrary.Format format) {
+    this.format = format;
     this.timestampFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm'Z'");
     this.dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     this.includeHeaders = true;
@@ -92,15 +96,20 @@ public class TableFormat implements Cloneable {
     return timestamp;
   }
 
-  @Override
-  public Object clone() {
-    final TableFormat other = new TableFormat();
-    other.compression = compression;
-    other.csvFormat = csvFormat;
-    other.dateFormat = dateFormat;
-    other.encoding = encoding;
-    other.includeHeaders = includeHeaders;
-    other.timestampFormat = timestampFormat;
-    return other;
+  public Format getFormat() {
+    return format;
+  }
+
+  public String getExtension() {
+    if (compression == Compression.Gzip) {
+      return ".gz";
+    }
+    if (csvFormat.getDelimiter() == '\t') {
+      return ".tsv";
+    }
+    if (csvFormat.getDelimiter() == ',') {
+      return ".csv";
+    }
+    return "";
   }
 }
