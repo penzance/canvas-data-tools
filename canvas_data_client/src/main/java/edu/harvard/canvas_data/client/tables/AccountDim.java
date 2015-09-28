@@ -372,4 +372,52 @@ public class AccountDim extends CanvasDataTable {
     fields.add(sisSourceId);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("name");
+      fields.add("depth");
+      fields.add("workflow_state");
+      fields.add("parent_account");
+      fields.add("parent_account_id");
+      fields.add("grandparent_account");
+      fields.add("grandparent_account_id");
+      fields.add("root_account");
+      fields.add("root_account_id");
+      fields.add("subaccount1");
+      fields.add("subaccount1_id");
+      fields.add("subaccount2");
+      fields.add("subaccount2_id");
+      fields.add("subaccount3");
+      fields.add("subaccount3_id");
+      fields.add("subaccount4");
+      fields.add("subaccount4_id");
+      fields.add("subaccount5");
+      fields.add("subaccount5_id");
+      fields.add("subaccount6");
+      fields.add("subaccount6_id");
+      fields.add("subaccount7");
+      fields.add("subaccount7_id");
+      fields.add("subaccount8");
+      fields.add("subaccount8_id");
+      fields.add("subaccount9");
+      fields.add("subaccount9_id");
+      fields.add("subaccount10");
+      fields.add("subaccount10_id");
+      fields.add("subaccount11");
+      fields.add("subaccount11_id");
+      fields.add("subaccount12");
+      fields.add("subaccount12_id");
+      fields.add("subaccount13");
+      fields.add("subaccount13_id");
+      fields.add("subaccount14");
+      fields.add("subaccount14_id");
+      fields.add("subaccount15");
+      fields.add("subaccount15_id");
+      fields.add("sis_source_id");
+    return fields;
+  }
 }

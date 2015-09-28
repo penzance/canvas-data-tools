@@ -87,4 +87,18 @@ public class WikiDim extends CanvasDataTable {
     fields.add(hasNoFrontPage);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("parent_type");
+      fields.add("title");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("front_page_url");
+      fields.add("has_no_front_page");
+    return fields;
+  }
 }

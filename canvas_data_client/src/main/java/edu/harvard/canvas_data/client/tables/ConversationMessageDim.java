@@ -103,4 +103,19 @@ public class ConversationMessageDim extends CanvasDataTable {
     fields.add(body);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("conversation_id");
+      fields.add("author_id");
+      fields.add("created_at");
+      fields.add("generated");
+      fields.add("has_attachments");
+      fields.add("has_media_objects");
+      fields.add("body");
+    return fields;
+  }
 }

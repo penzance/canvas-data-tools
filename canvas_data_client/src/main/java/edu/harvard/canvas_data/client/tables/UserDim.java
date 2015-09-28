@@ -129,4 +129,24 @@ public class UserDim extends CanvasDataTable {
     fields.add(countryCode);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("root_account_id");
+      fields.add("name");
+      fields.add("time_zone");
+      fields.add("created_at");
+      fields.add("visibility");
+      fields.add("school_name");
+      fields.add("school_position");
+      fields.add("gender");
+      fields.add("locale");
+      fields.add("public");
+      fields.add("birthdate");
+      fields.add("country_code");
+    return fields;
+  }
 }

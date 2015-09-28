@@ -147,4 +147,24 @@ public class SubmissionCommentDim extends CanvasDataTable {
     fields.add(hidden);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("submission_id");
+      fields.add("recipient_id");
+      fields.add("author_id");
+      fields.add("assessment_request_id");
+      fields.add("group_comment_id");
+      fields.add("comment");
+      fields.add("author_name");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("anonymous");
+      fields.add("teacher_only_comment");
+      fields.add("hidden");
+    return fields;
+  }
 }

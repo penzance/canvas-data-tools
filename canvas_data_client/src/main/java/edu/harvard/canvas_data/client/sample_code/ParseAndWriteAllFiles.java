@@ -13,6 +13,7 @@ import edu.harvard.canvas_data.client.api.CanvasDataFile;
 import edu.harvard.canvas_data.client.api.UnexpectedApiResponseException;
 import edu.harvard.canvas_data.client.tables.CanvasDataTable;
 import edu.harvard.canvas_data.client.tables.ParsedWithErrorsException;
+import edu.harvard.canvas_data.client.tables.Table;
 import edu.harvard.canvas_data.client.tables.TableClient;
 
 public class ParseAndWriteAllFiles {
@@ -39,12 +40,13 @@ public class ParseAndWriteAllFiles {
     }
 
     // Iterate over the artifacts in the dump.
-    for (final String table : dump.getArtifactsByTable().keySet()) {
+    for (final String key : dump.getArtifactsByTable().keySet()) {
+      final Table table = Table.fromSourceName(key);
       final CanvasDataArtifact artifact = dump.getArtifactsByTable().get(table);
 
       // Download the files belonging to the artifact.
       try {
-        artifact.downloadAllFiles(new File(downloadDir, table));
+        artifact.downloadAllFiles(new File(downloadDir, table.getSourceName()));
         // Parse each of the files that were downloaded
         for (final CanvasDataFile f : artifact.getFiles()) {
           final File src = new File(downloadDir, table + "/" + f.getFilename());
@@ -64,7 +66,7 @@ public class ParseAndWriteAllFiles {
           // should be identical to the raw Canvas Data file that was
           // downloaded.
           final File output = new File(rewrittenDir, table + "/" + f.getFilename() + ".tsv");
-          dataSet.writeCanvasDataFormat(output, true);
+          dataSet.writeCanvasDataFormat(output, false, true);
         }
       } catch (final IOException ioException) {
         System.err.println("Some error reading or writing files");

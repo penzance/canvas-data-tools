@@ -178,4 +178,28 @@ public class SubmissionDim extends CanvasDataTable {
     fields.add(hasAdminComment);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("body");
+      fields.add("url");
+      fields.add("grade");
+      fields.add("submitted_at");
+      fields.add("submission_type");
+      fields.add("workflow_state");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("processed");
+      fields.add("process_attempts");
+      fields.add("grade_matches_current_submission");
+      fields.add("published_grade");
+      fields.add("graded_at");
+      fields.add("has_rubric_assessment");
+      fields.add("attempt");
+      fields.add("has_admin_comment");
+    return fields;
+  }
 }

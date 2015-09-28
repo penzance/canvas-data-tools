@@ -113,4 +113,21 @@ public class DateDim extends CanvasDataTable {
     fields.add(dayOfWeek);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("day");
+      fields.add("month");
+      fields.add("quarter");
+      fields.add("year");
+      fields.add("quarter_of_year");
+      fields.add("month_of_year");
+      fields.add("day_of_month");
+      fields.add("day_of_quarter");
+      fields.add("day_of_year");
+      fields.add("week_of_year");
+      fields.add("day_of_week");
+    return fields;
+  }
 }

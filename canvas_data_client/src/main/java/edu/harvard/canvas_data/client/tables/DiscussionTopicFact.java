@@ -105,4 +105,19 @@ public class DiscussionTopicFact extends CanvasDataTable {
     fields.add(messageLength);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("discussion_topic_id");
+      fields.add("course_id");
+      fields.add("enrollment_term_id");
+      fields.add("course_account_id");
+      fields.add("user_id");
+      fields.add("assignment_id");
+      fields.add("editor_id");
+      fields.add("enrollment_rollup_id");
+      fields.add("message_length");
+    return fields;
+  }
 }

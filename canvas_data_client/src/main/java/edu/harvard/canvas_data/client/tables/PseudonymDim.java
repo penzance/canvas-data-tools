@@ -171,4 +171,27 @@ public class PseudonymDim extends CanvasDataTable {
     fields.add(uniqueName);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("user_id");
+      fields.add("account_id");
+      fields.add("workflow_state");
+      fields.add("last_request_at");
+      fields.add("last_login_at");
+      fields.add("current_login_at");
+      fields.add("last_login_ip");
+      fields.add("current_login_ip");
+      fields.add("position");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("password_auto_generated");
+      fields.add("deleted_at");
+      fields.add("sis_user_id");
+      fields.add("unique_name");
+    return fields;
+  }
 }

@@ -107,4 +107,20 @@ public class RoleDim extends CanvasDataTable {
     fields.add(formatTimestamp(deletedAt));
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("root_account_id");
+      fields.add("account_id");
+      fields.add("name");
+      fields.add("base_role_type");
+      fields.add("workflow_state");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("deleted_at");
+    return fields;
+  }
 }

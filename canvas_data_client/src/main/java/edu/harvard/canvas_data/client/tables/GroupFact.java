@@ -85,4 +85,17 @@ public class GroupFact extends CanvasDataTable {
     fields.add(storageQuota);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("group_id");
+      fields.add("parent_course_id");
+      fields.add("parent_account_id");
+      fields.add("parent_course_account_id");
+      fields.add("enrollment_term_id");
+      fields.add("max_membership");
+      fields.add("storage_quota");
+    return fields;
+  }
 }

@@ -135,4 +135,24 @@ public class ExternalToolActivationDim extends CanvasDataTable {
     fields.add(selectableAll);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("course_id");
+      fields.add("account_id");
+      fields.add("activation_target_type");
+      fields.add("url");
+      fields.add("name");
+      fields.add("description");
+      fields.add("workflow_state");
+      fields.add("privacy_level");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("tool_id");
+      fields.add("selectable_all");
+    return fields;
+  }
 }

@@ -29,7 +29,6 @@ public abstract class CanvasDataTable {
 
   public static final String CANVAS_DATA_ENCODING = "UTF-8";
 
-  public abstract List<Object> getCsvFields();
 
   protected String formatTimestamp(final ZonedDateTime time) {
     if (time == null) {
@@ -48,5 +47,8 @@ public abstract class CanvasDataTable {
     }
     return date.format(CANVAS_DATA_ALL_DAY_FORMAT);
   }
+
+  public abstract List<String> getCsvHeaders();
+  public abstract List<Object> getCsvFields();
 
 }

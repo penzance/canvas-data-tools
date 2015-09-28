@@ -252,4 +252,35 @@ public class AssignmentDim extends CanvasDataTable {
     fields.add(muted);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("course_id");
+      fields.add("title");
+      fields.add("description");
+      fields.add("due_at");
+      fields.add("unlock_at");
+      fields.add("lock_at");
+      fields.add("points_possible");
+      fields.add("grading_type");
+      fields.add("submission_types");
+      fields.add("workflow_state");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("peer_review_count");
+      fields.add("peer_reviews_due_at");
+      fields.add("peer_reviews_assigned");
+      fields.add("peer_reviews");
+      fields.add("automatic_peer_reviews");
+      fields.add("all_day");
+      fields.add("all_day_date");
+      fields.add("could_be_locked");
+      fields.add("grade_group_students_individually");
+      fields.add("anonymous_peer_reviews");
+      fields.add("muted");
+    return fields;
+  }
 }

@@ -135,4 +135,24 @@ public class GroupDim extends CanvasDataTable {
     fields.add(sisSourceId);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("name");
+      fields.add("description");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("deleted_at");
+      fields.add("is_public");
+      fields.add("workflow_state");
+      fields.add("context_type");
+      fields.add("category");
+      fields.add("join_level");
+      fields.add("default_view");
+      fields.add("sis_source_id");
+    return fields;
+  }
 }

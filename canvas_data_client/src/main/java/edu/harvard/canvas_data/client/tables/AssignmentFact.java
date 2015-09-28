@@ -75,4 +75,16 @@ public class AssignmentFact extends CanvasDataTable {
     fields.add(peerReviewCount);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("assignment_id");
+      fields.add("course_id");
+      fields.add("course_account_id");
+      fields.add("enrollment_term_id");
+      fields.add("points_possible");
+      fields.add("peer_review_count");
+    return fields;
+  }
 }

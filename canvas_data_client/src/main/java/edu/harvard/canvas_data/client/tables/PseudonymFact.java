@@ -65,4 +65,15 @@ public class PseudonymFact extends CanvasDataTable {
     fields.add(failedLoginCount);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("pseudonym_id");
+      fields.add("user_id");
+      fields.add("account_id");
+      fields.add("login_count");
+      fields.add("failed_login_count");
+    return fields;
+  }
 }

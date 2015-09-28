@@ -1,42 +1,21 @@
 package edu.harvard.canvas_data.verifier;
 
-import java.io.File;
-
-import edu.harvard.canvas_data.client.api.CanvasDataArtifact;
-import edu.harvard.canvas_data.client.api.CanvasDataFile;
-import edu.harvard.canvas_data.client.tables.ParsedWithErrorsException;
-
 public class VerificationException extends Exception {
 
   private static final long serialVersionUID = 1L;
+  private DataSetTextComparison comparison;
 
-  private final CanvasDataFile file;
-  private final CanvasDataArtifact artifact;
-
-  public VerificationException(final CanvasDataArtifact artifact, final CanvasDataFile file,
-      final TextComparison<File, File> comparison) {
+  public VerificationException(final DataSetTextComparison comparison) {
     super();
-    this.file = file;
-    this.artifact = artifact;
+    this.comparison = comparison;
   }
 
-  public VerificationException(final CanvasDataArtifact artifact, final CanvasDataFile file,
-      final ParsedWithErrorsException e) {
+  public VerificationException(final Throwable e) {
     super(e);
-    this.file = file;
-    this.artifact = artifact;
   }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public CanvasDataFile getFile() {
-    return file;
-  }
-
-  public CanvasDataArtifact getArtifact() {
-    return artifact;
+  public DataSetTextComparison getComparison() {
+    return comparison;
   }
 
 }

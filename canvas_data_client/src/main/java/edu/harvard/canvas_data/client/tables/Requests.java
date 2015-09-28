@@ -200,4 +200,32 @@ public class Requests extends CanvasDataTable {
     fields.add(webApplicationContextId);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("timestamp");
+      fields.add("timestamp_year");
+      fields.add("timestamp_month");
+      fields.add("timestamp_day");
+      fields.add("user_id");
+      fields.add("course_id");
+      fields.add("root_account_id");
+      fields.add("course_account_id");
+      fields.add("quiz_id");
+      fields.add("discussion_id");
+      fields.add("conversation_id");
+      fields.add("assignment_id");
+      fields.add("url");
+      fields.add("user_agent");
+      fields.add("http_method");
+      fields.add("remote_ip");
+      fields.add("interaction_micros");
+      fields.add("web_application_controller");
+      fields.add("web_applicaiton_action");
+      fields.add("web_application_context_type");
+      fields.add("web_application_context_id");
+    return fields;
+  }
 }

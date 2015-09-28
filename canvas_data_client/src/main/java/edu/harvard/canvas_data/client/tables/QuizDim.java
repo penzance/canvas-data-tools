@@ -62,4 +62,15 @@ public class QuizDim extends CanvasDataTable {
     fields.add(pointsPossible);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("root_account_id");
+      fields.add("name");
+      fields.add("points_possible");
+    return fields;
+  }
 }

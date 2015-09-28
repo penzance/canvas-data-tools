@@ -95,4 +95,18 @@ public class EnrollmentFact extends CanvasDataTable {
     fields.add(computedCurrentScore);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("enrollment_id");
+      fields.add("user_id");
+      fields.add("course_id");
+      fields.add("enrollment_term_id");
+      fields.add("course_account_id");
+      fields.add("course_section_id");
+      fields.add("computed_final_score");
+      fields.add("computed_current_score");
+    return fields;
+  }
 }

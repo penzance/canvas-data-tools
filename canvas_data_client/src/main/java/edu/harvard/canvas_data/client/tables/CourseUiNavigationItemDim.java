@@ -52,4 +52,14 @@ public class CourseUiNavigationItemDim extends CanvasDataTable {
     fields.add(position);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("root_account_id");
+      fields.add("visible");
+      fields.add("position");
+    return fields;
+  }
 }

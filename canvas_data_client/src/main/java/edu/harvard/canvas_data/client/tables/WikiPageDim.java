@@ -121,4 +121,22 @@ public class WikiPageDim extends CanvasDataTable {
     fields.add(couldBeLocked);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("title");
+      fields.add("body");
+      fields.add("workflow_state");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("url");
+      fields.add("protected_editing");
+      fields.add("editing_roles");
+      fields.add("revised_at");
+      fields.add("could_be_locked");
+    return fields;
+  }
 }

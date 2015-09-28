@@ -167,4 +167,26 @@ public class CourseSectionDim extends CanvasDataTable {
     fields.add(sisSourceId);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("name");
+      fields.add("course_id");
+      fields.add("enrollment_term_id");
+      fields.add("default_section");
+      fields.add("accepting_enrollments");
+      fields.add("can_manually_enroll");
+      fields.add("start_at");
+      fields.add("end_at");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("workflow_state");
+      fields.add("restrict_enrollments_to_section_dates");
+      fields.add("nonxlist_course_id");
+      fields.add("sis_source_id");
+    return fields;
+  }
 }

@@ -85,4 +85,17 @@ public class CourseUiNavigationItemFact extends CanvasDataTable {
     fields.add(enrollmentTermId);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("root_account_id");
+      fields.add("course_ui_navigation_item_id");
+      fields.add("course_ui_canvas_navigation_id");
+      fields.add("external_tool_activation_id");
+      fields.add("course_id");
+      fields.add("course_account_id");
+      fields.add("enrollment_term_id");
+    return fields;
+  }
 }

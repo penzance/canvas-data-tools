@@ -92,4 +92,18 @@ public class ConversationDim extends CanvasDataTable {
     fields.add(accountId);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("has_attachments");
+      fields.add("has_media_objects");
+      fields.add("subject");
+      fields.add("course_id");
+      fields.add("group_id");
+      fields.add("account_id");
+    return fields;
+  }
 }

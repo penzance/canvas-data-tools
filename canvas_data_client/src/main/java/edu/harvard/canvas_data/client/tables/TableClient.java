@@ -31,7 +31,7 @@ public class TableClient {
     final ObjectMapper mapper = new ObjectMapper();
     final Map<String, TableSchema> schema = mapper.readValue(schemaFile,
         new TypeReference<Map<String, TableSchema>>() {
-        });
+    });
     return schema;
   }
 
@@ -265,104 +265,9 @@ public class TableClient {
     return parseCanvasDataFile(gzipFile, WikiPageFact.class);
   }
 
-  public DataTable<? extends CanvasDataTable> parseCanvasDataFile(final String table,
+  public DataTable<? extends CanvasDataTable> parseCanvasDataFile(final Table table,
       final File gzipFile) throws IOException, ParsedWithErrorsException {
-    switch (table) {
-    case "date_dim":
-      return parseDateDimCanvasDataFile(gzipFile);
-    case "course_dim":
-      return parseCourseDimCanvasDataFile(gzipFile);
-    case "account_dim":
-      return parseAccountDimCanvasDataFile(gzipFile);
-    case "user_dim":
-      return parseUserDimCanvasDataFile(gzipFile);
-    case "user_expanded_dim":
-      return parseUserExpandedDimCanvasDataFile(gzipFile);
-    case "pseudonym_dim":
-      return parsePseudonymDimCanvasDataFile(gzipFile);
-    case "pseudonym_fact":
-      return parsePseudonymFactCanvasDataFile(gzipFile);
-    case "assignment_dim":
-      return parseAssignmentDimCanvasDataFile(gzipFile);
-    case "assignment_fact":
-      return parseAssignmentFactCanvasDataFile(gzipFile);
-    case "submission_dim":
-      return parseSubmissionDimCanvasDataFile(gzipFile);
-    case "submission_fact":
-      return parseSubmissionFactCanvasDataFile(gzipFile);
-    case "submission_comment_participant_fact":
-      return parseSubmissionCommentParticipantFactCanvasDataFile(gzipFile);
-    case "submission_comment_participant_dim":
-      return parseSubmissionCommentParticipantDimCanvasDataFile(gzipFile);
-    case "submission_comment_fact":
-      return parseSubmissionCommentFactCanvasDataFile(gzipFile);
-    case "submission_comment_dim":
-      return parseSubmissionCommentDimCanvasDataFile(gzipFile);
-    case "conversation_dim":
-      return parseConversationDimCanvasDataFile(gzipFile);
-    case "conversation_message_dim":
-      return parseConversationMessageDimCanvasDataFile(gzipFile);
-    case "conversation_message_participant_fact":
-      return parseConversationMessageParticipantFactCanvasDataFile(gzipFile);
-    case "discussion_topic_dim":
-      return parseDiscussionTopicDimCanvasDataFile(gzipFile);
-    case "discussion_topic_fact":
-      return parseDiscussionTopicFactCanvasDataFile(gzipFile);
-    case "discussion_entry_dim":
-      return parseDiscussionEntryDimCanvasDataFile(gzipFile);
-    case "discussion_entry_fact":
-      return parseDiscussionEntryFactCanvasDataFile(gzipFile);
-    case "enrollment_term_dim":
-      return parseEnrollmentTermDimCanvasDataFile(gzipFile);
-    case "course_section_dim":
-      return parseCourseSectionDimCanvasDataFile(gzipFile);
-    case "role_dim":
-      return parseRoleDimCanvasDataFile(gzipFile);
-    case "role_expanded_dim":
-      return parseRoleExpandedDimCanvasDataFile(gzipFile);
-    case "enrollment_dim":
-      return parseEnrollmentDimCanvasDataFile(gzipFile);
-    case "enrollment_fact":
-      return parseEnrollmentFactCanvasDataFile(gzipFile);
-    case "enrollment_rollup_dim":
-      return parseEnrollmentRollupDimCanvasDataFile(gzipFile);
-    case "group_dim":
-      return parseGroupDimCanvasDataFile(gzipFile);
-    case "group_fact":
-      return parseGroupFactCanvasDataFile(gzipFile);
-    case "group_membership_fact":
-      return parseGroupMembershipFactCanvasDataFile(gzipFile);
-    case "course_ui_navigation_dim_dim":
-      return parseCourseUiNavigationDimDimCanvasDataFile(gzipFile);
-    case "course_ui_canvas_navigation_dim":
-      return parseCourseUiCanvasNavigationDimCanvasDataFile(gzipFile);
-    case "course_ui_canvas_navigation_expanded_dim":
-      return parseCourseUiCanvasNavigationExpandedDimCanvasDataFile(gzipFile);
-    case "course_ui_navigation_item_dim":
-      return parseCourseUiNavigationItemDimCanvasDataFile(gzipFile);
-    case "course_ui_navigation_item_fact":
-      return parseCourseUiNavigationItemFactCanvasDataFile(gzipFile);
-    case "quiz_submission_fact":
-      return parseQuizSubmissionFactCanvasDataFile(gzipFile);
-    case "quiz_dim":
-      return parseQuizDimCanvasDataFile(gzipFile);
-    case "requests":
-      return parseRequestsCanvasDataFile(gzipFile);
-    case "external_tool_activation_dim":
-      return parseExternalToolActivationDimCanvasDataFile(gzipFile);
-    case "external_tool_activation_fact":
-      return parseExternalToolActivationFactCanvasDataFile(gzipFile);
-    case "wiki_dim":
-      return parseWikiDimCanvasDataFile(gzipFile);
-    case "wiki_fact":
-      return parseWikiFactCanvasDataFile(gzipFile);
-    case "wiki_page_dim":
-      return parseWikiPageDimCanvasDataFile(gzipFile);
-    case "wiki_page_fact":
-      return parseWikiPageFactCanvasDataFile(gzipFile);
-    default:
-      throw new RuntimeException("No such table: " + table);
-    }
+    return parseCanvasDataFile(gzipFile, table.getTableType());
   }
 
   private <T extends CanvasDataTable> DataTable<T> parseCanvasDataFile(final File gzipFile,

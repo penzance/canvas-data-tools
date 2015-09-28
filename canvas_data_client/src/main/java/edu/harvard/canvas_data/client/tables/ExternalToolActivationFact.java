@@ -75,4 +75,16 @@ public class ExternalToolActivationFact extends CanvasDataTable {
     fields.add(courseAccountId);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("external_tool_activation_id");
+      fields.add("course_id");
+      fields.add("account_id");
+      fields.add("root_account_id");
+      fields.add("enrollment_term_id");
+      fields.add("course_account_id");
+    return fields;
+  }
 }

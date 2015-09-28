@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.zip.GZIPOutputStream;
@@ -23,8 +24,21 @@ public class ListDataTable<T extends CanvasDataTable> implements DataTable<T> {
     this.records = records;
   }
 
+  public ListDataTable() {
+    this.records = new ArrayList<T>();
+  }
+
   @Override
-  public void writeCanvasDataFormat(final File outputFile, final boolean gzip) throws IOException {
+  public void addRecords(final DataTable<T> newRecords, final Class<T> type) {
+    if (newRecords instanceof ListDataTable) {
+      records.addAll(((ListDataTable<T>)newRecords).records);
+    } else {
+      throw new RuntimeException("Can't add records from data table " + newRecords);
+    }
+  }
+
+  @Override
+  public void writeCanvasDataFormat(final File outputFile, final boolean headers, final boolean gzip) throws IOException {
     outputFile.getParentFile().mkdirs();
     Writer out = null;
     try {
@@ -35,7 +49,12 @@ public class ListDataTable<T extends CanvasDataTable> implements DataTable<T> {
         out = new FileWriter(outputFile);
       }
       try (CSVPrinter printer = new CSVPrinter(out, CanvasDataTable.CANVAS_DATA_FILE_FORMAT)) {
+        boolean headersPrinted = false;
         for (final T record : records) {
+          if (headers && !headersPrinted) {
+            printer.printRecord(record.getCsvHeaders());
+            headersPrinted = true;
+          }
           final List<Object> fields = record.getCsvFields();
           printer.printRecord(fields);
         }
@@ -57,4 +76,8 @@ public class ListDataTable<T extends CanvasDataTable> implements DataTable<T> {
     return records.size();
   }
 
+  @Override
+  public void close() throws IOException {
+    // Nothing to do.
+  }
 }

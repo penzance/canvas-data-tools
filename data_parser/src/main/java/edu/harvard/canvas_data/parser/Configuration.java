@@ -1,9 +1,10 @@
 package edu.harvard.canvas_data.parser;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.util.Properties;
 
@@ -12,8 +13,8 @@ public class Configuration {
   private String canvasApiKey;
   private String canvasApiSecret;
   private String canvasDataHost;
-  private File canvasDataScratchDirectory;
-  private File canvasDataArchiveDirectory;
+  private Path canvasDataScratchDirectory;
+  private Path canvasDataArchiveDirectory;
 
   public static Configuration getConfiguration(final String propertiesFileName) throws IOException {
     final ClassLoader cl = Configuration.class.getClassLoader();
@@ -30,9 +31,9 @@ public class Configuration {
     config.canvasApiSecret = getConfigParameter(properties, "canvas_data_api_secret");
     config.canvasDataHost = getConfigParameter(properties, "canvas_data_host");
     final String scratch = getConfigParameter(properties, "canvas_data_scratch_directory");
-    config.canvasDataScratchDirectory = new File(scratch);
+    config.canvasDataScratchDirectory = Paths.get(scratch);
     final String archive = getConfigParameter(properties, "canvas_data_archive_directory");
-    config.canvasDataArchiveDirectory = new File(archive);
+    config.canvasDataArchiveDirectory = Paths.get(archive);
     return config;
   }
 
@@ -59,11 +60,11 @@ public class Configuration {
     return canvasDataHost;
   }
 
-  public File getCanvasDataScratchDirectory() {
+  public Path getCanvasDataScratchDirectory() {
     return canvasDataScratchDirectory;
   }
 
-  public File getCanvasDataArchiveDirectory() {
+  public Path getCanvasDataArchiveDirectory() {
     return canvasDataArchiveDirectory;
   }
 

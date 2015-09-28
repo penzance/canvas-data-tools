@@ -145,4 +145,23 @@ public class SubmissionCommentFact extends CanvasDataTable {
     fields.add(messageLineCount);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("submission_comment_id");
+      fields.add("submission_id");
+      fields.add("recipient_id");
+      fields.add("author_id");
+      fields.add("assignment_id");
+      fields.add("course_id");
+      fields.add("enrollment_term_id");
+      fields.add("course_account_id");
+      fields.add("user_account_id");
+      fields.add("message_size_bytes");
+      fields.add("message_character_count");
+      fields.add("message_word_count");
+      fields.add("message_line_count");
+    return fields;
+  }
 }

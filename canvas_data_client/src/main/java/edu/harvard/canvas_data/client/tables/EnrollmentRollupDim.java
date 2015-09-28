@@ -249,4 +249,34 @@ public class EnrollmentRollupDim extends CanvasDataTable {
     fields.add(leastPrivilegedRole);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("user_id");
+      fields.add("course_id");
+      fields.add("enrollment_count");
+      fields.add("role_count");
+      fields.add("base_role_count");
+      fields.add("account_admin_role_count");
+      fields.add("teacher_enrollment_role_count");
+      fields.add("designer_enrollment_role_count");
+      fields.add("ta_enrollment_role_count");
+      fields.add("student_enrollment_role_count");
+      fields.add("observer_enrollment_role_count");
+      fields.add("account_membership_role_count");
+      fields.add("no_permissions_role_count");
+      fields.add("account_admin_enrollment_id");
+      fields.add("teacher_enrollment_enrollment_id");
+      fields.add("designer_enrollment_enrollment_id");
+      fields.add("ta_enrollment_enrollment_id");
+      fields.add("student_enrollment_enrollment_id");
+      fields.add("observer_enrollment_enrollment_id");
+      fields.add("account_membership_enrollment_id");
+      fields.add("no_permissions_enrollment_id");
+      fields.add("most_privileged_role");
+      fields.add("least_privileged_role");
+    return fields;
+  }
 }

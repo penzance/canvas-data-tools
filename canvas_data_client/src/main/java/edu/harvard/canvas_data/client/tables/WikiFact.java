@@ -105,4 +105,19 @@ public class WikiFact extends CanvasDataTable {
     fields.add(groupCategoryId);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("wiki_id");
+      fields.add("parent_course_id");
+      fields.add("parent_group_id");
+      fields.add("parent_course_account_id");
+      fields.add("parent_group_account_id");
+      fields.add("account_id");
+      fields.add("root_account_id");
+      fields.add("enrollment_term_id");
+      fields.add("group_category_id");
+    return fields;
+  }
 }

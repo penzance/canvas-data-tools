@@ -151,4 +151,25 @@ public class DiscussionTopicDim extends CanvasDataTable {
     fields.add(locked);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("title");
+      fields.add("message");
+      fields.add("type");
+      fields.add("workflow_state");
+      fields.add("last_reply_at");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("delayed_post_at");
+      fields.add("posted_at");
+      fields.add("deleted_at");
+      fields.add("discussion_type");
+      fields.add("pinned");
+      fields.add("locked");
+    return fields;
+  }
 }

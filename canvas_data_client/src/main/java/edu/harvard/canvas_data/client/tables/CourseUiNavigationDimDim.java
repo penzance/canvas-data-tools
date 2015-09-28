@@ -235,4 +235,41 @@ public class CourseUiNavigationDimDim extends CanvasDataTable {
     fields.add(position29);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("course_id");
+      fields.add("position00");
+      fields.add("position01");
+      fields.add("position02");
+      fields.add("position03");
+      fields.add("position04");
+      fields.add("position05");
+      fields.add("position06");
+      fields.add("position07");
+      fields.add("position08");
+      fields.add("position09");
+      fields.add("position10");
+      fields.add("position11");
+      fields.add("position12");
+      fields.add("position13");
+      fields.add("position14");
+      fields.add("position15");
+      fields.add("position16");
+      fields.add("position17");
+      fields.add("position18");
+      fields.add("position19");
+      fields.add("position20");
+      fields.add("position21");
+      fields.add("position22");
+      fields.add("position23");
+      fields.add("position24");
+      fields.add("position25");
+      fields.add("position26");
+      fields.add("position27");
+      fields.add("position28");
+      fields.add("position29");
+    return fields;
+  }
 }

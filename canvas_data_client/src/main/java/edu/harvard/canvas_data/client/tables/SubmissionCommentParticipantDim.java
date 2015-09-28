@@ -63,4 +63,15 @@ public class SubmissionCommentParticipantDim extends CanvasDataTable {
     fields.add(formatTimestamp(updatedAt));
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("participation_type");
+      fields.add("created_at");
+      fields.add("updated_at");
+    return fields;
+  }
 }

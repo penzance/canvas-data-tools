@@ -155,4 +155,24 @@ public class ConversationMessageParticipantFact extends CanvasDataTable {
     fields.add(messageLineCount);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("conversation_message_id");
+      fields.add("conversation_id");
+      fields.add("user_id");
+      fields.add("user_account_id");
+      fields.add("course_id");
+      fields.add("enrollment_term_id");
+      fields.add("course_account_id");
+      fields.add("group_id");
+      fields.add("account_id");
+      fields.add("enrollment_rollup_id");
+      fields.add("message_size_bytes");
+      fields.add("message_character_count");
+      fields.add("message_word_count");
+      fields.add("message_line_count");
+    return fields;
+  }
 }

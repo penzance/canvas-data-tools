@@ -112,4 +112,20 @@ public class QuizSubmissionFact extends CanvasDataTable {
     fields.add(enrollmentRollupId);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("score");
+      fields.add("kept_score");
+      fields.add("date");
+      fields.add("course_id");
+      fields.add("enrollment_term_id");
+      fields.add("course_account_id");
+      fields.add("quiz_id");
+      fields.add("user_id");
+      fields.add("submission_id");
+      fields.add("enrollment_rollup_id");
+    return fields;
+  }
 }

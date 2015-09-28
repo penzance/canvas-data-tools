@@ -90,4 +90,18 @@ public class DiscussionEntryDim extends CanvasDataTable {
     fields.add(depth);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("message");
+      fields.add("workflow_state");
+      fields.add("created_at");
+      fields.add("updated_at");
+      fields.add("deleted_at");
+      fields.add("depth");
+    return fields;
+  }
 }

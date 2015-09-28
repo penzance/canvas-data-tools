@@ -80,4 +80,17 @@ public class EnrollmentTermDim extends CanvasDataTable {
     fields.add(sisSourceId);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("id");
+      fields.add("canvas_id");
+      fields.add("root_account_id");
+      fields.add("name");
+      fields.add("date_start");
+      fields.add("date_end");
+      fields.add("sis_source_id");
+    return fields;
+  }
 }

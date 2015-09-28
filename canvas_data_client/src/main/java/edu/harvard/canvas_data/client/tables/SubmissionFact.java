@@ -145,4 +145,23 @@ public class SubmissionFact extends CanvasDataTable {
     fields.add(submissionCommentsCount);
     return fields;
   }
+
+  @Override
+  public List<String> getCsvHeaders() {
+    final List<String> fields = new ArrayList<String>();
+      fields.add("submission_id");
+      fields.add("assignment_id");
+      fields.add("course_id");
+      fields.add("enrollment_term_id");
+      fields.add("user_id");
+      fields.add("grader_id");
+      fields.add("course_account_id");
+      fields.add("user_account_id");
+      fields.add("enrollment_rollup_id");
+      fields.add("score");
+      fields.add("published_score");
+      fields.add("what_if_score");
+      fields.add("submission_comments_count");
+    return fields;
+  }
 }
