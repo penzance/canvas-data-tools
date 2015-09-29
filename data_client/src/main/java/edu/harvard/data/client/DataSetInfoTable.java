@@ -37,10 +37,7 @@ public class DataSetInfoTable {
     for (final DataSetInfoFile file : files) {
       size += file.getLines();
     }
-    String str = "table:" + name + " records:" + size + "\n";
-    for (final DataSetInfoFile file : files) {
-      str += "    " + file;
-    }
+    final String str = "table:" + name + " records:" + size + "\n";
     return str;
   }
 }
