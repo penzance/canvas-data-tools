@@ -26,11 +26,13 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
   private int currentFileIndex;
   private final String tableName;
   private final DataSetInfoTable info;
+  private final Class<T> tableType;
 
   public DelimitedTableWriter(final Class<T> tableType, final TableFormat format, final Path directory, final String tableName)
       throws IOException {
     this.format = format;
     this.tableName = tableName;
+    this.tableType = tableType;
     this.buffer = new ArrayList<List<? extends Object>>();
     this.currentFileLines = 0;
     this.currentFileIndex = 0;
@@ -39,17 +41,7 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
     this.maxFileSize = DEFAULT_MAX_FILE_SIZE;
     this.info = new DataSetInfoTable(tableName);
     Files.createDirectories(directory);
-    if (format.includeHeaders()) {
-      try {
-        @SuppressWarnings("unchecked")
-        final List<String> headers = (List<String>) tableType.getMethod("getFieldNames")
-        .invoke(null);
-        buffer.add(headers);
-      } catch (NoSuchMethodException | SecurityException | IllegalAccessException
-          | IllegalArgumentException | InvocationTargetException e) {
-        throw new RuntimeException(e);
-      }
-    }
+    writeHeaders();
   }
 
   public void setBufferSize(final int size){
@@ -69,6 +61,7 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
       info.addFileInfo(new DataSetInfoFile(getCurrentFileName(), currentFileLines));
       currentFileIndex++;
       currentFileLines = 0;
+      writeHeaders();
     }
     file = directory.resolve(getCurrentFileName());
     switch (format.getCompression()) {
@@ -78,6 +71,20 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
       return Files.newOutputStream(file, opts);
     default:
       throw new RuntimeException("Unknown compression: " + format.getCompression());
+    }
+  }
+
+  private void writeHeaders() {
+    if (format.includeHeaders()) {
+      try {
+        @SuppressWarnings("unchecked")
+        final List<String> headers = (List<String>) tableType.getMethod("getFieldNames")
+        .invoke(null);
+        buffer.add(0, headers);
+      } catch (NoSuchMethodException | SecurityException | IllegalAccessException
+          | IllegalArgumentException | InvocationTargetException e) {
+        throw new RuntimeException(e);
+      }
     }
   }
 
@@ -91,7 +98,6 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
         final CSVPrinter printer = new CSVPrinter(new OutputStreamWriter(out), format.getCsvFormat())) {
       for (final List<? extends Object> row : buffer) {
         printer.printRecord(row);
-        currentFileLines++;
       }
     }
     buffer.clear();
