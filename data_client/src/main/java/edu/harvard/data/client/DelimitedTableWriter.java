@@ -97,7 +97,6 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
             format.getCsvFormat())) {
       for (final List<? extends Object> row : buffer) {
         printer.printRecord(row);
-        currentFileLines++;
       }
     }
     buffer.clear();
@@ -112,6 +111,7 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
   @Override
   public void add(final DataTable a) throws IOException {
     buffer.add(a.getFieldsAsList(format));
+    currentFileLines++;
     if (buffer.size() > bufferSize) {
       flushBuffer();
     }
