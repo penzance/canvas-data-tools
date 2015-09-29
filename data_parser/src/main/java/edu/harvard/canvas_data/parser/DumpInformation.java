@@ -48,6 +48,10 @@ public class DumpInformation {
     return downloadComplete;
   }
 
+  public static Path getFile(final Path dir) {
+    return dir.resolve("dump_info.json");
+  }
+
   public void write(final Path file) throws IOException {
     mapper.writeValue(file.toFile(), this);
   }

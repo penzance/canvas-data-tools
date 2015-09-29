@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
+
 import edu.harvard.data.client.DataConfigurationException;
 import edu.harvard.data.client.DataSetInfo;
 import edu.harvard.data.client.DataSetInfoFile;
@@ -36,7 +38,7 @@ public class DumpManager {
     if (!Files.exists(archiveDir)) {
       return true;
     }
-    final Path dumpInfoFile = getArchiveDumpDir(dump).resolve("dump_info.json");
+    final Path dumpInfoFile = DumpInformation.getFile(getArchiveDumpDir(dump));
     if (!Files.exists(dumpInfoFile)) {
       return true;
     }
@@ -55,7 +57,7 @@ public class DumpManager {
     if (!Files.exists(path) || !Files.isDirectory(path)) {
       return false;
     }
-    final Path dumpInfoFile = path.resolve("dump_info.json");
+    final Path dumpInfoFile = DumpInformation.getFile(path);
     if (!Files.exists(dumpInfoFile)) {
       return false;
     }
@@ -92,7 +94,7 @@ public class DumpManager {
         }
       }
     }
-    final Path dumpInfoFile = getScratchDumpDir(dump).resolve("dump_info.json");
+    final Path dumpInfoFile = DumpInformation.getFile(getScratchDumpDir(dump));
     final Date downloadEnd = new Date();
     new DumpInformation(dump, downloadStart, downloadEnd).write(dumpInfoFile);
     dataSetInfo.write();
@@ -100,6 +102,9 @@ public class DumpManager {
 
   public void archiveDump(final Path fromDir, final Path toDir) throws IOException {
     Files.createDirectories(toDir.getParent());
+    if (Files.exists(toDir)) {
+      FileUtils.deleteDirectory(toDir.toFile());
+    }
     final Set<PosixFilePermission> readOnly = new HashSet<PosixFilePermission>();
     readOnly.add(PosixFilePermission.OWNER_READ);
     readOnly.add(PosixFilePermission.GROUP_READ);
