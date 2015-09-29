@@ -28,8 +28,8 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
   private final DataSetInfoTable info;
   private final Class<T> tableType;
 
-  public DelimitedTableWriter(final Class<T> tableType, final TableFormat format, final Path directory, final String tableName)
-      throws IOException {
+  public DelimitedTableWriter(final Class<T> tableType, final TableFormat format,
+      final Path directory, final String tableName) throws IOException {
     this.format = format;
     this.tableName = tableName;
     this.tableType = tableType;
@@ -44,18 +44,17 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
     writeHeaders();
   }
 
-  public void setBufferSize(final int size){
+  public void setBufferSize(final int size) {
     this.bufferSize = size;
   }
 
-  public void setMaxFileSize(final int size){
+  public void setMaxFileSize(final int size) {
     this.maxFileSize = size;
   }
 
   private OutputStream getOutputStream() throws IOException {
-    final StandardOpenOption[] opts = new StandardOpenOption[] {
-        StandardOpenOption.CREATE, StandardOpenOption.APPEND
-    };
+    final StandardOpenOption[] opts = new StandardOpenOption[] { StandardOpenOption.CREATE,
+        StandardOpenOption.APPEND };
     Path file;
     if (currentFileLines + buffer.size() > maxFileSize) {
       info.addFileInfo(new DataSetInfoFile(getCurrentFileName(), currentFileLines));
@@ -93,11 +92,12 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
   }
 
   private void flushBuffer() throws IOException {
-    try (
-        OutputStream out = getOutputStream();
-        final CSVPrinter printer = new CSVPrinter(new OutputStreamWriter(out), format.getCsvFormat())) {
+    try (OutputStream out = getOutputStream();
+        final CSVPrinter printer = new CSVPrinter(new OutputStreamWriter(out),
+            format.getCsvFormat())) {
       for (final List<? extends Object> row : buffer) {
         printer.printRecord(row);
+        currentFileLines++;
       }
     }
     buffer.clear();
@@ -112,7 +112,7 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
   @Override
   public void add(final DataTable a) throws IOException {
     buffer.add(a.getFieldsAsList(format));
-    if(buffer.size() > bufferSize) {
+    if (buffer.size() > bufferSize) {
       flushBuffer();
     }
   }
