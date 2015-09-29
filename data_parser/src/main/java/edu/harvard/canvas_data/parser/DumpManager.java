@@ -74,7 +74,7 @@ public class DumpManager {
       throws IOException, UnexpectedApiResponseException, DataConfigurationException {
     final Date downloadStart = new Date();
     final DataSetInfo dataSetInfo = new DataSetInfo(DataSetInfo.getFileName(directory));
-    dataSetInfo.setFormat(FormatLibrary.Format.CompressedCanvasDataFlatFiles);
+    dataSetInfo.setFormat(FormatLibrary.Format.CanvasDataFlatFiles);
     Files.createDirectories(directory);
     final Map<String, CanvasDataArtifact> artifactsByTable = dump.getArtifactsByTable();
     final List<String> tables = new ArrayList<String>(artifactsByTable.keySet());

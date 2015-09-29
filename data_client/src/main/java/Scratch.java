@@ -52,8 +52,8 @@ public class Scratch {
   public Scratch() {
     factory = new CanvasTableFactory();
     final FormatLibrary formats = new FormatLibrary();
-    inFormat = formats.getFormat(Format.CompressedCanvasDataFlatFiles);
-    outFormat = formats.getFormat(Format.CanvasDataFlatFiles);
+    inFormat = formats.getFormat(Format.CanvasDataFlatFiles);
+    outFormat = formats.getFormat(Format.DecompressedCanvasDataFlatFiles);
     inDir = Paths.get("/tmp/canvas_archive/00034");
     outDir = Paths.get("/tmp/canvas_archive/00034-split");
     courseMap = new HashMap<Long, DataSetWriter>();

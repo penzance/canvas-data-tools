@@ -11,8 +11,8 @@ import org.apache.commons.csv.CSVFormat;
 
 public class FormatLibrary {
   public enum Format {
-    CompressedCanvasDataFlatFiles("compressed_canvas"), CanvasDataFlatFiles(
-        "canvas"), CompressedExcel("compressed_excel"), Excel("excel");
+    DecompressedCanvasDataFlatFiles("decompressed_canvas"), CanvasDataFlatFiles(
+        "canvas"), DecompressedExcel("decompressed_excel"), Excel("excel");
 
     private String label;
 
@@ -28,12 +28,12 @@ public class FormatLibrary {
       switch (label) {
       case "canvas":
         return CanvasDataFlatFiles;
-      case "compressed_canvas":
-        return CompressedCanvasDataFlatFiles;
+      case "decompressed_canvas":
+        return DecompressedCanvasDataFlatFiles;
       case "excel":
         return Excel;
-      case "compressed_excel":
-        return CompressedExcel;
+      case "decompressed_excel":
+        return DecompressedExcel;
       default:
         return Format.valueOf(label);
       }
@@ -45,9 +45,9 @@ public class FormatLibrary {
   public FormatLibrary() {
     this.formatMap = new HashMap<Format, TableFormat>();
     formatMap.put(Format.CanvasDataFlatFiles, createCanvasDataFlatFileFormat());
-    formatMap.put(Format.CompressedCanvasDataFlatFiles, createCompressedCanvasDataFlatFileFormat());
+    formatMap.put(Format.DecompressedCanvasDataFlatFiles, createDecompressedCanvasDataFlatFileFormat());
     formatMap.put(Format.Excel, createExcelFormat());
-    formatMap.put(Format.CompressedExcel, createCompressedExcelFormat());
+    formatMap.put(Format.DecompressedExcel, createDecompressedExcelFormat());
   }
 
   public TableFormat getFormat(final Format format) {
@@ -77,18 +77,18 @@ public class FormatLibrary {
     canvasFormat.setIncludeHeaders(false);
     canvasFormat.setEncoding(CANVAS_FILE_ENCODING);
     canvasFormat.setCsvFormat(CANVAS_CSV_FORMAT);
-    canvasFormat.setCompression(TableFormat.Compression.None);
+    canvasFormat.setCompression(TableFormat.Compression.Gzip);
     return canvasFormat;
   }
 
-  private TableFormat createCompressedCanvasDataFlatFileFormat() {
-    final TableFormat canvasFormat = new TableFormat(Format.CompressedCanvasDataFlatFiles);
+  private TableFormat createDecompressedCanvasDataFlatFileFormat() {
+    final TableFormat canvasFormat = new TableFormat(Format.DecompressedCanvasDataFlatFiles);
     canvasFormat.setTimestampFormat(CANVAS_TIMESTAMP_FORMAT);
     canvasFormat.setDateFormat(CANVAS_DATE_FORMAT);
     canvasFormat.setIncludeHeaders(false);
     canvasFormat.setEncoding(CANVAS_FILE_ENCODING);
     canvasFormat.setCsvFormat(CANVAS_CSV_FORMAT);
-    canvasFormat.setCompression(TableFormat.Compression.Gzip);
+    canvasFormat.setCompression(TableFormat.Compression.None);
     return canvasFormat;
   }
 
@@ -99,18 +99,18 @@ public class FormatLibrary {
     canvasFormat.setIncludeHeaders(true);
     canvasFormat.setEncoding(CANVAS_FILE_ENCODING);
     canvasFormat.setCsvFormat(CSVFormat.EXCEL);
-    canvasFormat.setCompression(TableFormat.Compression.None);
+    canvasFormat.setCompression(TableFormat.Compression.Gzip);
     return canvasFormat;
   }
 
-  private TableFormat createCompressedExcelFormat() {
+  private TableFormat createDecompressedExcelFormat() {
     final TableFormat canvasFormat = new TableFormat(Format.Excel);
     canvasFormat.setTimestampFormat(CANVAS_TIMESTAMP_FORMAT);
     canvasFormat.setDateFormat(CANVAS_DATE_FORMAT);
     canvasFormat.setIncludeHeaders(true);
     canvasFormat.setEncoding(CANVAS_FILE_ENCODING);
     canvasFormat.setCsvFormat(CSVFormat.EXCEL);
-    canvasFormat.setCompression(TableFormat.Compression.Gzip);
+    canvasFormat.setCompression(TableFormat.Compression.None);
     return canvasFormat;
   }
 

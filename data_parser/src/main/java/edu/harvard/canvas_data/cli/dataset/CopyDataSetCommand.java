@@ -42,7 +42,7 @@ public class CopyDataSetCommand implements Command {
     final TableFormat inputFormat;
     if (input.equals("LATEST")) {
       in = VirtualDataSets.getLatestDataSet(config.getCanvasDataArchiveDirectory());
-      inputFormat = formats.getFormat(Format.CompressedCanvasDataFlatFiles);
+      inputFormat = formats.getFormat(Format.CanvasDataFlatFiles);
     } else {
       final Path inputPath = Paths.get(input);
       if (!Files.exists(inputPath) || !Files.isDirectory(inputPath)

@@ -25,8 +25,8 @@ public class CanvasDumpVerifier {
   }
 
   public void parseAndOutput(final Path dumpDirectory, final Path scratchDirectory) throws IOException, VerificationException {
-    final TableFormat inFormat = formats.getFormat(Format.CompressedCanvasDataFlatFiles);
-    final TableFormat outFormat = formats.getFormat(Format.CanvasDataFlatFiles);
+    final TableFormat inFormat = formats.getFormat(Format.CanvasDataFlatFiles);
+    final TableFormat outFormat = formats.getFormat(Format.DecompressedCanvasDataFlatFiles);
     final TableFactory factory = new CanvasTableFactory();
     try (final DataSetReader in = new FileDataSetReader(dumpDirectory, inFormat, factory);
         final DataSetWriter out = new FileDataSetWriter(scratchDirectory, outFormat, factory);) {
