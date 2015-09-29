@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
 
 import edu.harvard.canvas_data.cli.Command;
@@ -25,10 +26,10 @@ import edu.harvard.data.client.canvas.tables.CanvasTableFactory;
 
 public class CopyDataSetCommand implements Command {
 
-  @Option(name = "-d", usage = "Input Data Set (either a directory or LATEST). This argument is required", metaVar = "/path/to/directory", required = true)
+  @Argument(index = 0, usage = "Input Data Set (either a directory or LATEST). This argument is required", metaVar = "/path/to/directory", required = true)
   private String input;
 
-  @Option(name = "-o", usage = "Output Data Set. Must be a directory. This argument is required", metaVar = "/path/to/directory", required = true)
+  @Argument(index = 1, usage = "Output Data set directory. This argument is required", metaVar = "/path/to/directory", required = true)
   private File output;
 
   @Option(name = "-f", usage = "Format for the new data set", metaVar = "format")

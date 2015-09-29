@@ -1,6 +1,6 @@
 package edu.harvard.canvas_data.cli.dump;
 
-import org.kohsuke.args4j.Option;
+import org.kohsuke.args4j.Argument;
 
 import edu.harvard.canvas_data.cli.Command;
 import edu.harvard.canvas_data.parser.Configuration;
@@ -13,7 +13,7 @@ import edu.harvard.data.client.canvas.api.UnexpectedApiResponseException;
 
 public class TableHistoryCommand implements Command {
 
-  @Option(name = "-t", usage = "Table for which to fetch history.", required=true, metaVar="table_name")
+  @Argument(index = 0, usage = "Table for which to fetch history.", required=true, metaVar="table_name")
   private String table;
 
   @Override

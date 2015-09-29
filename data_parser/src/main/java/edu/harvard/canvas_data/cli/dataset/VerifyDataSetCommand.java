@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
-import org.kohsuke.args4j.Option;
+import org.kohsuke.args4j.Argument;
 
 import edu.harvard.canvas_data.cli.Command;
 import edu.harvard.canvas_data.parser.Configuration;
@@ -16,7 +16,7 @@ import edu.harvard.data.client.DataConfigurationException;
 
 public class VerifyDataSetCommand implements Command {
 
-  @Option(name = "-d", usage = "Data Set. This may be a directory or dataset label. This argument is required", metaVar = "/path/to/directory", required = true)
+  @Argument(index = 0, usage = "Data set directory. This argument is required", metaVar = "/path/to/directory", required = true)
   private File directory;
 
   @Override

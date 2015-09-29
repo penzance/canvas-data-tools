@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.kohsuke.args4j.Option;
+import org.kohsuke.args4j.Argument;
 
 import edu.harvard.canvas_data.cli.Command;
 import edu.harvard.canvas_data.parser.Configuration;
@@ -13,12 +13,11 @@ import edu.harvard.data.client.DataSetInfo;
 
 public class DataSetInfoCommand implements Command {
 
-  @Option(name = "-d", usage = "Data Set. This must be a directory. This argument is required", metaVar = "/path/to/directory", required = true)
+  @Argument(index = 0, usage = "Data set directory. This argument is required", metaVar = "/path/to/directory", required = true)
   private File directory;
 
   @Override
   public void execute(final Configuration config) throws IOException {
-
     final Path infoFile = DataSetInfo.getFileName(directory.toPath());
     if (!Files.exists(infoFile)) {
       throw new RuntimeException(directory + " is not a well-formed data set");
