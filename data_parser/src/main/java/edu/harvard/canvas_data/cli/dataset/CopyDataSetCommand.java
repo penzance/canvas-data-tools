@@ -31,13 +31,18 @@ public class CopyDataSetCommand implements Command {
   @Option(name = "-o", usage = "Output Data Set. Must be a directory. This argument is required", metaVar = "/path/to/directory", required = true)
   private File output;
 
+  @Option(name = "-f", usage = "Format for the new data set", metaVar = "format")
+  private String format;
+
   @Override
   public void execute(final Configuration config) throws DataConfigurationException, IOException {
     final TableFactory factory = new CanvasTableFactory();
     final FormatLibrary formats = new FormatLibrary();
     final DataSetReader in;
+    final TableFormat inputFormat;
     if (input.equals("LATEST")) {
       in = VirtualDataSets.getLatestDataSet(config.getCanvasDataArchiveDirectory());
+      inputFormat = formats.getFormat(Format.CompressedCanvasDataFlatFiles);
     } else {
       final Path inputPath = Paths.get(input);
       if (!Files.exists(inputPath) || !Files.isDirectory(inputPath)
@@ -46,14 +51,29 @@ public class CopyDataSetCommand implements Command {
         return;
       }
       final DataSetInfo inputInfo = DataSetInfo.read(DataSetInfo.getFileName(inputPath));
-      final TableFormat inputFormat = formats.getFormat(inputInfo.getFormat());
+      inputFormat = formats.getFormat(inputInfo.getFormat());
       in = new FileDataSetReader(inputPath, inputFormat, factory);
+    }
+
+    Format outputFormat;
+    if (format != null) {
+      try {
+        outputFormat = Format.fromLabel(format);
+      } catch(final IllegalArgumentException e) {
+        System.err.println("Format " + format + " not found. Possible formats are:");
+        for (final Format f : Format.values()) {
+          System.out.println("  " + f.getLabel());
+        }
+        return;
+      }
+    } else {
+      outputFormat = inputFormat.getFormat();
     }
 
     try {
       if (!output.exists()) {
         try (final DataSetWriter out = new FileDataSetWriter(output.toPath(),
-            formats.getFormat(Format.DecompressedCanvasDataFlatFiles), factory)) {
+            formats.getFormat(outputFormat), factory)) {
           out.pipe(in);
         }
       } else {

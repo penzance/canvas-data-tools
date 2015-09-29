@@ -56,16 +56,19 @@ public class VirtualDataSets {
     final ArrayList<TableReader<? extends DataTable>> partialReaders = new ArrayList<TableReader<? extends DataTable>>();
     for (final int dumpId : dumpIds) {
       final Path dir = dumps.get(dumpId);
-      final DumpInformation info = DumpInformation.read(DumpInformation.getFile(dir));
-      final CanvasDataArtifact artifact = info.getDump().getArtifactsByTable()
-          .get(table.getSourceName());
-      if (artifact != null) {
-        for (final CanvasDataFile file : artifact.getFiles()) {
-          final Path dumpFile = dir.resolve(table.getSourceName()).resolve(file.getFilename());
-          partialReaders.add(0, new DelimitedTableReader(table.getTableClass(), format, dumpFile));
-        }
-        if (!artifact.isPartial()) {
-          break;
+      final Path dumpInfoFile = DumpInformation.getFile(dir);
+      if (Files.exists(dumpInfoFile)){
+        final DumpInformation info = DumpInformation.read(dumpInfoFile);
+        final CanvasDataArtifact artifact = info.getDump().getArtifactsByTable()
+            .get(table.getSourceName());
+        if (artifact != null) {
+          for (final CanvasDataFile file : artifact.getFiles()) {
+            final Path dumpFile = dir.resolve(table.getSourceName()).resolve(file.getFilename());
+            partialReaders.add(0, new DelimitedTableReader(table.getTableClass(), format, dumpFile));
+          }
+          if (!artifact.isPartial()) {
+            break;
+          }
         }
       }
     }
