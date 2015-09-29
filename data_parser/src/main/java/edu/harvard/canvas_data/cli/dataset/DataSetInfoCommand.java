@@ -13,11 +13,12 @@ import edu.harvard.data.client.DataSetInfo;
 
 public class DataSetInfoCommand implements Command {
 
-  @Option(name = "-d", usage = "Data Set. This may be a directory or dataset label. This argument is required", metaVar = "/path/to/directory", required = true)
+  @Option(name = "-d", usage = "Data Set. This must be a directory. This argument is required", metaVar = "/path/to/directory", required = true)
   private File directory;
 
   @Override
   public void execute(final Configuration config) throws IOException {
+
     final Path infoFile = DataSetInfo.getFileName(directory.toPath());
     if (!Files.exists(infoFile)) {
       throw new RuntimeException(directory + " is not a well-formed data set");

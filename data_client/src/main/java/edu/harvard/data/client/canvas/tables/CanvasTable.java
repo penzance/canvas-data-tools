@@ -1,61 +1,69 @@
 package edu.harvard.data.client.canvas.tables;
 
+  import edu.harvard.data.client.DataTable;
+
 public enum CanvasTable {
-  AccountDim("account_dim"),
-  AssignmentDim("assignment_dim"),
-  AssignmentFact("assignment_fact"),
-  ConversationDim("conversation_dim"),
-  ConversationMessageDim("conversation_message_dim"),
-  ConversationMessageParticipantFact("conversation_message_participant_fact"),
-  CourseDim("course_dim"),
-  CourseSectionDim("course_section_dim"),
-  CourseUiCanvasNavigationDim("course_ui_canvas_navigation_dim"),
-  CourseUiCanvasNavigationExpandedDim("course_ui_canvas_navigation_expanded_dim"),
-  CourseUiNavigationDimDim("course_ui_navigation_dim_dim"),
-  CourseUiNavigationItemDim("course_ui_navigation_item_dim"),
-  CourseUiNavigationItemFact("course_ui_navigation_item_fact"),
-  DateDim("date_dim"),
-  DiscussionEntryDim("discussion_entry_dim"),
-  DiscussionEntryFact("discussion_entry_fact"),
-  DiscussionTopicDim("discussion_topic_dim"),
-  DiscussionTopicFact("discussion_topic_fact"),
-  EnrollmentDim("enrollment_dim"),
-  EnrollmentFact("enrollment_fact"),
-  EnrollmentRollupDim("enrollment_rollup_dim"),
-  EnrollmentTermDim("enrollment_term_dim"),
-  ExternalToolActivationDim("external_tool_activation_dim"),
-  ExternalToolActivationFact("external_tool_activation_fact"),
-  GroupDim("group_dim"),
-  GroupFact("group_fact"),
-  GroupMembershipFact("group_membership_fact"),
-  PseudonymDim("pseudonym_dim"),
-  PseudonymFact("pseudonym_fact"),
-  QuizDim("quiz_dim"),
-  QuizSubmissionFact("quiz_submission_fact"),
-  Requests("requests"),
-  RoleDim("role_dim"),
-  RoleExpandedDim("role_expanded_dim"),
-  SubmissionCommentDim("submission_comment_dim"),
-  SubmissionCommentFact("submission_comment_fact"),
-  SubmissionCommentParticipantDim("submission_comment_participant_dim"),
-  SubmissionCommentParticipantFact("submission_comment_participant_fact"),
-  SubmissionDim("submission_dim"),
-  SubmissionFact("submission_fact"),
-  UserDim("user_dim"),
-  UserExpandedDim("user_expanded_dim"),
-  WikiDim("wiki_dim"),
-  WikiFact("wiki_fact"),
-  WikiPageDim("wiki_page_dim"),
-  WikiPageFact("wiki_page_fact");
+  AccountDim("account_dim", AccountDim.class),
+  AssignmentDim("assignment_dim", AssignmentDim.class),
+  AssignmentFact("assignment_fact", AssignmentFact.class),
+  ConversationDim("conversation_dim", ConversationDim.class),
+  ConversationMessageDim("conversation_message_dim", ConversationMessageDim.class),
+  ConversationMessageParticipantFact("conversation_message_participant_fact", ConversationMessageParticipantFact.class),
+  CourseDim("course_dim", CourseDim.class),
+  CourseSectionDim("course_section_dim", CourseSectionDim.class),
+  CourseUiCanvasNavigationDim("course_ui_canvas_navigation_dim", CourseUiCanvasNavigationDim.class),
+  CourseUiCanvasNavigationExpandedDim("course_ui_canvas_navigation_expanded_dim", CourseUiCanvasNavigationExpandedDim.class),
+  CourseUiNavigationDimDim("course_ui_navigation_dim_dim", CourseUiNavigationDimDim.class),
+  CourseUiNavigationItemDim("course_ui_navigation_item_dim", CourseUiNavigationItemDim.class),
+  CourseUiNavigationItemFact("course_ui_navigation_item_fact", CourseUiNavigationItemFact.class),
+  DateDim("date_dim", DateDim.class),
+  DiscussionEntryDim("discussion_entry_dim", DiscussionEntryDim.class),
+  DiscussionEntryFact("discussion_entry_fact", DiscussionEntryFact.class),
+  DiscussionTopicDim("discussion_topic_dim", DiscussionTopicDim.class),
+  DiscussionTopicFact("discussion_topic_fact", DiscussionTopicFact.class),
+  EnrollmentDim("enrollment_dim", EnrollmentDim.class),
+  EnrollmentFact("enrollment_fact", EnrollmentFact.class),
+  EnrollmentRollupDim("enrollment_rollup_dim", EnrollmentRollupDim.class),
+  EnrollmentTermDim("enrollment_term_dim", EnrollmentTermDim.class),
+  ExternalToolActivationDim("external_tool_activation_dim", ExternalToolActivationDim.class),
+  ExternalToolActivationFact("external_tool_activation_fact", ExternalToolActivationFact.class),
+  GroupDim("group_dim", GroupDim.class),
+  GroupFact("group_fact", GroupFact.class),
+  GroupMembershipFact("group_membership_fact", GroupMembershipFact.class),
+  PseudonymDim("pseudonym_dim", PseudonymDim.class),
+  PseudonymFact("pseudonym_fact", PseudonymFact.class),
+  QuizDim("quiz_dim", QuizDim.class),
+  QuizSubmissionFact("quiz_submission_fact", QuizSubmissionFact.class),
+  Requests("requests", Requests.class),
+  RoleDim("role_dim", RoleDim.class),
+  RoleExpandedDim("role_expanded_dim", RoleExpandedDim.class),
+  SubmissionCommentDim("submission_comment_dim", SubmissionCommentDim.class),
+  SubmissionCommentFact("submission_comment_fact", SubmissionCommentFact.class),
+  SubmissionCommentParticipantDim("submission_comment_participant_dim", SubmissionCommentParticipantDim.class),
+  SubmissionCommentParticipantFact("submission_comment_participant_fact", SubmissionCommentParticipantFact.class),
+  SubmissionDim("submission_dim", SubmissionDim.class),
+  SubmissionFact("submission_fact", SubmissionFact.class),
+  UserDim("user_dim", UserDim.class),
+  UserExpandedDim("user_expanded_dim", UserExpandedDim.class),
+  WikiDim("wiki_dim", WikiDim.class),
+  WikiFact("wiki_fact", WikiFact.class),
+  WikiPageDim("wiki_page_dim", WikiPageDim.class),
+  WikiPageFact("wiki_page_fact", WikiPageFact.class);
 
   private final String sourceName;
+  private final Class<? extends DataTable> tableClass;
 
-  private CanvasTable(final String sourceName) {
+  private CanvasTable(final String sourceName, Class<? extends DataTable> tableClass) {
     this.sourceName = sourceName;
+    this.tableClass = tableClass;
   }
 
   public String getSourceName() {
     return sourceName;
+  }
+
+  public Class<? extends DataTable> getTableClass() {
+    return tableClass;
   }
 
   public static CanvasTable fromSourceName(String sourceName) {

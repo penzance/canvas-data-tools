@@ -98,21 +98,29 @@ public class GenerateCanvasTables {
   private static void generateTableEnum(final PrintStream out, final List<String> tableNames) {
     out.println("package edu.harvard.data.client.canvas.tables;");
     out.println();
+    out.println("  import edu.harvard.data.client.DataTable;");
+    out.println();
     out.println("public enum CanvasTable {");
     for (int i = 0; i < tableNames.size(); i++) {
       final String name = tableNames.get(i);
-      out.print("  " + className(name) + "(\"" + name + "\")");
+      out.print("  " + className(name) + "(\"" + name + "\", " + className(name) + ".class)");
       out.println(i == (tableNames.size() - 1) ? ";" : ",");
     }
     out.println();
     out.println("  private final String sourceName;");
+    out.println("  private final Class<? extends DataTable> tableClass;");
     out.println();
-    out.println("  private CanvasTable(final String sourceName) {");
+    out.println("  private CanvasTable(final String sourceName, Class<? extends DataTable> tableClass) {");
     out.println("    this.sourceName = sourceName;");
+    out.println("    this.tableClass = tableClass;");
     out.println("  }");
     out.println();
     out.println("  public String getSourceName() {");
     out.println("    return sourceName;");
+    out.println("  }");
+    out.println();
+    out.println("  public Class<? extends DataTable> getTableClass() {");
+    out.println("    return tableClass;");
     out.println("  }");
     out.println();
     out.println("  public static CanvasTable fromSourceName(String sourceName) {");
