@@ -3,7 +3,6 @@ package edu.harvard.canvas_data.cli.dump;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
 import org.kohsuke.args4j.Option;
 
 import edu.harvard.canvas_data.cli.Command;
@@ -17,16 +16,15 @@ import edu.harvard.data.client.canvas.api.UnexpectedApiResponseException;
 
 public class DownloadDumpCommand implements Command {
 
-  @Option(name = "-i", usage = "Dump ID. Either this or the dump sequence number is required",
-      metaVar = "dump_id", forbids = {"-s" })
+  @Option(name = "-i", usage = "Dump ID. Either this or the dump sequence number is required", metaVar = "dump_id", forbids = {
+  "-s" })
   private String id;
 
-  @Option(name = "-s", usage = "Dump sequence number. Either this or the dump ID is required.",
-      metaVar = "sequence_number", forbids = {"-i" })
+  @Option(name = "-s", usage = "Dump sequence number. Either this or the dump ID is required.", metaVar = "sequence_number", forbids = {
+  "-i" })
   private String seq;
 
-  @Option(name = "-o", usage = "Output directory. Defaults to the scratch directory.",
-      metaVar = "/path/to/directory")
+  @Option(name = "-o", usage = "Output directory. Defaults to the scratch directory.", metaVar = "/path/to/directory")
   private File directory;
 
   @Override
@@ -52,7 +50,8 @@ public class DownloadDumpCommand implements Command {
         directory = manager.getScratchDumpDir(dump).toFile();
       }
       if (directory.exists()) {
-        FileUtils.deleteDirectory(directory);
+        System.err.println("Output directory " + directory + " already exists");
+        return;
       }
       directory.mkdirs();
       manager.saveDump(api, directory.toPath(), dump);

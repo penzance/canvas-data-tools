@@ -20,6 +20,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
@@ -95,16 +96,23 @@ public class RestUtils {
       throws IOException, UnexpectedApiResponseException {
     Files.createDirectories(dest.getParent());
 
-    final WebResource request = client.resource(url);
-    final ClientResponse response = request.get(ClientResponse.class);
-    if (response.getStatus() != expectedStatus) {
-      throw new UnexpectedApiResponseException(response.getStatus(), url);
-    }
-    final File downloaded = response.getEntity(File.class);
-    Files.move(downloaded.toPath(), dest, StandardCopyOption.REPLACE_EXISTING);
-    //    downloaded.renameTo(dest);
-    try (final FileWriter out = new FileWriter(downloaded)) {
-      out.flush();
+    int retries = 10;
+    while (retries-- > 0) {
+      try {
+        final WebResource request = client.resource(url);
+        final ClientResponse response = request.get(ClientResponse.class);
+        if (response.getStatus() != expectedStatus) {
+          throw new UnexpectedApiResponseException(response.getStatus(), url);
+        }
+        final File downloaded = response.getEntity(File.class);
+        Files.move(downloaded.toPath(), dest, StandardCopyOption.REPLACE_EXISTING);
+        try (final FileWriter out = new FileWriter(downloaded)) {
+          out.flush();
+        }
+        return;
+      } catch (final ClientHandlerException e) {
+        System.err.println(e);
+      }
     }
   }
 
