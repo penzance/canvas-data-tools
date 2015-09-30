@@ -15,6 +15,8 @@ import edu.harvard.canvas_data.parser.DumpInformation;
 import edu.harvard.data.client.CombinedDataSetReader;
 import edu.harvard.data.client.CombinedTableReader;
 import edu.harvard.data.client.DataSetInfo;
+import edu.harvard.data.client.DataSetInfoFile;
+import edu.harvard.data.client.DataSetInfoTable;
 import edu.harvard.data.client.DataSetReader;
 import edu.harvard.data.client.DataTable;
 import edu.harvard.data.client.DelimitedTableReader;
@@ -126,6 +128,19 @@ public class DataSetUtils {
       }
     }
     return new CombinedTableReader(partialReaders, table.getTableClass());
+  }
+
+  public DataSetInfo getLatestDataSetInfo(final Configuration config) throws IOException {
+    final DataSetReader reader = getLatestDataSet(config.getCanvasDataArchiveDirectory());
+    final DataSetInfo info = new DataSetInfo();
+    final Map<String, TableReader<? extends DataTable>> tables = reader.getTables();
+    for (final String tableName : tables.keySet()) {
+      final TableReader<? extends DataTable> table = tables.get(tableName);
+      final DataSetInfoTable tableInfo = new DataSetInfoTable(tableName);
+      tableInfo.addFileInfo(new DataSetInfoFile(tableName + "-latest", table.size()));
+      info.addTable(tableName, tableInfo);
+    }
+    return info;
   }
 
 }
