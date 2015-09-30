@@ -10,11 +10,13 @@ public class CombinedTableReader<T extends DataTable> implements TableReader<T> 
   private final List<TableReader<T>> tables;
   private CombinedTableIterator<T> iterator;
   private final Class<T> tableType;
+  private final String tableName;
 
-  public CombinedTableReader(final List<TableReader<T>> tables, final Class<T> tableType) {
+  public CombinedTableReader(final List<TableReader<T>> tables, final Class<T> tableType, final String tableName) {
     this.tables = tables;
     this.tableType = tableType;
     this.iterator = new CombinedTableIterator<T>(tables);
+    this.tableName = tableName;
   }
 
   @Override
@@ -49,6 +51,15 @@ public class CombinedTableReader<T extends DataTable> implements TableReader<T> 
       size += table.size();
     }
     return size;
+  }
+
+  @Override
+  public DataSetInfoTable generateTableInfo() throws IOException {
+    final DataSetInfoTable info = new DataSetInfoTable(tableName);
+    for (final TableReader<T> tableReader : tables) {
+      info.addFileInfo(tableReader.generateTableInfo().getFileInfo());
+    }
+    return info;
   }
 
 }

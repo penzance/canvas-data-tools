@@ -5,35 +5,45 @@ import java.util.Map;
 
 public class CombinedDataSetReader implements DataSetReader {
 
-  private final Map<String, TableReader<? extends DataTable>> tables;
+  private final Map<String, TableReader<? extends DataTable>> readers;
   private final TableFormat format;
 
-  public CombinedDataSetReader(final Map<String, TableReader<? extends DataTable>> tables, final TableFormat format) {
-    this.tables = tables;
+  public CombinedDataSetReader(final Map<String, TableReader<? extends DataTable>> readers, final TableFormat format) {
+    this.readers = readers;
     this.format = format;
   }
 
   @Override
   public void close() throws IOException {
-    for (final TableReader<? extends DataTable> table : tables.values()) {
+    for (final TableReader<? extends DataTable> table : readers.values()) {
       table.close();
     }
   }
 
   @Override
   public Map<String, TableReader<? extends DataTable>> getTables() {
-    return tables;
+    return readers;
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public <T extends DataTable> TableReader<T> getTable(final String tableName, final Class<T> tableClass) {
-    return (TableReader<T>) tables.get(tableName);
+    return (TableReader<T>) readers.get(tableName);
   }
 
   @Override
   public TableFormat getFormat() {
     return format;
+  }
+
+  @Override
+  public void generateDataSetInfo() throws IOException {
+    final DataSetInfo info = new DataSetInfo();
+    info.setFormat(format.getFormat());
+    for (final TableReader<? extends DataTable> reader : readers.values()) {
+      final DataSetInfoTable tableInfo = reader.generateTableInfo();
+      info.addTable(tableInfo.getName(), tableInfo);
+    }
   }
 
 }

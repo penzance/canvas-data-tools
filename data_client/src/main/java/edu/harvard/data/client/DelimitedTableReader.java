@@ -20,12 +20,14 @@ public class DelimitedTableReader<T extends DataTable> implements TableReader<T>
   private final Path file;
   private DelimitedFileIterator<T> iterator;
   private final Class<T> tableType;
+  private final String tableName;
 
-  public DelimitedTableReader(final Class<T> tableType, final TableFormat format, final Path file)
+  public DelimitedTableReader(final Class<T> tableType, final TableFormat format, final Path file, final String tableName)
       throws IOException {
     this.format = format;
     this.file = file;
     this.tableType = tableType;
+    this.tableName = tableName;
     if (!Files.exists(file) || Files.isDirectory(file)) {
       throw new FileNotFoundException(file.toString());
     }
@@ -74,6 +76,13 @@ public class DelimitedTableReader<T extends DataTable> implements TableReader<T>
     default:
       throw new RuntimeException("Unknown compression format: " + format.getCompression());
     }
+  }
+
+  @Override
+  public DataSetInfoTable generateTableInfo() throws IOException {
+    final DataSetInfoTable tableInfo = new DataSetInfoTable(tableName);
+    tableInfo.addFileInfo(new DataSetInfoFile(file.toString(), size()));
+    return tableInfo;
   }
 
 }

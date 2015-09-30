@@ -36,7 +36,7 @@ public class FileDataSetReader implements DataSetReader {
           if (tableReaders.size() == 1) {
             readers.put(tableName, tableReaders.get(0));
           } else {
-            readers.put(tableName, new CombinedTableReader(tableReaders, tableReaders.get(0).getTableType()));
+            readers.put(tableName, new CombinedTableReader(tableReaders, tableReaders.get(0).getTableType(), tableName));
           }
         }
       }
@@ -64,5 +64,15 @@ public class FileDataSetReader implements DataSetReader {
   @Override
   public TableFormat getFormat() {
     return format;
+  }
+
+  @Override
+  public void generateDataSetInfo() throws IOException {
+    final DataSetInfo info = new DataSetInfo();
+    info.setFormat(format.getFormat());
+    for (final TableReader<? extends DataTable> reader : readers.values()) {
+      final DataSetInfoTable tableInfo = reader.generateTableInfo();
+      info.addTable(tableInfo.getName(), tableInfo);
+    }
   }
 }

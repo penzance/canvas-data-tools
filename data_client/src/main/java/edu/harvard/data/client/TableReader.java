@@ -11,4 +11,6 @@ public interface TableReader<T extends DataTable> extends Iterable<T>, Closeable
 
   long size() throws IOException;
 
+  DataSetInfoTable generateTableInfo() throws IOException;
+
 }

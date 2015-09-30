@@ -76,7 +76,7 @@ public class GenerateCanvasTables {
     out.println("    switch(table) {");
     for (final String name : tableNames) {
       out.println("    case \"" + name + "\":");
-      out.println("      return new DelimitedTableReader<" + className(name) + ">(" + className(name) + ".class, format, file);");
+      out.println("      return new DelimitedTableReader<" + className(name) + ">(" + className(name) + ".class, format, file, \"" + name + "\");");
     }
     out.println("    }");
     out.println("    return null;");
