@@ -35,6 +35,10 @@ public class DataSetInfo {
     this.tables= new HashMap<String, DataSetInfoTable>();
   }
 
+  public DataSetInfo() {
+    this.tables= new HashMap<String, DataSetInfoTable>();
+  }
+
   public DataSetInfo(@JsonProperty("format") final FormatLibrary.Format format) {
     this.format = format;
     this.tables = new HashMap<String, DataSetInfoTable>();
