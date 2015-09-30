@@ -30,7 +30,7 @@ public class CalculateDataSetInfoCommand implements Command {
     final FormatLibrary formats = new FormatLibrary();
     final TableFormat tableFormat = formats.getFormat(Format.fromLabel(format));
     try (DataSetReader in = new FileDataSetReader(input.toPath(), tableFormat, factory)) {
-      in.generateDataSetInfo();
+      in.generateDataSetInfo().write();
     }
   }
 

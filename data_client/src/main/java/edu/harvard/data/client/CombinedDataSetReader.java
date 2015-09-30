@@ -37,13 +37,14 @@ public class CombinedDataSetReader implements DataSetReader {
   }
 
   @Override
-  public void generateDataSetInfo() throws IOException {
+  public DataSetInfo generateDataSetInfo() throws IOException {
     final DataSetInfo info = new DataSetInfo();
     info.setFormat(format.getFormat());
     for (final TableReader<? extends DataTable> reader : readers.values()) {
       final DataSetInfoTable tableInfo = reader.generateTableInfo();
       info.addTable(tableInfo.getName(), tableInfo);
     }
+    return info;
   }
 
 }

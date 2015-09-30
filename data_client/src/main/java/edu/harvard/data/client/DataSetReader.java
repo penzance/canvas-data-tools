@@ -12,6 +12,6 @@ public interface DataSetReader extends Closeable {
 
   TableFormat getFormat();
 
-  void generateDataSetInfo() throws IOException;
+  DataSetInfo generateDataSetInfo() throws IOException;
 
 }
