@@ -90,4 +90,8 @@ public class DataSetInfo {
     }
     return str;
   }
+
+  public void setFile(final Path file) {
+    this.file = file;
+  }
 }

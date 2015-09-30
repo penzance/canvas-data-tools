@@ -8,6 +8,7 @@ import org.kohsuke.args4j.Argument;
 import edu.harvard.canvas_data.cli.Command;
 import edu.harvard.canvas_data.parser.Configuration;
 import edu.harvard.data.client.DataConfigurationException;
+import edu.harvard.data.client.DataSetInfo;
 import edu.harvard.data.client.DataSetReader;
 import edu.harvard.data.client.FileDataSetReader;
 import edu.harvard.data.client.FormatLibrary;
@@ -30,7 +31,9 @@ public class CalculateDataSetInfoCommand implements Command {
     final FormatLibrary formats = new FormatLibrary();
     final TableFormat tableFormat = formats.getFormat(Format.fromLabel(format));
     try (DataSetReader in = new FileDataSetReader(input.toPath(), tableFormat, factory)) {
-      in.generateDataSetInfo().write();
+      final DataSetInfo dataSetInfo = in.generateDataSetInfo();
+      dataSetInfo.setFile(DataSetInfo.getFileName(input.toPath()));
+      dataSetInfo.write();
     }
   }
 
