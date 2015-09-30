@@ -12,6 +12,7 @@ import edu.harvard.data.client.FileDataSetWriter;
 import edu.harvard.data.client.FormatLibrary;
 import edu.harvard.data.client.TableFactory;
 import edu.harvard.data.client.TableFormat;
+import edu.harvard.data.client.TableWriter;
 import edu.harvard.data.client.canvas.tables.CanvasTableFactory;
 import edu.harvard.data.client.canvas.tables.CourseDim;
 import edu.harvard.data.client.canvas.tables.Requests;
@@ -37,6 +38,7 @@ public class DataPartitioner {
   }
 
   public void splitRequestsByDay() throws IOException {
+    final DataSetWriter nonMatching = getWriter("date_unknown");
     final SplitCriteria splitter = new SplitCriteria() {
       @Override
       public final String getKey(final Requests r) {
@@ -46,11 +48,12 @@ public class DataPartitioner {
         return FormatLibrary.CANVAS_DATE_FORMAT.format(r.getTimestamp());
       }
     };
-    splitRequests(splitter);
+    splitRequests(splitter, nonMatching);
   }
 
   public void splitRequestsByCourse() throws IOException {
     populateCourses();
+    final DataSetWriter nonMatching = getWriter("non_course");
     final SplitCriteria splitter = new SplitCriteria() {
       @Override
       public final String getKey(final Requests r) {
@@ -68,19 +71,22 @@ public class DataPartitioner {
         return courseKey;
       }
     };
-    splitRequests(splitter);
+    splitRequests(splitter, nonMatching);
     System.out.println("Missing course IDs:");
     for (final Long missingId : missingIds.keySet()) {
       System.out.println("  " + missingId + ": " + missingIds.get(missingId));
     }
   }
 
-  private void splitRequests(final SplitCriteria splitter) throws IOException {
+  private void splitRequests(final SplitCriteria splitter, final DataSetWriter nonMatching) throws IOException {
+    final TableWriter<Requests> nonMatchingTable = nonMatching.getTable("requests", Requests.class);
     createOutputDirectory();
     try {
       for (final Requests r : in.getTable("requests", Requests.class)) {
         final String key = splitter.getKey(r);
-        if (key != null) {
+        if (key == null) {
+          nonMatchingTable.add(r);
+        } else {
           final DataSetWriter writer = getWriter(key);
           writer.getTable("requests", Requests.class).add(r);
         }
