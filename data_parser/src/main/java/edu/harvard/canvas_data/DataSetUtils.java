@@ -119,7 +119,7 @@ public class DataSetUtils {
         if (artifact != null) {
           for (final CanvasDataFile file : artifact.getFiles()) {
             final Path dumpFile = dir.resolve(table.getSourceName()).resolve(file.getFilename());
-            partialReaders.add(0, new DelimitedTableReader(table.getTableClass(), format, dumpFile));
+            partialReaders.add(0, new DelimitedTableReader(table.getTableClass(), format, dumpFile, table.getSourceName()));
           }
           if (!artifact.isPartial()) {
             break;
@@ -127,7 +127,7 @@ public class DataSetUtils {
         }
       }
     }
-    return new CombinedTableReader(partialReaders, table.getTableClass());
+    return new CombinedTableReader(partialReaders, table.getTableClass(), table.getSourceName());
   }
 
   private List<Path> getDumpsForLatestTable(final CanvasTable table, final Path archiveDir) throws IOException {
