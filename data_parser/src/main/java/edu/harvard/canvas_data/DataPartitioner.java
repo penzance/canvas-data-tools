@@ -27,7 +27,7 @@ public class DataPartitioner {
   private final TableFactory factory;
   private final Map<Long, Integer> missingIds;
 
-  public DataPartitioner(final DataSetReader in, final Path outputDir) {
+  public DataPartitioner(final DataSetReader in, final Path outputDir) throws IOException {
     this.in = in;
     this.outputDir = outputDir;
     this.factory = new CanvasTableFactory();
@@ -35,6 +35,7 @@ public class DataPartitioner {
     this.writers = new HashMap<String, DataSetWriter>();
     this.courses = new HashMap<Long, String>();
     this.missingIds = new HashMap<Long, Integer>();
+    createOutputDirectory();
   }
 
   public void splitRequestsByDay() throws IOException {
@@ -80,7 +81,6 @@ public class DataPartitioner {
 
   private void splitRequests(final SplitCriteria splitter, final DataSetWriter nonMatching) throws IOException {
     final TableWriter<Requests> nonMatchingTable = nonMatching.getTable("requests", Requests.class);
-    createOutputDirectory();
     try {
       for (final Requests r : in.getTable("requests", Requests.class)) {
         final String key = splitter.getKey(r);
