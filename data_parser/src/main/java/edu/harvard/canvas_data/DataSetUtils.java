@@ -130,15 +130,54 @@ public class DataSetUtils {
     return new CombinedTableReader(partialReaders, table.getTableClass());
   }
 
+  private List<Path> getDumpsForLatestTable(final CanvasTable table, final Path archiveDir) throws IOException {
+    final List<Path> partialDumps = new ArrayList<Path>();
+    final Map<Integer, Path> dumps = new HashMap<Integer, Path>();
+    //    final TableFormat format = new FormatLibrary().getFormat(Format.CanvasDataFlatFiles);
+    for (final Path dir : Files.newDirectoryStream(archiveDir)) {
+      if (!Files.isDirectory(dir)) {
+        continue;
+      }
+      try {
+        final int dumpId = Integer.parseInt(dir.getFileName().toString());
+        dumps.put(dumpId, dir);
+      } catch (final NumberFormatException e) {
+        continue;
+      }
+    }
+    final List<Integer> dumpIds = new ArrayList<Integer>(dumps.keySet());
+    Collections.sort(dumpIds);
+    Collections.reverse(dumpIds);
+
+    for (final int dumpId : dumpIds) {
+      final Path dir = dumps.get(dumpId);
+      final Path dumpInfoFile = DumpInformation.getFile(dir);
+      if (Files.exists(dumpInfoFile)){
+        final DumpInformation info = DumpInformation.read(dumpInfoFile);
+        final CanvasDataArtifact artifact = info.getDump().getArtifactsByTable().get(table.getSourceName());
+        if (artifact != null){
+          partialDumps.add(dir);
+          if (!artifact.isPartial()) {
+            break;
+          }
+        }
+      }
+    }
+    return partialDumps;
+  }
+
   public DataSetInfo getLatestDataSetInfo(final Configuration config) throws IOException {
-    final DataSetReader reader = getLatestDataSet(config.getCanvasDataArchiveDirectory());
     final DataSetInfo info = new DataSetInfo();
-    final Map<String, TableReader<? extends DataTable>> tables = reader.getTables();
-    for (final String tableName : tables.keySet()) {
-      final TableReader<? extends DataTable> table = tables.get(tableName);
-      final DataSetInfoTable tableInfo = new DataSetInfoTable(tableName);
-      tableInfo.addFileInfo(new DataSetInfoFile(tableName + "-latest", table.size()));
-      info.addTable(tableName, tableInfo);
+    for (final CanvasTable table : CanvasTable.values()) {
+      final List<Path> dumps = getDumpsForLatestTable(table, config.getCanvasDataArchiveDirectory());
+      final DataSetInfoTable tableInfo = new DataSetInfoTable(table.getSourceName());
+      info.addTable(table.getSourceName(), tableInfo);
+      for (final Path dump : dumps) {
+        final DataSetInfo dumpInfo = DataSetInfo.read(DataSetInfo.getFileName(dump));
+        for (final DataSetInfoFile fileInfo : dumpInfo.getTable(table.getSourceName()).getFileInfo()) {
+          tableInfo.addFileInfo(fileInfo);
+        }
+      }
     }
     return info;
   }
