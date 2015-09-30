@@ -63,7 +63,7 @@ public class FormatLibrary {
       .appendFraction(ChronoField.MICRO_OF_SECOND, 1, 6, true).optionalEnd().toFormatter()
       .withZone(ZoneOffset.ofHours(0));
 
-  private static DateTimeFormatter CANVAS_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+  public static DateTimeFormatter CANVAS_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
   private static final CSVFormat CANVAS_CSV_FORMAT = CSVFormat.TDF.withQuote(null)
       .withNullString("\\N").withRecordSeparator("\n").withIgnoreSurroundingSpaces(false);

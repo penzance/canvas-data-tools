@@ -1,19 +1,24 @@
-package edu.harvard.canvas_data.parser;
+package edu.harvard.canvas_data;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.harvard.canvas_data.parser.Configuration;
+import edu.harvard.canvas_data.parser.DumpInformation;
 import edu.harvard.data.client.CombinedDataSetReader;
 import edu.harvard.data.client.CombinedTableReader;
+import edu.harvard.data.client.DataSetInfo;
 import edu.harvard.data.client.DataSetReader;
 import edu.harvard.data.client.DataTable;
 import edu.harvard.data.client.DelimitedTableReader;
+import edu.harvard.data.client.FileDataSetReader;
 import edu.harvard.data.client.FormatLibrary;
 import edu.harvard.data.client.FormatLibrary.Format;
 import edu.harvard.data.client.TableFormat;
@@ -21,10 +26,58 @@ import edu.harvard.data.client.TableReader;
 import edu.harvard.data.client.canvas.api.CanvasDataArtifact;
 import edu.harvard.data.client.canvas.api.CanvasDataFile;
 import edu.harvard.data.client.canvas.tables.CanvasTable;
+import edu.harvard.data.client.canvas.tables.CanvasTableFactory;
 
-public class VirtualDataSets {
+public class DataSetUtils {
 
-  public static DataSetReader getLatestDataSet(final Path archiveDir) throws IOException {
+  private final CanvasTableFactory factory;
+  private final FormatLibrary formats;
+  private final Configuration config;
+
+  public DataSetUtils(final Configuration config) {
+    this.factory = new CanvasTableFactory();
+    this.formats = new FormatLibrary();
+    this.config = config;
+  }
+
+  public Format getFormatFromString(final String format, final Format defaultFormat) {
+    Format outputFormat;
+    if (format != null) {
+      try {
+        outputFormat = Format.fromLabel(format);
+      } catch(final IllegalArgumentException e) {
+        String err = "Format " + format + " not found. Possible formats are:\n";
+        for (final Format f : Format.values()) {
+          err += "  " + f.getLabel() + "\n";
+        }
+        throw new RuntimeException(err);
+      }
+    } else {
+      outputFormat = defaultFormat;
+    }
+    return outputFormat;
+  }
+
+  public DataSetReader getReaderFromString(final String input) throws IOException {
+    DataSetReader in;
+    final TableFormat inputFormat;
+    if (input.equals("LATEST")) {
+      in = getLatestDataSet(config.getCanvasDataArchiveDirectory());
+      inputFormat = formats.getFormat(Format.CanvasDataFlatFiles);
+    } else {
+      final Path inputPath = Paths.get(input);
+      if (!Files.exists(inputPath) || !Files.isDirectory(inputPath)
+          || !Files.exists(DataSetInfo.getFileName(inputPath))) {
+        throw new RuntimeException("Input directory " + input + " is not a well-formed data set");
+      }
+      final DataSetInfo inputInfo = DataSetInfo.read(DataSetInfo.getFileName(inputPath));
+      inputFormat = formats.getFormat(inputInfo.getFormat());
+      in = new FileDataSetReader(inputPath, inputFormat, factory);
+    }
+    return in;
+  }
+
+  public DataSetReader getLatestDataSet(final Path archiveDir) throws IOException {
     final Map<Integer, Path> dumps = new HashMap<Integer, Path>();
     final TableFormat format = new FormatLibrary().getFormat(Format.CanvasDataFlatFiles);
     for (final Path dir : Files.newDirectoryStream(archiveDir)) {
@@ -46,11 +99,11 @@ public class VirtualDataSets {
     for (final CanvasTable table : CanvasTable.values()) {
       tables.put(table.getSourceName(), getTableReader(table, dumpIds, dumps, format));
     }
-    return new CombinedDataSetReader(tables);
+    return new CombinedDataSetReader(tables, format);
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  private static TableReader<? extends DataTable> getTableReader(final CanvasTable table,
+  private TableReader<? extends DataTable> getTableReader(final CanvasTable table,
       final List<Integer> dumpIds, final Map<Integer, Path> dumps, final TableFormat format)
           throws IOException {
     final ArrayList<TableReader<? extends DataTable>> partialReaders = new ArrayList<TableReader<? extends DataTable>>();
@@ -74,4 +127,5 @@ public class VirtualDataSets {
     }
     return new CombinedTableReader(partialReaders, table.getTableClass());
   }
+
 }

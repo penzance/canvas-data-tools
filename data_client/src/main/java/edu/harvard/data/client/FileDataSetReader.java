@@ -11,11 +11,13 @@ import java.util.Map;
 
 public class FileDataSetReader implements DataSetReader {
   private final Map<String, TableReader<? extends DataTable>> readers;
+  private final TableFormat format;
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public FileDataSetReader(final Path directory, final TableFormat format,
       final TableFactory factory) throws IOException {
     this.readers = new HashMap<String, TableReader<? extends DataTable>>();
+    this.format = format;
     if (!Files.exists(directory) || !Files.isDirectory(directory)) {
       throw new FileNotFoundException(directory.toString());
     }
@@ -57,5 +59,10 @@ public class FileDataSetReader implements DataSetReader {
   @Override
   public <T extends DataTable> TableReader<T> getTable(final String tableName, final Class<T> tableClass) {
     return (TableReader<T>) readers.get(tableName);
+  }
+
+  @Override
+  public TableFormat getFormat() {
+    return format;
   }
 }

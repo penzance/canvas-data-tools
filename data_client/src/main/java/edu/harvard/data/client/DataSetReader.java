@@ -9,4 +9,6 @@ public interface DataSetReader extends Closeable {
 
   <T extends DataTable> TableReader<T> getTable(String tableName, Class<T> tableClass);
 
+  TableFormat getFormat();
+
 }

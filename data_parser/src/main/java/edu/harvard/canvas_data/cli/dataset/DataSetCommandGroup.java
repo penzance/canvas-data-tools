@@ -18,6 +18,7 @@ public class DataSetCommandGroup implements Command {
     @SubCommand(name="info", impl=DataSetInfoCommand.class),
     @SubCommand(name="verify", impl=VerifyDataSetCommand.class),
     @SubCommand(name="copy", impl=CopyDataSetCommand.class),
+    @SubCommand(name="split", impl=SplitRequestsCommand.class),
   })
   public Command cmd;
 
