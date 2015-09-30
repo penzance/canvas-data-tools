@@ -24,6 +24,7 @@ public class DataPartitioner {
   private final Map<String, DataSetWriter> writers;
   private final Map<Long, String> courses;
   private final TableFactory factory;
+  private final Map<Long, Integer> missingIds;
 
   public DataPartitioner(final DataSetReader in, final Path outputDir) {
     this.in = in;
@@ -32,6 +33,7 @@ public class DataPartitioner {
     this.format = in.getFormat();
     this.writers = new HashMap<String, DataSetWriter>();
     this.courses = new HashMap<Long, String>();
+    this.missingIds = new HashMap<Long, Integer>();
   }
 
   public void splitRequestsByDay() throws IOException {
@@ -53,17 +55,24 @@ public class DataPartitioner {
       @Override
       public final String getKey(final Requests r) {
         final Long courseId = r.getCourseId();
-        if (!isValidCourseId(courseId)) {
-          return null;
-        }
+        //        if (!isValidCourseId(courseId)) {
+        //          return null;
+        //        }
         final String courseKey = courses.get(courseId);
         if (courseKey == null) {
-          throw new NullPointerException("Course ID " + courseId + " not found in course_dim table");
+          if (!missingIds.containsKey(courseId)) {
+            missingIds.put(courseId, 0);
+          }
+          missingIds.put(courseId, missingIds.get(courseId) + 1);
         }
         return courseKey;
       }
     };
     splitRequests(splitter);
+    System.out.println("Missing course IDs:");
+    for (final Long missingId : missingIds.keySet()) {
+      System.out.println("  " + missingId + ": " + missingIds.get(missingId));
+    }
   }
 
   private void splitRequests(final SplitCriteria splitter) throws IOException {
