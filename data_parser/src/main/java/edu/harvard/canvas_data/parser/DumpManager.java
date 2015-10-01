@@ -89,7 +89,7 @@ public class DumpManager {
         final CanvasDataDump refreshedDump = api.getDump(dump.getDumpId());
         for (final CanvasDataFile f : refreshedDump.getArtifactsByTable().get(table).getFiles()) {
           if (f.getFilename().equals(file.getFilename())) {
-            final String filename = artifact.getTableName() + String.format("%05d", fileIndex++);
+            final String filename = artifact.getTableName() + "-" + String.format("%05d", fileIndex++) + ".gz";
             final DataSetInfoFile fileInfo = f.download(tableDir.resolve(filename));
             tableInfo.addFileInfo(fileInfo);
           }
