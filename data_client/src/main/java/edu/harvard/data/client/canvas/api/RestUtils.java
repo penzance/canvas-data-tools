@@ -111,7 +111,7 @@ public class RestUtils {
           entity.writeTo(out);
         }
         return;
-      } catch (final javax.net.ssl.SSLException e) {
+      } catch (final java.io.IOException e) {
         retries++;
       }
     }
