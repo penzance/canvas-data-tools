@@ -79,6 +79,7 @@ public class DumpManager {
     final Map<String, CanvasDataArtifact> artifactsByTable = dump.getArtifactsByTable();
     final List<String> tables = new ArrayList<String>(artifactsByTable.keySet());
     for (final String table : tables) {
+      int fileIndex = 0;
       final Path tableDir = directory.resolve(table);
       final CanvasDataArtifact artifact = artifactsByTable.get(table);
       System.out.println("Dumping " + table + " to " + tableDir);
@@ -88,7 +89,8 @@ public class DumpManager {
         final CanvasDataDump refreshedDump = api.getDump(dump.getDumpId());
         for (final CanvasDataFile f : refreshedDump.getArtifactsByTable().get(table).getFiles()) {
           if (f.getFilename().equals(file.getFilename())) {
-            final DataSetInfoFile fileInfo = f.download(tableDir.resolve(f.getFilename()));
+            final String filename = artifact.getTableName() + String.format("%05d", fileIndex++);
+            final DataSetInfoFile fileInfo = f.download(tableDir.resolve(filename));
             tableInfo.addFileInfo(fileInfo);
           }
         }
