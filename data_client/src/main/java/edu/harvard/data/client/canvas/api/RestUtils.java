@@ -102,7 +102,7 @@ public class RestUtils {
     Files.createDirectories(dest.getParent());
     final HttpGet get = new HttpGet(url);
     int retries = 10;
-    while (retries-- > 0) {
+    while (true) {
       try (final CloseableHttpClient httpClient = HttpClients.createDefault();
           final CloseableHttpResponse response = httpClient.execute(get);
           final FileOutputStream out = new FileOutputStream(dest.toString());) {
@@ -112,7 +112,9 @@ public class RestUtils {
         }
         return;
       } catch (final java.io.IOException e) {
-        retries++;
+        if (--retries < 0) {
+          throw e;
+        }
       }
     }
   }
