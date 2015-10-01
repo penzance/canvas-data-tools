@@ -110,6 +110,9 @@ public class RestUtils {
         if (entity != null) {
           entity.writeTo(out);
         }
+        return;
+      } catch (final javax.net.ssl.SSLException e) {
+        retries++;
       }
     }
   }

@@ -37,7 +37,7 @@ public class CopyDataSetCommand implements Command {
     final DataSetReader in = utils.getReaderFromString(input);
     final Format outputFormat = utils.getFormatFromString(format, in.getFormat().getFormat());
     try {
-      if (!output.exists()) {
+      if (output.exists()) {
         throw new RuntimeException("Output directory " + output + " already exists");
       }
       try (final DataSetWriter out = new FileDataSetWriter(output.toPath(),
