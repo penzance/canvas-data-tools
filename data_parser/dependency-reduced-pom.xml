@@ -27,7 +27,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>edu.harvard.canvas_data.cli.DataParser</mainClass>
+                  <mainClass>edu.harvard.canvas_data.cli.CanvasDataCli</mainClass>
                 </transformer>
               </transformers>
             </configuration>

@@ -64,7 +64,7 @@ public class ArchiveDumpCommand implements Command {
   }
 
   CanvasDataDump getDumpForSequence(final CanvasApiClient api)
-      throws DataConfigurationException, UnexpectedApiResponseException {
+      throws DataConfigurationException, UnexpectedApiResponseException, IOException {
     for (final CanvasDataDump d : api.getDumps()) {
       if (("" + d.getSequence()).equals(seq)) {
         return api.getDump(d.getDumpId());

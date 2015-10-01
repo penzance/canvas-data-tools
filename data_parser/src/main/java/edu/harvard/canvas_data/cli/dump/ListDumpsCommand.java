@@ -1,5 +1,7 @@
 package edu.harvard.canvas_data.cli.dump;
 
+import java.io.IOException;
+
 import edu.harvard.canvas_data.cli.Command;
 import edu.harvard.canvas_data.parser.Configuration;
 import edu.harvard.data.client.DataClient;
@@ -11,7 +13,7 @@ import edu.harvard.data.client.canvas.api.UnexpectedApiResponseException;
 public class ListDumpsCommand implements Command {
 
   @Override
-  public void execute(final Configuration config) throws DataConfigurationException {
+  public void execute(final Configuration config) throws DataConfigurationException, IOException {
     try {
       final CanvasApiClient api = new DataClient().getCanvasApiClient(config.getCanvasDataHost(),
           config.getCanvasApiKey(), config.getCanvasApiSecret());

@@ -1,5 +1,7 @@
 package edu.harvard.canvas_data.cli.dump;
 
+import java.io.IOException;
+
 import org.kohsuke.args4j.Argument;
 
 import edu.harvard.canvas_data.cli.Command;
@@ -17,7 +19,7 @@ public class TableHistoryCommand implements Command {
   private String table;
 
   @Override
-  public void execute(final Configuration config) throws DataConfigurationException {
+  public void execute(final Configuration config) throws DataConfigurationException, IOException {
     try {
       final CanvasApiClient api = new DataClient().getCanvasApiClient(config.getCanvasDataHost(),
           config.getCanvasApiKey(), config.getCanvasApiSecret());

@@ -98,10 +98,6 @@ public class DataPartitioner {
     }
   }
 
-  private boolean isValidCourseId(final Long courseId) {
-    return courseId != null && courseId != 18749999999999999L && courseId != 18750000000000000L;
-  }
-
   private void populateCourses() {
     for (final CourseDim course : in.getTable("course_dim", CourseDim.class)) {
       courses.put(course.getId(), course.getId() + "-" + course.getName());

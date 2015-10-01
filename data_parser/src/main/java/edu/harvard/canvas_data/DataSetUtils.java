@@ -13,20 +13,17 @@ import java.util.Map;
 import edu.harvard.canvas_data.parser.Configuration;
 import edu.harvard.canvas_data.parser.DumpInformation;
 import edu.harvard.data.client.CombinedDataSetReader;
-import edu.harvard.data.client.CombinedTableReader;
 import edu.harvard.data.client.DataSetInfo;
 import edu.harvard.data.client.DataSetInfoFile;
 import edu.harvard.data.client.DataSetInfoTable;
 import edu.harvard.data.client.DataSetReader;
 import edu.harvard.data.client.DataTable;
-import edu.harvard.data.client.DelimitedTableReader;
 import edu.harvard.data.client.FileDataSetReader;
 import edu.harvard.data.client.FormatLibrary;
 import edu.harvard.data.client.FormatLibrary.Format;
 import edu.harvard.data.client.TableFormat;
 import edu.harvard.data.client.TableReader;
 import edu.harvard.data.client.canvas.api.CanvasDataArtifact;
-import edu.harvard.data.client.canvas.api.CanvasDataFile;
 import edu.harvard.data.client.canvas.tables.CanvasTable;
 import edu.harvard.data.client.canvas.tables.CanvasTableFactory;
 
@@ -79,61 +76,23 @@ public class DataSetUtils {
     return in;
   }
 
+  @SuppressWarnings("resource")
   public DataSetReader getLatestDataSet(final Path archiveDir) throws IOException {
-    final Map<Integer, Path> dumps = new HashMap<Integer, Path>();
-    final TableFormat format = new FormatLibrary().getFormat(Format.CanvasDataFlatFiles);
-    for (final Path dir : Files.newDirectoryStream(archiveDir)) {
-      if (!Files.isDirectory(dir)) {
-        continue;
-      }
-      try {
-        final int dumpId = Integer.parseInt(dir.getFileName().toString());
-        dumps.put(dumpId, dir);
-      } catch (final NumberFormatException e) {
-        continue;
-      }
-    }
-    final List<Integer> dumpIds = new ArrayList<Integer>(dumps.keySet());
-    Collections.sort(dumpIds);
-    Collections.reverse(dumpIds);
-
     final Map<String, TableReader<? extends DataTable>> tables = new HashMap<String, TableReader<? extends DataTable>>();
+    final TableFormat format = new FormatLibrary().getFormat(Format.CanvasDataFlatFiles);
     for (final CanvasTable table : CanvasTable.values()) {
-      tables.put(table.getSourceName(), getTableReader(table, dumpIds, dumps, format));
+      for (final Path dumpDir : getDumpsForLatestTable(table, archiveDir)) {
+        final String tableName = table.getSourceName();
+        final Class<? extends DataTable> tableClass = table.getTableClass();
+        tables.put(tableName, new FileDataSetReader(dumpDir, format, factory).getTable(tableName, tableClass));
+      }
     }
     return new CombinedDataSetReader(tables, format);
-  }
-
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  private TableReader<? extends DataTable> getTableReader(final CanvasTable table,
-      final List<Integer> dumpIds, final Map<Integer, Path> dumps, final TableFormat format)
-          throws IOException {
-    final ArrayList<TableReader<? extends DataTable>> partialReaders = new ArrayList<TableReader<? extends DataTable>>();
-    for (final int dumpId : dumpIds) {
-      final Path dir = dumps.get(dumpId);
-      final Path dumpInfoFile = DumpInformation.getFile(dir);
-      if (Files.exists(dumpInfoFile)){
-        final DumpInformation info = DumpInformation.read(dumpInfoFile);
-        final CanvasDataArtifact artifact = info.getDump().getArtifactsByTable()
-            .get(table.getSourceName());
-        if (artifact != null) {
-          for (final CanvasDataFile file : artifact.getFiles()) {
-            final Path dumpFile = dir.resolve(table.getSourceName()).resolve(file.getFilename());
-            partialReaders.add(0, new DelimitedTableReader(table.getTableClass(), format, dumpFile, table.getSourceName()));
-          }
-          if (!artifact.isPartial()) {
-            break;
-          }
-        }
-      }
-    }
-    return new CombinedTableReader(partialReaders, table.getTableClass(), table.getSourceName());
   }
 
   private List<Path> getDumpsForLatestTable(final CanvasTable table, final Path archiveDir) throws IOException {
     final List<Path> partialDumps = new ArrayList<Path>();
     final Map<Integer, Path> dumps = new HashMap<Integer, Path>();
-    //    final TableFormat format = new FormatLibrary().getFormat(Format.CanvasDataFlatFiles);
     for (final Path dir : Files.newDirectoryStream(archiveDir)) {
       if (!Files.isDirectory(dir)) {
         continue;

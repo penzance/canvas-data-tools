@@ -59,7 +59,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>edu.harvard.canvas_data.cli.DataParser</mainClass>
+									<mainClass>edu.harvard.canvas_data.cli.CanvasDataCli</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
