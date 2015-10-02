@@ -85,15 +85,18 @@ public class DumpManager {
       System.out.println("Dumping " + table + " to " + tableDir);
       final DataSetInfoTable tableInfo = new DataSetInfoTable(table);
       dataSetInfo.addTable(artifact.getTableName(), tableInfo);
-      for (final CanvasDataFile file : artifact.getFiles()) {
+      final List<CanvasDataFile> files = artifact.getFiles();
+      for (int i=0; i<files.size(); i++) {
+        final CanvasDataFile file = files.get(i);
         final CanvasDataDump refreshedDump = api.getDump(dump.getDumpId());
-        for (final CanvasDataFile f : refreshedDump.getArtifactsByTable().get(table).getFiles()) {
-          if (f.getFilename().equals(file.getFilename())) {
-            final String filename = artifact.getTableName() + "-" + String.format("%05d", fileIndex++) + ".gz";
-            final DataSetInfoFile fileInfo = f.download(tableDir.resolve(filename));
-            tableInfo.addFileInfo(fileInfo);
-          }
+        final CanvasDataArtifact refreshedArtifact = refreshedDump.getArtifactsByTable().get(table);
+        final CanvasDataFile refreshedFile = refreshedArtifact.getFiles().get(i);
+        if (!refreshedFile.getFilename().equals(file.getFilename())) {
+          System.err.println("Mismatch in file name for refreshed dump");
         }
+        final String filename = artifact.getTableName() + "-" + String.format("%05d", fileIndex++) + ".gz";
+        final DataSetInfoFile fileInfo = refreshedFile.download(tableDir.resolve(filename));
+        tableInfo.addFileInfo(fileInfo);
       }
     }
     final Path dumpInfoFile = DumpInformation.getFile(getScratchDumpDir(dump));
