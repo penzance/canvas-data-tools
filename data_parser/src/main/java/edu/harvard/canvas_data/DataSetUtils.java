@@ -1,6 +1,7 @@
 package edu.harvard.canvas_data;
 
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -93,15 +94,17 @@ public class DataSetUtils {
   private List<Path> getDumpsForLatestTable(final CanvasTable table, final Path archiveDir) throws IOException {
     final List<Path> partialDumps = new ArrayList<Path>();
     final Map<Integer, Path> dumps = new HashMap<Integer, Path>();
-    for (final Path dir : Files.newDirectoryStream(archiveDir)) {
-      if (!Files.isDirectory(dir)) {
-        continue;
-      }
-      try {
-        final int dumpId = Integer.parseInt(dir.getFileName().toString());
-        dumps.put(dumpId, dir);
-      } catch (final NumberFormatException e) {
-        continue;
+    try (DirectoryStream<Path> listing = Files.newDirectoryStream(archiveDir)) {
+      for (final Path dir : listing) {
+        if (!Files.isDirectory(dir)) {
+          continue;
+        }
+        try {
+          final int dumpId = Integer.parseInt(dir.getFileName().toString());
+          dumps.put(dumpId, dir);
+        } catch (final NumberFormatException e) {
+          continue;
+        }
       }
     }
     final List<Integer> dumpIds = new ArrayList<Integer>(dumps.keySet());

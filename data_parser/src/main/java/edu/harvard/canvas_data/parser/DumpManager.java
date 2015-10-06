@@ -1,6 +1,7 @@
 package edu.harvard.canvas_data.parser;
 
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.PosixFilePermission;
@@ -114,10 +115,14 @@ public class DumpManager {
     readOnly.add(PosixFilePermission.OWNER_READ);
     readOnly.add(PosixFilePermission.GROUP_READ);
     readOnly.add(PosixFilePermission.OTHERS_READ);
-    for (final Path table : Files.newDirectoryStream(fromDir)) {
-      if (Files.isDirectory(table)) {
-        for (final Path dumpFile : Files.newDirectoryStream(table)) {
-          Files.setPosixFilePermissions(dumpFile, readOnly);
+    try (DirectoryStream<Path> listing = Files.newDirectoryStream(fromDir)) {
+      for (final Path table : listing) {
+        if (Files.isDirectory(table)) {
+          try (DirectoryStream<Path> tableListing = Files.newDirectoryStream(table)) {
+            for (final Path dumpFile : Files.newDirectoryStream(table)) {
+              Files.setPosixFilePermissions(dumpFile, readOnly);
+            }
+          }
         }
       }
     }

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -37,16 +38,18 @@ public class VerificationUtils {
     for (final Path dir : d1) {
       final Path tableDir = dir.resolve(table);
       if (Files.exists(tableDir) && Files.isDirectory(tableDir)) {
-        for (final Path file : Files.newDirectoryStream(tableDir)) {
-          try (BufferedReader in = getReaderForFile(file)) {
-            String line = in.readLine();
-            while (line != null) {
-              if (d1LineMap.containsKey(line)) {
-                d1LineMap.put(line, d1LineMap.get(line) + 1);
-              } else {
-                d1LineMap.put(line, 1);
+        try (DirectoryStream<Path> listing = Files.newDirectoryStream(tableDir)) {
+          for (final Path file : listing) {
+            try (BufferedReader in = getReaderForFile(file)) {
+              String line = in.readLine();
+              while (line != null) {
+                if (d1LineMap.containsKey(line)) {
+                  d1LineMap.put(line, d1LineMap.get(line) + 1);
+                } else {
+                  d1LineMap.put(line, 1);
+                }
+                line = in.readLine();
               }
-              line = in.readLine();
             }
           }
         }
@@ -55,19 +58,21 @@ public class VerificationUtils {
     for (final Path dir : d2) {
       final Path tableDir = dir.resolve(table);
       if (Files.exists(tableDir) && Files.isDirectory(tableDir)) {
-        for (final Path file : Files.newDirectoryStream(tableDir)) {
-          try (BufferedReader in = getReaderForFile(file)) {
-            String line = in.readLine();
-            while (line != null) {
-              if (!d1LineMap.containsKey(line)) {
-                comparison.addDump2UniqueLine(table, line);
+        try (DirectoryStream<Path> listing = Files.newDirectoryStream(tableDir)) {
+          for (final Path file : listing) {
+            try (BufferedReader in = getReaderForFile(file)) {
+              String line = in.readLine();
+              while (line != null) {
+                if (!d1LineMap.containsKey(line)) {
+                  comparison.addDump2UniqueLine(table, line);
+                }
+                if (d1LineMap.get(line) == 1) {
+                  d1LineMap.remove(line);
+                } else {
+                  d1LineMap.put(line, d1LineMap.get(line) - 1);
+                }
+                line = in.readLine();
               }
-              if (d1LineMap.get(line) == 1) {
-                d1LineMap.remove(line);
-              } else {
-                d1LineMap.put(line, d1LineMap.get(line) - 1);
-              }
-              line = in.readLine();
             }
           }
         }
@@ -84,9 +89,11 @@ public class VerificationUtils {
   private static Set<String> getTables(final List<Path> d1) throws IOException {
     final Set<String> tables = new HashSet<String>();
     for (final Path dir : d1) {
-      for (final Path table : Files.newDirectoryStream(dir)) {
-        if (Files.isDirectory(table)) {
-          tables.add(table.getFileName().toString());
+      try (DirectoryStream<Path> listing = Files.newDirectoryStream(dir)) {
+        for (final Path table : listing) {
+          if (Files.isDirectory(table)) {
+            tables.add(table.getFileName().toString());
+          }
         }
       }
     }
