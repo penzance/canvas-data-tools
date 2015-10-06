@@ -9,6 +9,8 @@ public interface TableWriter<T extends DataTable> extends Closeable {
 
   DataSetInfoTable getTableInfo();
 
-  String getName();
+  String getTableName();
+
+  void flush() throws IOException;
 
 }

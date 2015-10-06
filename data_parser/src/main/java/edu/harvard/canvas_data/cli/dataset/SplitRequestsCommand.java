@@ -24,33 +24,22 @@ public class SplitRequestsCommand implements Command {
       metaVar = "/path/to/directory", required = true)
   private File output;
 
-  @Option(name = "-a", usage = "Axis to split the data set. Defaults to class.",
-      metaVar = "class|day")
-  private String axis;
-
   @Option(name = "-f", usage = "Format for the new data set", metaVar = "format")
   private String format;
 
+  @Option(name = "-nobots", usage = "Strip out automated user agents, including TLT tools or the Googlebot")
+  private Boolean nobots;
+
   @Override
   public void execute(final Configuration config) throws DataConfigurationException, IOException {
+    if (nobots == null) {
+      nobots = false;
+    }
     final DataSetUtils utils = new DataSetUtils(config);
     final DataSetReader in = utils.getReaderFromString(input);
-    if (axis == null) {
-      axis = "class";
-    }
     try {
       final DataPartitioner partitioner = new DataPartitioner(in, output.toPath());
-
-      switch(axis) {
-      case "day":
-        partitioner.splitRequestsByDay();
-        break;
-      case "class":
-        partitioner.splitRequestsByCourse();
-        break;
-      default:
-        throw new RuntimeException("Split axis must be either 'class' or 'day'");
-      }
+      partitioner.splitRequestsByCourseAndDay(nobots);
     } finally {
       in.close();
     }

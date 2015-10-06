@@ -4,15 +4,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import edu.harvard.data.client.DataSetInfo;
+import edu.harvard.data.client.DataSetInfoTable;
 import edu.harvard.data.client.DataSetReader;
 import edu.harvard.data.client.DataSetWriter;
 import edu.harvard.data.client.FileDataSetWriter;
 import edu.harvard.data.client.FormatLibrary;
+import edu.harvard.data.client.NamedFileTableWriter;
 import edu.harvard.data.client.TableFactory;
 import edu.harvard.data.client.TableFormat;
-import edu.harvard.data.client.TableWriter;
 import edu.harvard.data.client.canvas.tables.CanvasTableFactory;
 import edu.harvard.data.client.canvas.tables.CourseDim;
 import edu.harvard.data.client.canvas.tables.Requests;
@@ -27,6 +31,17 @@ public class DataPartitioner {
   private final TableFactory factory;
   private final Map<Long, Integer> missingIds;
 
+  private static final Set<String> BOT_USER_AGENTS;
+  private static final Set<String> BOT_IP_ADDRESSES;
+
+  static {
+    BOT_USER_AGENTS = new HashSet<String>();
+    BOT_USER_AGENTS.add("Googlebot");
+    BOT_IP_ADDRESSES = new HashSet<String>();
+    BOT_IP_ADDRESSES.add("52.1.199.75");
+    BOT_IP_ADDRESSES.add("52.7.0.32");
+  }
+
   public DataPartitioner(final DataSetReader in, final Path outputDir) throws IOException {
     this.in = in;
     this.outputDir = outputDir;
@@ -35,60 +50,41 @@ public class DataPartitioner {
     this.writers = new HashMap<String, DataSetWriter>();
     this.courses = new HashMap<Long, String>();
     this.missingIds = new HashMap<Long, Integer>();
-    createOutputDirectory();
+    Files.createDirectories(outputDir);
   }
 
-  public void splitRequestsByDay() throws IOException {
-    final DataSetWriter nonMatching = getWriter("date_unknown");
-    final SplitCriteria splitter = new SplitCriteria() {
-      @Override
-      public final String getKey(final Requests r) {
-        if (r.getTimestamp() == null) {
-          throw new NullPointerException("Request " + r.getId() + " has no timestamp");
-        }
-        return FormatLibrary.CANVAS_DATE_FORMAT.format(r.getTimestamp());
-      }
-    };
-    splitRequests(splitter, nonMatching);
-  }
-
-  public void splitRequestsByCourse() throws IOException {
+  public void splitRequestsByCourseAndDay(final Boolean nobots) throws IOException {
     populateCourses();
     final DataSetWriter nonMatching = getWriter("non_course");
-    final SplitCriteria splitter = new SplitCriteria() {
-      @Override
-      public final String getKey(final Requests r) {
+    final NamedFileTableWriter<Requests> nonMatchingTable = (NamedFileTableWriter<Requests>) nonMatching
+        .getTable("requests", Requests.class);
+
+    try {
+      long processed = 0;
+      for (final Requests r : in.getTable("requests", Requests.class)) {
+        if (nobots && madeByBot(r)) {
+          continue;
+        }
         final Long courseId = r.getCourseId();
-        //        if (!isValidCourseId(courseId)) {
-        //          return null;
-        //        }
-        final String courseKey = courses.get(courseId);
-        if (courseKey == null) {
+        final String day = FormatLibrary.CANVAS_DATE_FORMAT.format(r.getTimestamp());
+        final String key = courses.get(courseId);
+        if (key == null) {
+          nonMatchingTable.add(r, day);
           if (!missingIds.containsKey(courseId)) {
             missingIds.put(courseId, 0);
           }
           missingIds.put(courseId, missingIds.get(courseId) + 1);
-        }
-        return courseKey;
-      }
-    };
-    splitRequests(splitter, nonMatching);
-    System.out.println("Missing course IDs:");
-    for (final Long missingId : missingIds.keySet()) {
-      System.out.println("  " + missingId + ": " + missingIds.get(missingId));
-    }
-  }
-
-  private void splitRequests(final SplitCriteria splitter, final DataSetWriter nonMatching) throws IOException {
-    final TableWriter<Requests> nonMatchingTable = nonMatching.getTable("requests", Requests.class);
-    try {
-      for (final Requests r : in.getTable("requests", Requests.class)) {
-        final String key = splitter.getKey(r);
-        if (key == null) {
-          nonMatchingTable.add(r);
         } else {
           final DataSetWriter writer = getWriter(key);
-          writer.getTable("requests", Requests.class).add(r);
+          final NamedFileTableWriter<Requests> namedTable = (NamedFileTableWriter<Requests>) writer
+              .getTable("requests", Requests.class);
+          namedTable.add(r, day);
+        }
+        if (++processed % 1000000 == 0) {
+          System.out.println("Flushing");
+          for (final DataSetWriter writer : writers.values()) {
+            writer.flush();
+          }
         }
       }
     } finally {
@@ -96,6 +92,20 @@ public class DataPartitioner {
         writer.close();
       }
     }
+  }
+
+  private boolean madeByBot(final Requests r) {
+    if (BOT_IP_ADDRESSES.contains(r.getRemoteIp())) {
+      return true;
+    }
+    if (r.getUserAgent() != null) {
+      for (final String agent : BOT_USER_AGENTS) {
+        if (r.getUserAgent().contains(agent)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   private void populateCourses() {
@@ -108,20 +118,23 @@ public class DataPartitioner {
     if (writers.containsKey(name)) {
       return writers.get(name);
     }
-    final DataSetWriter out = new FileDataSetWriter(outputDir.resolve(name), format, factory);
+    final Path datasetOutputDir = outputDir.resolve(name);
+    final Path infoFile = DataSetInfo.getFileName(datasetOutputDir);
+    DataSetInfoTable existingFiles = null;
+    if (Files.exists(infoFile)) {
+      final DataSetInfoTable table = DataSetInfo.read(infoFile).getTable("requests");
+      if (table != null) {
+        existingFiles = table;
+      }
+    }
+    if (existingFiles == null) {
+      existingFiles = new DataSetInfoTable("requests");
+    }
+    final DataSetWriter out = new FileDataSetWriter(datasetOutputDir, format, factory);
+    out.setTableWriter("requests", Requests.class, new NamedFileTableWriter<Requests>(
+        Requests.class, format, datasetOutputDir.resolve("requests"), "requests", existingFiles));
     writers.put(name, out);
     return out;
   }
 
-  private void createOutputDirectory() throws IOException {
-    if (Files.exists(outputDir)) {
-      throw new RuntimeException("Output directory " + outputDir + " exists");
-    }
-    Files.createDirectories(outputDir);
-  }
-
-}
-
-interface SplitCriteria {
-  String getKey(Requests r);
 }

@@ -5,11 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DataSetInfoFile {
 
   private final String name;
-  private final long lines;
+  private long lines;
 
   public DataSetInfoFile(@JsonProperty("name") final String name,
       @JsonProperty("lines") final long lines) {
     this.name = name;
+    this.lines = lines;
+  }
+
+  public void setLines(final int lines) {
     this.lines = lines;
   }
 

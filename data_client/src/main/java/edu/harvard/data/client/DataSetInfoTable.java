@@ -40,4 +40,21 @@ public class DataSetInfoTable {
     final String str = "table:" + name + " records:" + size + "\n";
     return str;
   }
+
+  public DataSetInfoFile getFileInfo(final String fileName) {
+    return getFileInfo(fileName, false);
+  }
+
+  public DataSetInfoFile getFileInfo(final String fileName, final boolean ignoreExtension) {
+    for (final DataSetInfoFile file : files) {
+      String f = file.getName();
+      if (ignoreExtension && f.contains(".")) {
+        f = f.substring(0, f.lastIndexOf("."));
+      }
+      if (f.equals(fileName)) {
+        return file;
+      }
+    }
+    return null;
+  }
 }

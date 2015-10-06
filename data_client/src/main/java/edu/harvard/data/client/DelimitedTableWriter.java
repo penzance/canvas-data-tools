@@ -18,30 +18,39 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
   private static final int DEFAULT_BUFFER_SIZE = 512;
   private static final int DEFAULT_MAX_FILE_SIZE = 65536;
   private final TableFormat format;
-  private final List<List<? extends Object>> buffer;
+  private final List<T> buffer;
   private final Path directory;
   private int bufferSize;
   private int maxFileSize;
-  private int currentFileLines;
+  private long currentFileLines;
   private int currentFileIndex;
   private final String tableName;
   private final DataSetInfoTable info;
   private final Class<T> tableType;
+  private String fileName;
+  private boolean splitFile;
 
   public DelimitedTableWriter(final Class<T> tableType, final TableFormat format,
       final Path directory, final String tableName) throws IOException {
+    this(tableType, format, directory, tableName, tableName, true, 0);
+  }
+
+  public DelimitedTableWriter(final Class<T> tableType, final TableFormat format,
+      final Path directory, final String tableName, final String fileName, final boolean splitFile,
+      final long previousFileLines) throws IOException {
     this.format = format;
     this.tableName = tableName;
     this.tableType = tableType;
-    this.buffer = new ArrayList<List<? extends Object>>();
-    this.currentFileLines = 0;
+    this.fileName = fileName;
+    this.splitFile = splitFile;
+    this.buffer = new ArrayList<T>();
+    this.currentFileLines = previousFileLines;
     this.currentFileIndex = 0;
     this.directory = directory;
     this.bufferSize = DEFAULT_BUFFER_SIZE;
     this.maxFileSize = DEFAULT_MAX_FILE_SIZE;
     this.info = new DataSetInfoTable(tableName);
     Files.createDirectories(directory);
-    writeHeaders();
   }
 
   public void setBufferSize(final int size) {
@@ -56,11 +65,10 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
     final StandardOpenOption[] opts = new StandardOpenOption[] { StandardOpenOption.CREATE,
         StandardOpenOption.APPEND };
     Path file;
-    if (currentFileLines + buffer.size() > maxFileSize) {
+    if (splitFile && (currentFileLines + buffer.size() > maxFileSize)) {
       info.addFileInfo(new DataSetInfoFile(getCurrentFileName(), currentFileLines));
       currentFileIndex++;
       currentFileLines = 0;
-      writeHeaders();
     }
     file = directory.resolve(getCurrentFileName());
     switch (format.getCompression()) {
@@ -73,30 +81,32 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
     }
   }
 
-  private void writeHeaders() {
-    if (format.includeHeaders()) {
-      try {
-        @SuppressWarnings("unchecked")
-        final List<String> headers = (List<String>) tableType.getMethod("getFieldNames")
-        .invoke(null);
-        buffer.add(0, headers);
-      } catch (NoSuchMethodException | SecurityException | IllegalAccessException
-          | IllegalArgumentException | InvocationTargetException e) {
-        throw new RuntimeException(e);
-      }
+  @SuppressWarnings("unchecked")
+  private void writeHeaders(final CSVPrinter printer) throws IOException {
+    try {
+      final List<String> headers = (List<String>) tableType.getMethod("getFieldNames").invoke(null);
+      printer.printRecord(headers);
+    } catch (NoSuchMethodException | SecurityException | IllegalAccessException
+        | IllegalArgumentException | InvocationTargetException e) {
+      throw new RuntimeException(e);
     }
   }
 
   private String getCurrentFileName() {
-    return tableName + "-" + String.format("%03d", currentFileIndex) + format.getExtension();
+    final String splitNumber = splitFile ? "-" + String.format("%03d", currentFileIndex) : "";
+    return fileName + splitNumber + format.getExtension();
   }
 
   private void flushBuffer() throws IOException {
+    final boolean newFile = !Files.exists(directory.resolve(getCurrentFileName()));
     try (OutputStream out = getOutputStream();
         final CSVPrinter printer = new CSVPrinter(new OutputStreamWriter(out),
             format.getCsvFormat())) {
-      for (final List<? extends Object> row : buffer) {
-        printer.printRecord(row);
+      if (newFile && format.includeHeaders()) {
+        writeHeaders(printer);
+      }
+      for (final T row : buffer) {
+        printer.printRecord(row.getFieldsAsList(format));
       }
     }
     buffer.clear();
@@ -108,9 +118,10 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
     info.addFileInfo(new DataSetInfoFile(getCurrentFileName(), currentFileLines));
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public void add(final DataTable a) throws IOException {
-    buffer.add(a.getFieldsAsList(format));
+    buffer.add((T) a);
     currentFileLines++;
     if (buffer.size() > bufferSize) {
       flushBuffer();
@@ -118,13 +129,18 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
   }
 
   @Override
-  public String getName() {
+  public String getTableName() {
     return tableName;
   }
 
   @Override
   public DataSetInfoTable getTableInfo() {
     return info;
+  }
+
+  @Override
+  public void flush() throws IOException {
+    flushBuffer();
   }
 
 }
