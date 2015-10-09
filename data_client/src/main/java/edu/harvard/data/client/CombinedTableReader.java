@@ -66,11 +66,13 @@ public class CombinedTableReader<T extends DataTable> implements TableReader<T> 
 
 class CombinedTableIterator<T extends DataTable> implements Iterator<T> {
 
-  Iterator<T> currentIterator;
-  List<Iterator<T>> iteratorQueue;
+  private Iterator<T> currentIterator;
+  private final List<Iterator<T>> iteratorQueue;
+  private final List<TableReader<T>> tables;
 
   public CombinedTableIterator(final List<TableReader<T>> tables) {
     iteratorQueue = new ArrayList<Iterator<T>>();
+    this.tables = tables;
     if (tables.size() == 0) {
       currentIterator = null;
     } else {
@@ -90,10 +92,24 @@ class CombinedTableIterator<T extends DataTable> implements Iterator<T> {
       return true;
     }
     if (iteratorQueue.isEmpty()) {
+      closeCurrentIterator();
       return false;
     }
+    closeCurrentIterator();
     currentIterator = iteratorQueue.remove(0);
     return hasNext();
+  }
+
+  private void closeCurrentIterator() {
+    for (final TableReader<T> t : tables) {
+      if (t.iterator().equals(currentIterator)) {
+        try {
+          t.close();
+        } catch (final IOException e) {
+          throw new RuntimeException(e);
+        }
+      }
+    }
   }
 
   @Override

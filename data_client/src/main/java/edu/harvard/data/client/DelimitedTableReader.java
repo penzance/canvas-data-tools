@@ -22,8 +22,8 @@ public class DelimitedTableReader<T extends DataTable> implements TableReader<T>
   private final Class<T> tableType;
   private final String tableName;
 
-  public DelimitedTableReader(final Class<T> tableType, final TableFormat format, final Path file, final String tableName)
-      throws IOException {
+  public DelimitedTableReader(final Class<T> tableType, final TableFormat format, final Path file,
+      final String tableName) throws IOException {
     this.format = format;
     this.file = file;
     this.tableType = tableType;
@@ -39,7 +39,7 @@ public class DelimitedTableReader<T extends DataTable> implements TableReader<T>
     if (iterator != null) {
       iterator.close();
     }
-    this.iterator = new DelimitedFileIterator<T>(tableType, format, getInputStream(), file);
+    this.iterator = new DelimitedFileIterator<T>(tableType, format, file, this);
   }
 
   @Override
@@ -59,7 +59,8 @@ public class DelimitedTableReader<T extends DataTable> implements TableReader<T>
 
   @Override
   public long size() throws IOException {
-    try (LineNumberReader lineReader = new LineNumberReader(new InputStreamReader(getInputStream()))) {
+    try (LineNumberReader lineReader = new LineNumberReader(
+        new InputStreamReader(getInputStream()))) {
       while (lineReader.ready()) {
         lineReader.skip(Long.MAX_VALUE);
       }
@@ -67,7 +68,7 @@ public class DelimitedTableReader<T extends DataTable> implements TableReader<T>
     }
   }
 
-  private InputStream getInputStream() throws IOException {
+  InputStream getInputStream() throws IOException {
     switch (format.getCompression()) {
     case Gzip:
       return new GZIPInputStream(Files.newInputStream(file));
@@ -89,21 +90,20 @@ public class DelimitedTableReader<T extends DataTable> implements TableReader<T>
 
 class DelimitedFileIterator<T extends DataTable> implements Iterator<T>, Closeable {
 
-  private final Iterator<CSVRecord> iterator;
-  private final CSVParser requestParser;
+  private Iterator<CSVRecord> iterator;
+  private CSVParser requestParser;
   private final Class<T> table;
   private final TableFormat format;
   private final Path file;
   private int line;
+  private final DelimitedTableReader<T> parent;
 
-  public DelimitedFileIterator(final Class<T> table, final TableFormat format, final InputStream in, final Path file)
-      throws IOException {
+  public DelimitedFileIterator(final Class<T> table, final TableFormat format, final Path file,
+      final DelimitedTableReader<T> parent) throws IOException {
     this.format = format;
     this.table = table;
     this.file = file;
-    requestParser = new CSVParser(new InputStreamReader(in, format.getEncoding()),
-        format.getCsvFormat());
-    iterator = requestParser.iterator();
+    this.parent = parent;
     if (format.includeHeaders()) {
       iterator.next();
       line = 1;
@@ -112,13 +112,30 @@ class DelimitedFileIterator<T extends DataTable> implements Iterator<T>, Closeab
     }
   }
 
+  private void createIterator() {
+    try {
+      final InputStream in = parent.getInputStream();
+      requestParser = new CSVParser(new InputStreamReader(in, format.getEncoding()),
+          format.getCsvFormat());
+      iterator = requestParser.iterator();
+    } catch (final IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   @Override
   public boolean hasNext() {
+    if (iterator == null) {
+      createIterator();
+    }
     return iterator.hasNext();
   }
 
   @Override
   public T next() {
+    if (iterator == null) {
+      createIterator();
+    }
     final CSVRecord next = iterator.next();
     line++;
     try {
@@ -128,7 +145,7 @@ class DelimitedFileIterator<T extends DataTable> implements Iterator<T>, Closeab
       throw new RuntimeException(e);
     } catch (final InvocationTargetException e) {
       Throwable cause = e;
-      while(cause instanceof InvocationTargetException) {
+      while (cause instanceof InvocationTargetException) {
         cause = cause.getCause();
       }
       throw new RecordParsingException(file, line, next, cause);
@@ -137,7 +154,9 @@ class DelimitedFileIterator<T extends DataTable> implements Iterator<T>, Closeab
 
   @Override
   public void close() throws IOException {
-    requestParser.close();
+    if (requestParser != null) {
+      requestParser.close();
+    }
   }
 
 }
