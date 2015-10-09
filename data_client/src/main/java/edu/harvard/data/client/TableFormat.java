@@ -1,8 +1,14 @@
 package edu.harvard.data.client;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.csv.CSVFormat;
 
@@ -111,5 +117,16 @@ public class TableFormat {
       return ".csv";
     }
     return "";
+  }
+
+  public OutputStream getOutputStream(final Path file, final StandardOpenOption... opts) throws IOException {
+    switch (compression) {
+    case Gzip:
+      return new GZIPOutputStream(Files.newOutputStream(file, opts));
+    case None:
+      return Files.newOutputStream(file, opts);
+    default:
+      throw new RuntimeException("Unknown compression: " + compression);
+    }
   }
 }

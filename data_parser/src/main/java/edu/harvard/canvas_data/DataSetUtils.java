@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import edu.harvard.canvas_data.parser.Configuration;
 import edu.harvard.canvas_data.parser.DumpInformation;
@@ -29,6 +30,8 @@ import edu.harvard.data.client.canvas.tables.CanvasTable;
 import edu.harvard.data.client.canvas.tables.CanvasTableFactory;
 
 public class DataSetUtils {
+
+  private static final Logger log = Logger.getLogger("Canvas Data");
 
   private final CanvasTableFactory factory;
   private final FormatLibrary formats;
@@ -142,6 +145,19 @@ public class DataSetUtils {
       }
     }
     return info;
+  }
+
+  public DataSetInfo getDataSetInfo(final String input) throws IOException {
+    if (input.equals("LATEST")) {
+      return getLatestDataSetInfo(config);
+    } else {
+      final Path infoFile = DataSetInfo.getFileName(Paths.get(input));
+      if (!Files.exists(infoFile)) {
+        log.severe(input + " is not a well-formed data set");
+        return null;
+      }
+      return DataSetInfo.read(infoFile);
+    }
   }
 
 }

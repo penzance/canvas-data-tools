@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.csv.CSVPrinter;
 
@@ -71,14 +70,7 @@ public class DelimitedTableWriter<T extends DataTable> implements TableWriter<T>
       currentFileLines = 0;
     }
     file = directory.resolve(getCurrentFileName());
-    switch (format.getCompression()) {
-    case Gzip:
-      return new GZIPOutputStream(Files.newOutputStream(file, opts));
-    case None:
-      return Files.newOutputStream(file, opts);
-    default:
-      throw new RuntimeException("Unknown compression: " + format.getCompression());
-    }
+    return format.getOutputStream(file, opts);
   }
 
   @SuppressWarnings("unchecked")

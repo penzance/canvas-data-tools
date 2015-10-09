@@ -16,6 +16,7 @@ import org.kohsuke.args4j.spi.SubCommand;
 import org.kohsuke.args4j.spi.SubCommandHandler;
 import org.kohsuke.args4j.spi.SubCommands;
 
+import edu.harvard.canvas_data.cli.analysis.AnalysisCommandGroup;
 import edu.harvard.canvas_data.cli.dataset.DataSetCommandGroup;
 import edu.harvard.canvas_data.cli.dump.DumpCommandGroup;
 import edu.harvard.canvas_data.parser.Configuration;
@@ -40,7 +41,9 @@ public class CanvasDataCli {
 
   @Argument(handler = SubCommandHandler.class, usage = "Top-level command.")
   @SubCommands({ @SubCommand(name = "dump", impl = DumpCommandGroup.class),
-    @SubCommand(name = "data", impl = DataSetCommandGroup.class), })
+    @SubCommand(name = "data", impl = DataSetCommandGroup.class),
+    @SubCommand(name = "analysis", impl = AnalysisCommandGroup.class),
+  })
   public Command cmd;
 
   public static void main(final String[] args) {
