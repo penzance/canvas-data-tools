@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 
@@ -27,6 +28,8 @@ import edu.harvard.data.client.canvas.api.UnexpectedApiResponseException;
 
 public class DumpManager {
 
+  private static final Logger log = Logger.getLogger("Canvas Data");
+
   private final Configuration config;
 
   public DumpManager(final Configuration config) {
@@ -37,29 +40,39 @@ public class DumpManager {
     final String dirName = String.format("%05d", dump.getSequence());
     final Path archiveDir = config.getCanvasDataArchiveDirectory().resolve(dirName);
     if (!Files.exists(archiveDir)) {
+      log.info("Dump needs to be saved; directory " + archiveDir + " does not exist.");
       return true;
     }
     final Path dumpInfoFile = DumpInformation.getFile(getArchiveDumpDir(dump));
     if (!Files.exists(dumpInfoFile)) {
+      log.info("Dump needs to be saved; dump info file " + dumpInfoFile + " does not exist.");
       return true;
     }
     final DumpInformation info = DumpInformation.read(dumpInfoFile);
     if (info.getDownloadComplete() == null) {
+      log.info("Dump needs to be saved; previous download to " + archiveDir + " did not complete.");
       return true;
     }
     final Date downloadStart = info.getDownloadStart();
     // Re-download any dump that was updated less than an hour before it was
     // downloaded before.
     final Date conservativeStart = new Date(downloadStart.getTime() - (60 * 60 * 1000));
-    return conservativeStart.before(dump.getUpdatedAt());
+    if (conservativeStart.before(dump.getUpdatedAt())) {
+      log.info("Dump needs to be saved; downloaded to " + archiveDir + " less than an hour after it was last updated.");
+      return true;
+    }
+    log.info("Dump does not need to be saved; already exists at " + archiveDir + ".");
+    return false;
   }
 
   public boolean isValidDumpDirectory(final Path path) {
     if (!Files.exists(path) || !Files.isDirectory(path)) {
+      log.info(path + " is not a valid dump. Directory does not exist");
       return false;
     }
     final Path dumpInfoFile = DumpInformation.getFile(path);
     if (!Files.exists(dumpInfoFile)) {
+      log.info(path + " is not a valid dump. No dump info file at " + dumpInfoFile);
       return false;
     }
     return true;
@@ -68,7 +81,9 @@ public class DumpManager {
 
   public void saveDumpToTempDirectory(final CanvasApiClient api, final CanvasDataDump dump)
       throws IOException, UnexpectedApiResponseException, DataConfigurationException {
-    saveDump(api, getScratchDumpDir(dump), dump);
+    final Path dumpDir = getScratchDumpDir(dump);
+    log.info("Saving dump " + dump.getDumpId() + " to " + dumpDir);
+    saveDump(api, dumpDir, dump);
   }
 
   public void saveDump(final CanvasApiClient api, final Path directory, final CanvasDataDump dump)
@@ -83,7 +98,7 @@ public class DumpManager {
       int fileIndex = 0;
       final Path tableDir = directory.resolve(table);
       final CanvasDataArtifact artifact = artifactsByTable.get(table);
-      System.out.println("Dumping " + table + " to " + tableDir);
+      log.info("Dumping " + table + " to " + tableDir);
       final DataSetInfoTable tableInfo = new DataSetInfoTable(table);
       dataSetInfo.addTable(artifact.getTableName(), tableInfo);
       final List<CanvasDataFile> files = artifact.getFiles();
@@ -93,7 +108,7 @@ public class DumpManager {
         final CanvasDataArtifact refreshedArtifact = refreshedDump.getArtifactsByTable().get(table);
         final CanvasDataFile refreshedFile = refreshedArtifact.getFiles().get(i);
         if (!refreshedFile.getFilename().equals(file.getFilename())) {
-          System.err.println("Mismatch in file name for refreshed dump");
+          log.warning("Mismatch in file name for refreshed dump. Expected" + refreshedFile.getFilename() + ", got " + file.getFilename());
         }
         final String filename = artifact.getTableName() + "-" + String.format("%05d", fileIndex++) + ".gz";
         final DataSetInfoFile fileInfo = refreshedFile.download(tableDir.resolve(filename));
@@ -107,8 +122,10 @@ public class DumpManager {
   }
 
   public void archiveDump(final Path fromDir, final Path toDir) throws IOException {
+    log.info("Archiving " + fromDir + " to " + toDir);
     Files.createDirectories(toDir.getParent());
     if (Files.exists(toDir)) {
+      log.info(toDir + " exists. Deleting it");
       FileUtils.deleteDirectory(toDir.toFile());
     }
     final Set<PosixFilePermission> readOnly = new HashSet<PosixFilePermission>();

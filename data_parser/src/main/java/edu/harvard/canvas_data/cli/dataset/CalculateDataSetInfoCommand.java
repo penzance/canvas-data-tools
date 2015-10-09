@@ -2,10 +2,12 @@ package edu.harvard.canvas_data.cli.dataset;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import org.kohsuke.args4j.Argument;
 
 import edu.harvard.canvas_data.cli.Command;
+import edu.harvard.canvas_data.cli.ReturnStatus;
 import edu.harvard.canvas_data.parser.Configuration;
 import edu.harvard.data.client.DataConfigurationException;
 import edu.harvard.data.client.DataSetInfo;
@@ -26,7 +28,7 @@ public class CalculateDataSetInfoCommand implements Command {
   private String format;
 
   @Override
-  public void execute(final Configuration config) throws DataConfigurationException, IOException {
+  public ReturnStatus execute(final Configuration config, final PrintStream out) throws DataConfigurationException, IOException {
     final TableFactory factory = new CanvasTableFactory();
     final FormatLibrary formats = new FormatLibrary();
     final TableFormat tableFormat = formats.getFormat(Format.fromLabel(format));
@@ -35,6 +37,7 @@ public class CalculateDataSetInfoCommand implements Command {
       dataSetInfo.setFile(DataSetInfo.getFileName(input.toPath()));
       dataSetInfo.write();
     }
+    return ReturnStatus.OK;
   }
 
   @Override

@@ -54,7 +54,7 @@ public class RestUtils {
         final CloseableHttpResponse response = httpClient.execute(get);) {
       final int status = response.getStatusLine().getStatusCode();
       if (status != expectedStatus) {
-        throw new UnexpectedApiResponseException(status, url);
+        throw new UnexpectedApiResponseException(expectedStatus, status, url);
       }
       return mapper.readValue(response.getEntity().getContent(), type);
     }

@@ -1,5 +1,6 @@
 package edu.harvard.canvas_data.verifier;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -24,7 +25,8 @@ public class CanvasDumpVerifier {
     formats = new FormatLibrary();
   }
 
-  public void parseAndOutput(final Path dumpDirectory, final Path scratchDirectory) throws IOException, VerificationException {
+  public void parseAndOutput(final Path dumpDirectory, final Path scratchDirectory,
+      final BufferedWriter errors) throws IOException, VerificationException {
     final TableFormat inFormat = formats.getFormat(Format.CanvasDataFlatFiles);
     final TableFormat outFormat = formats.getFormat(Format.DecompressedCanvasDataFlatFiles);
     final TableFactory factory = new CanvasTableFactory();
@@ -32,17 +34,13 @@ public class CanvasDumpVerifier {
         final DataSetWriter out = new FileDataSetWriter(scratchDirectory, outFormat, factory);) {
       out.pipe(in);
     } catch (final RecordParsingException e) {
-      System.err.println(e.getRecord().toString());
+      errors.write("Error parsing " + e.getRecord().toString() + ": " + e.getMessage());
       throw new VerificationException(e);
     }
 
     final List<Path> dump1 = Collections.singletonList(dumpDirectory);
     final List<Path> dump2 = Collections.singletonList(scratchDirectory);
-    final DataSetTextComparison comparison = new DataSetTextComparison(dump1, dump2, System.out);
 
-    VerificationUtils.textualCompareDumps(dump1, dump2, comparison);
-    if (!comparison.identical()) {
-      throw new VerificationException(comparison);
-    }
+    VerificationUtils.textualCompareDumps(dump1, dump2, errors);
   }
 }
