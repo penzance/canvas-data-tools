@@ -32,11 +32,16 @@ public class Histogram<T extends Comparable<T>> {
   }
 
   public void put(final T value) {
+    put(value, 1L);
+  }
+
+  public void put(final T value, final Long count) {
     if (!map.containsKey(value)) {
       map.put(value, 0L);
     }
-    map.put(value, map.get(value) + 1);
+    map.put(value, map.get(value) + count);
   }
+
 
   public Collection<T> keySet() {
     return map.keySet();

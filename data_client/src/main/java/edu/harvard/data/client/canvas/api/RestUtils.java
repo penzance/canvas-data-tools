@@ -39,7 +39,6 @@ public class RestUtils {
     this.key = key;
     this.secret = secret;
     this.mapper = new ObjectMapper();
-
   }
 
   public <T> T makeApiCall(final String resourcePath, final int expectedStatus, final JavaType type)

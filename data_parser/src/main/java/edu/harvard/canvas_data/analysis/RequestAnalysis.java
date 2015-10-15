@@ -44,7 +44,7 @@ public class RequestAnalysis {
     this.minutes = new Histogram<Integer>("minute_of_day");
     this.urls = new Histogram<String>("url");
     this.userAgents = new Histogram<String>("user_agent");
-    this.localDates = new Histogram<String>("user_agent");
+    this.localDates = new Histogram<String>("date");
     this.courses = new Histogram<Long>("course_id");
     this.discussions = new Histogram<Long>("discussion_id");
     this.quizzes = new Histogram<Long>("quiz_id");
