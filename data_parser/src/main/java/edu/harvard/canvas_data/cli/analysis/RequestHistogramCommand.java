@@ -79,6 +79,9 @@ public class RequestHistogramCommand implements Command {
     analysis.getAssignments().write(dir.resolve("requestsPerAssignment" + ext), tableFormat, SortOrder.Value);
     analysis.getConversations().write(dir.resolve("requestsPerConversation" + ext), tableFormat, SortOrder.Value);
     analysis.getAccounts().write(dir.resolve("requestsPerAccount" + ext), tableFormat, SortOrder.Key);
+    analysis.getBrowsers().write(dir.resolve("requestsPerBrowser" + ext), tableFormat, SortOrder.Value);
+    analysis.getOperatingSystems().write(dir.resolve("requestsPerOS" + ext), tableFormat, SortOrder.Value);
+    analysis.getDaysOfWeek().write(dir.resolve("requestsPerDayOfWeek" + ext), tableFormat, SortOrder.Key);
     writeUserIps(analysis.getUserIps(), dir, tableFormat);
   }
 

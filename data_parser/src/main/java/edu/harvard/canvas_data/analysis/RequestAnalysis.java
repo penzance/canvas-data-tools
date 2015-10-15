@@ -1,5 +1,6 @@
 package edu.harvard.canvas_data.analysis;
 
+import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +9,9 @@ import java.util.logging.Logger;
 import edu.harvard.data.client.DataSetReader;
 import edu.harvard.data.client.FormatLibrary;
 import edu.harvard.data.client.TableReader;
+import edu.harvard.data.client.analysis_utils.UserAgentParser;
 import edu.harvard.data.client.canvas.tables.Requests;
+import net.sf.uadetector.ReadableUserAgent;
 
 public class RequestAnalysis {
 
@@ -19,22 +22,20 @@ public class RequestAnalysis {
   private final Histogram<String> actions;
   private final Histogram<Integer> hours;
   private final Histogram<Integer> minutes;
+  private final Histogram<DayOfWeek> localDays;
   private final Histogram<String> urls;
   private final Histogram<String> userAgents;
   private final Histogram<String> localDates;
   private final Map<Long, Histogram<String>> userIps;
-
   private final Histogram<Long> courses;
-
   private final Histogram<Long> discussions;
-
   private final Histogram<Long> quizzes;
-
   private final Histogram<Long> assignments;
-
   private final Histogram<Long> conversations;
-
   private final Histogram<Long> accounts;
+  private final Histogram<String> browsers;
+  private final Histogram<String> os;
+  private final UserAgentParser uaParser;
 
   public RequestAnalysis() {
     this.userRequests = new Histogram<Long>("user_id");
@@ -45,6 +46,7 @@ public class RequestAnalysis {
     this.urls = new Histogram<String>("url");
     this.userAgents = new Histogram<String>("user_agent");
     this.localDates = new Histogram<String>("date");
+    this.localDays = new Histogram<DayOfWeek>("day_of_week");
     this.courses = new Histogram<Long>("course_id");
     this.discussions = new Histogram<Long>("discussion_id");
     this.quizzes = new Histogram<Long>("quiz_id");
@@ -52,6 +54,9 @@ public class RequestAnalysis {
     this.conversations = new Histogram<Long>("conversation_id");
     this.accounts = new Histogram<Long>("account_id");
     this.userIps = new HashMap<Long, Histogram<String>>();
+    this.browsers = new Histogram<String>("browser");
+    this.os = new Histogram<String>("os");
+    this.uaParser = new UserAgentParser();
   }
 
   public void analyzeRequests(final DataSetReader inputDataSet) {
@@ -65,8 +70,9 @@ public class RequestAnalysis {
       hours.put(request.getTimestamp().getHour());
       minutes.put((request.getTimestamp().getHour() * 60) + request.getTimestamp().getMinute());
       urls.put(request.getUrl());
-      userAgents.put(request.getUserAgent());
       localDates.put(request.getTimestamp().format(localFormatter));
+      // TODO: this doesn't account for requests made during DST
+      localDays.put(request.getTimestamp().toLocalDate().getDayOfWeek());
       if (request.getCourseId() != null) {
         courses.put(request.getCourseId());
       }
@@ -86,9 +92,20 @@ public class RequestAnalysis {
         accounts.put(request.getCourseAccountId());
       }
       addUserIp(request);
+      parseUserAgent(request);
       records++;
     }
     log.info("Analyzed " + records + " requests");
+  }
+
+  private void parseUserAgent(final Requests request) {
+    final String agentString = request.getUserAgent();
+    userAgents.put(agentString);
+    if (agentString != null) {
+      final ReadableUserAgent agent = uaParser.parse(agentString);
+      browsers.put(agent.getName());
+      os.put(agent.getOperatingSystem().getName());
+    }
   }
 
   private void addUserIp(final Requests request) {
@@ -162,4 +179,15 @@ public class RequestAnalysis {
     return accounts;
   }
 
+  public Histogram<String> getBrowsers() {
+    return browsers;
+  }
+
+  public Histogram<String> getOperatingSystems() {
+    return os;
+  }
+
+  public Histogram<DayOfWeek> getDaysOfWeek() {
+    return localDays;
+  }
 }
