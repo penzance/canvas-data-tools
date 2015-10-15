@@ -2,19 +2,14 @@ package edu.harvard.canvas_data.cli.analysis;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
-import java.nio.file.Path;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.commons.csv.CSVPrinter;
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
 
 import edu.harvard.canvas_data.DataSetUtils;
-import edu.harvard.canvas_data.analysis.Histogram;
-import edu.harvard.canvas_data.analysis.Histogram.SortOrder;
 import edu.harvard.canvas_data.analysis.RequestAnalysis;
 import edu.harvard.canvas_data.cli.Command;
 import edu.harvard.canvas_data.cli.ReturnStatus;
@@ -24,6 +19,11 @@ import edu.harvard.data.client.DataSetReader;
 import edu.harvard.data.client.FormatLibrary;
 import edu.harvard.data.client.FormatLibrary.Format;
 import edu.harvard.data.client.TableFormat;
+import edu.harvard.data.client.canvas.tables.Requests;
+import edu.harvard.data.client.filters.FilterCriteria;
+import edu.harvard.data.client.filters.FilteredRequestTableReader;
+import edu.harvard.data.client.filters.RequestIPFilter;
+import edu.harvard.data.client.filters.RequestUserIDFilter;
 
 public class RequestHistogramCommand implements Command {
 
@@ -35,6 +35,18 @@ public class RequestHistogramCommand implements Command {
 
   @Option(name = "-f", usage = "Format for the output data. Defaults to match the input", metaVar = "format")
   private String format;
+
+  @Option(name = "-filterUsers", usage = "Comma-separated list of user IDs to filter out", metaVar = "123,456,789")
+  private String filterUsers;
+
+  @Option(name = "-requireUsers", usage = "Comma-separated list of user IDs to include in results", metaVar = "123,456,789")
+  private String requireUsers;
+
+  @Option(name = "-filterIPs", usage = "Comma-separated list of IP addresses to filter out", metaVar = "127.0.0.1,127.0.0.2")
+  private String filterIps;
+
+  @Option(name = "-requireIPs", usage = "Comma-separated list of IP addresses to include in results", metaVar = "127.0.0.1,127.0.0.2")
+  private String requireIps;
 
   @Override
   public ReturnStatus execute(final Configuration config, final PrintStream out)
@@ -49,54 +61,48 @@ public class RequestHistogramCommand implements Command {
     final TableFormat tableFormat = new FormatLibrary().getFormat(outputFormat);
 
     try (DataSetReader in = utils.getReaderFromString(input)) {
+      final List<FilterCriteria<Requests>> filters = buildFilters();
+      if (filters.size() > 0) {
+        final FilteredRequestTableReader<Requests> reader = new FilteredRequestTableReader<Requests>(
+            Requests.class, in.getTable("requests", Requests.class), filters);
+        in.replaceTable("requests", reader);
+      }
       if (in == null) {
         return ReturnStatus.BAD_DATA_SET;
       }
       final RequestAnalysis analysis = new RequestAnalysis();
       analysis.analyzeRequests(in);
-      dumpOutput(analysis, tableFormat);
+      analysis.dumpOutput(output.toPath(), tableFormat);
     }
     return ReturnStatus.OK;
   }
 
-  private void dumpOutput(final RequestAnalysis analysis, final TableFormat tableFormat) throws IOException {
-    if (!output.exists()) {
-      output.mkdirs();
-    }
-    final Path dir = output.toPath();
-    final String ext = tableFormat.getExtension();
-    analysis.getActions().write(dir.resolve("requestsPerAction" + ext), tableFormat, SortOrder.Value);
-    analysis.getControllers().write(dir.resolve("requestsPerController" + ext), tableFormat, SortOrder.Value);
-    analysis.getHours().write(dir.resolve("requestsPerHour" + ext), tableFormat, SortOrder.Key);
-    analysis.getMinutes().write(dir.resolve("requestsPerMinute" + ext), tableFormat, SortOrder.Key);
-    analysis.getUserRequests().write(dir.resolve("requestsPerUser" + ext), tableFormat, SortOrder.Value);
-    analysis.getUrls().write(dir.resolve("requestsPerUrl" + ext), tableFormat, SortOrder.Value);
-    analysis.getUserAgents().write(dir.resolve("requestsPerUserAgent" + ext), tableFormat, SortOrder.Value);
-    analysis.getLocalDates().write(dir.resolve("requestsPerLocalDate" + ext), tableFormat, SortOrder.Key);
-    analysis.getCourses().write(dir.resolve("requestsPerCourse" + ext), tableFormat, SortOrder.Value);
-    analysis.getDiscussions().write(dir.resolve("requestsPerDiscussion" + ext), tableFormat, SortOrder.Value);
-    analysis.getQuizzes().write(dir.resolve("requestsPerQuiz" + ext), tableFormat, SortOrder.Value);
-    analysis.getAssignments().write(dir.resolve("requestsPerAssignment" + ext), tableFormat, SortOrder.Value);
-    analysis.getConversations().write(dir.resolve("requestsPerConversation" + ext), tableFormat, SortOrder.Value);
-    analysis.getAccounts().write(dir.resolve("requestsPerAccount" + ext), tableFormat, SortOrder.Key);
-    analysis.getBrowsers().write(dir.resolve("requestsPerBrowser" + ext), tableFormat, SortOrder.Value);
-    analysis.getOperatingSystems().write(dir.resolve("requestsPerOS" + ext), tableFormat, SortOrder.Value);
-    analysis.getDaysOfWeek().write(dir.resolve("requestsPerDayOfWeek" + ext), tableFormat, SortOrder.Key);
-    writeUserIps(analysis.getUserIps(), dir, tableFormat);
+  private List<FilterCriteria<Requests>> buildFilters() {
+    final List<FilterCriteria<Requests>> filters = new ArrayList<FilterCriteria<Requests>>();
+    createUserFilters(filterUsers, false, filters);
+    createUserFilters(requireUsers, true, filters);
+    createIpFilters(filterIps, false, filters);
+    createIpFilters(requireIps, true, filters);
+    return filters;
   }
 
-  private void writeUserIps(final Map<Long, Histogram<String>> userIps, final Path dir, final TableFormat tableFormat) throws IOException {
-    final Path totalFile = dir.resolve("ipCountPerUser" + tableFormat.getExtension());
-    final Path detailFile = dir.resolve("ipsPerUser" + tableFormat.getExtension());
-    try (OutputStream totalOut = tableFormat.getOutputStream(totalFile);
-        OutputStream detailOut = tableFormat.getOutputStream(detailFile);
-        CSVPrinter totalPrinter = new CSVPrinter(new OutputStreamWriter(totalOut), tableFormat.getCsvFormat());
-        CSVPrinter detailPrinter = new CSVPrinter(new OutputStreamWriter(detailOut), tableFormat.getCsvFormat())) {
-      for (final Long user : userIps.keySet()) {
-        final Histogram<String> ips = userIps.get(user);
-        totalPrinter.printRecord(user, ips.size());
-        for (final String ip : ips.keySet()) {
-          detailPrinter.printRecord(user, ip, ips.get(ip));
+  private static void createIpFilters(final String ips, final boolean requireMatch,
+      final List<FilterCriteria<Requests>> filters) {
+    if (ips != null) {
+      for (final String ip : ips.split(",")) {
+        filters.add(new RequestIPFilter<>(ip, requireMatch));
+      }
+    }
+  }
+
+  private static void createUserFilters(final String users, final boolean requireMatch,
+      final List<FilterCriteria<Requests>> filters) {
+    if (users != null) {
+      for (final String userId : users.split(",")) {
+        try {
+          filters.add(new RequestUserIDFilter<>(Long.parseLong(userId), requireMatch));
+        } catch (final NumberFormatException e) {
+          throw new IllegalArgumentException("Can't parse " + userId + " as user ID");
         }
       }
     }

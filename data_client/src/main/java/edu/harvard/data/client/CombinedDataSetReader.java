@@ -47,4 +47,14 @@ public class CombinedDataSetReader implements DataSetReader {
     return info;
   }
 
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T extends DataTable> void replaceTable(final String tableName, final TableReader<T> reader) throws IOException {
+    final TableReader<T> oldTable = (TableReader<T>) readers.get(tableName);
+    if (oldTable != null) {
+      oldTable.close();
+    }
+    readers.put(tableName, reader);
+  }
+
 }

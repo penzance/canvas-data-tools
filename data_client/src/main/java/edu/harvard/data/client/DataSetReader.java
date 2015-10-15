@@ -14,4 +14,6 @@ public interface DataSetReader extends Closeable {
 
   DataSetInfo generateDataSetInfo() throws IOException;
 
+  <T extends DataTable> void replaceTable(String tableName, TableReader<T> reader) throws IOException;
+
 }

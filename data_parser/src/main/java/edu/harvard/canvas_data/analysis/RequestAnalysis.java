@@ -1,13 +1,22 @@
 package edu.harvard.canvas_data.analysis;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.apache.commons.csv.CSVPrinter;
+
+import edu.harvard.canvas_data.analysis.Histogram.SortOrder;
 import edu.harvard.data.client.DataSetReader;
 import edu.harvard.data.client.FormatLibrary;
+import edu.harvard.data.client.TableFormat;
 import edu.harvard.data.client.TableReader;
 import edu.harvard.data.client.analysis_utils.UserAgentParser;
 import edu.harvard.data.client.canvas.tables.Requests;
@@ -117,6 +126,48 @@ public class RequestAnalysis {
       userIps.put(userId, new Histogram<String>("ip_address"));
     }
     userIps.get(userId).put(request.getRemoteIp());
+  }
+
+  public void dumpOutput(final Path dir, final TableFormat tableFormat) throws IOException {
+    if (!Files.exists(dir)) {
+      Files.createDirectories(dir);
+    }
+    final String ext = tableFormat.getExtension();
+    actions.write(dir.resolve("requestsPerAction" + ext), tableFormat, SortOrder.Value);
+    controllers.write(dir.resolve("requestsPerController" + ext), tableFormat, SortOrder.Value);
+    hours.write(dir.resolve("requestsPerHour" + ext), tableFormat, SortOrder.Key);
+    minutes.write(dir.resolve("requestsPerMinute" + ext), tableFormat, SortOrder.Key);
+    userRequests.write(dir.resolve("requestsPerUser" + ext), tableFormat, SortOrder.Value);
+    urls.write(dir.resolve("requestsPerUrl" + ext), tableFormat, SortOrder.Value);
+    userAgents.write(dir.resolve("requestsPerUserAgent" + ext), tableFormat, SortOrder.Value);
+    localDates.write(dir.resolve("requestsPerLocalDate" + ext), tableFormat, SortOrder.Key);
+    courses.write(dir.resolve("requestsPerCourse" + ext), tableFormat, SortOrder.Value);
+    discussions.write(dir.resolve("requestsPerDiscussion" + ext), tableFormat, SortOrder.Value);
+    quizzes.write(dir.resolve("requestsPerQuiz" + ext), tableFormat, SortOrder.Value);
+    assignments.write(dir.resolve("requestsPerAssignment" + ext), tableFormat, SortOrder.Value);
+    conversations.write(dir.resolve("requestsPerConversation" + ext), tableFormat, SortOrder.Value);
+    accounts.write(dir.resolve("requestsPerAccount" + ext), tableFormat, SortOrder.Key);
+    browsers.write(dir.resolve("requestsPerBrowser" + ext), tableFormat, SortOrder.Value);
+    os.write(dir.resolve("requestsPerOS" + ext), tableFormat, SortOrder.Value);
+    localDays.write(dir.resolve("requestsPerDayOfWeek" + ext), tableFormat, SortOrder.Key);
+    writeUserIps(dir, tableFormat);
+  }
+
+  private void writeUserIps(final Path dir, final TableFormat tableFormat) throws IOException {
+    final Path totalFile = dir.resolve("ipCountPerUser" + tableFormat.getExtension());
+    final Path detailFile = dir.resolve("ipsPerUser" + tableFormat.getExtension());
+    try (OutputStream totalOut = tableFormat.getOutputStream(totalFile);
+        OutputStream detailOut = tableFormat.getOutputStream(detailFile);
+        CSVPrinter totalPrinter = new CSVPrinter(new OutputStreamWriter(totalOut), tableFormat.getCsvFormat());
+        CSVPrinter detailPrinter = new CSVPrinter(new OutputStreamWriter(detailOut), tableFormat.getCsvFormat())) {
+      for (final Long user : userIps.keySet()) {
+        final Histogram<String> ips = userIps.get(user);
+        totalPrinter.printRecord(user, ips.size());
+        for (final String ip : ips.keySet()) {
+          detailPrinter.printRecord(user, ip, ips.get(ip));
+        }
+      }
+    }
   }
 
   public Histogram<Long> getUserRequests() {
