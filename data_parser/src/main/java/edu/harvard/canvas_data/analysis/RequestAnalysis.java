@@ -181,6 +181,13 @@ public class RequestAnalysis {
     os.write(dir.resolve("requestsPerOS" + ext), tableFormat, SortOrder.Value);
     localDays.write(dir.resolve("requestsPerDayOfWeek" + ext), tableFormat, SortOrder.Key);
     writeUserIps(dir, tableFormat);
+    writeMinuteOfDayPerDay(dir, tableFormat, ext);
+  }
+
+  private void writeMinuteOfDayPerDay(final Path dir, final TableFormat tableFormat, final String ext) throws IOException {
+    for (final DayOfWeek day : minuteOfDayPerDay.keySet()) {
+      minuteOfDayPerDay.get(day).write(dir.resolve("requestsPerMinute-" + day + ext), tableFormat, SortOrder.Key);
+    }
   }
 
   private void writeUserIps(final Path dir, final TableFormat tableFormat) throws IOException {
