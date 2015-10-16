@@ -45,6 +45,7 @@ public class RequestAnalysis {
   private final Histogram<String> browsers;
   private final Histogram<String> os;
   private final UserAgentParser uaParser;
+  private final Map<DayOfWeek, Histogram<Integer>> minuteOfDayPerDay;
 
   public RequestAnalysis() {
     this.userRequests = new Histogram<Long>("user_id");
@@ -66,45 +67,74 @@ public class RequestAnalysis {
     this.browsers = new Histogram<String>("browser");
     this.os = new Histogram<String>("os");
     this.uaParser = new UserAgentParser();
+    this.minuteOfDayPerDay = new HashMap<DayOfWeek, Histogram<Integer>>();
+    for (final DayOfWeek day : DayOfWeek.values()) {
+      minuteOfDayPerDay.put(day, new Histogram<Integer>("minute_of_day"));
+    }
   }
 
-  public void analyzeRequests(final DataSetReader inputDataSet) {
+  private void analyzeRequest(final Requests request) {
+    final DateTimeFormatter localFormatter = FormatLibrary.LOCAL_DATE_FORMAT;
+    userRequests.put(request.getUserId());
+    controllers.put(request.getWebApplicationController());
+    actions.put(request.getWebApplicationController() + "." + request.getWebApplicaitonAction());
+    hours.put(request.getTimestamp().getHour());
+    final int minute = (request.getTimestamp().getHour() * 60) + request.getTimestamp().getMinute();
+    minutes.put(minute);
+    urls.put(request.getUrl());
+    localDates.put(request.getTimestamp().format(localFormatter));
+    // TODO: this doesn't account for requests made during DST
+    final DayOfWeek localDayOfWeek = request.getTimestamp().toLocalDate().getDayOfWeek();
+    localDays.put(localDayOfWeek);
+    minuteOfDayPerDay.get(localDayOfWeek).put(minute);
+    if (request.getCourseId() != null) {
+      courses.put(request.getCourseId());
+    }
+    if (request.getDiscussionId() != null) {
+      discussions.put(request.getDiscussionId());
+    }
+    if (request.getQuizId() != null) {
+      quizzes.put(request.getQuizId());
+    }
+    if (request.getAssignmentId() != null) {
+      assignments.put(request.getAssignmentId());
+    }
+    if (request.getConversationId() != null) {
+      conversations.put(request.getConversationId());
+    }
+    if (request.getCourseAccountId() != null) {
+      accounts.put(request.getRootAccountId());
+    }
+    addUserIp(request);
+    parseUserAgent(request);
+  }
+
+  public static RequestAnalysis analyseDataSet(final DataSetReader inputDataSet) {
+    final RequestAnalysis analysis = new RequestAnalysis();
     final TableReader<Requests> in = inputDataSet.getTable("requests", Requests.class);
     long records = 0;
-    final DateTimeFormatter localFormatter = FormatLibrary.LOCAL_DATE_FORMAT;
     for (final Requests request : in) {
-      userRequests.put(request.getUserId());
-      controllers.put(request.getWebApplicationController());
-      actions.put(request.getWebApplicationController() + "." + request.getWebApplicaitonAction());
-      hours.put(request.getTimestamp().getHour());
-      minutes.put((request.getTimestamp().getHour() * 60) + request.getTimestamp().getMinute());
-      urls.put(request.getUrl());
-      localDates.put(request.getTimestamp().format(localFormatter));
-      // TODO: this doesn't account for requests made during DST
-      localDays.put(request.getTimestamp().toLocalDate().getDayOfWeek());
-      if (request.getCourseId() != null) {
-        courses.put(request.getCourseId());
-      }
-      if (request.getDiscussionId() != null) {
-        discussions.put(request.getDiscussionId());
-      }
-      if (request.getQuizId() != null) {
-        quizzes.put(request.getQuizId());
-      }
-      if (request.getAssignmentId() != null) {
-        assignments.put(request.getAssignmentId());
-      }
-      if (request.getConversationId() != null) {
-        conversations.put(request.getConversationId());
-      }
-      if (request.getCourseAccountId() != null) {
-        accounts.put(request.getCourseAccountId());
-      }
-      addUserIp(request);
-      parseUserAgent(request);
+      analysis.analyzeRequest(request);
       records++;
     }
     log.info("Analyzed " + records + " requests");
+    return analysis;
+  }
+
+  public static Map<Long, RequestAnalysis> analyseDataSetPerAccount(final DataSetReader inputDataSet) {
+    final Map<Long, RequestAnalysis> perAccount = new HashMap<Long, RequestAnalysis>();
+    final TableReader<Requests> in = inputDataSet.getTable("requests", Requests.class);
+    long records = 0;
+    for (final Requests request : in) {
+      final Long account = request.getRootAccountId();
+      if (!perAccount.containsKey(account)) {
+        perAccount.put(account, new RequestAnalysis());
+      }
+      perAccount.get(account).analyzeRequest(request);
+      records++;
+    }
+    log.info("Analyzed " + records + " requests");
+    return perAccount;
   }
 
   private void parseUserAgent(final Requests request) {

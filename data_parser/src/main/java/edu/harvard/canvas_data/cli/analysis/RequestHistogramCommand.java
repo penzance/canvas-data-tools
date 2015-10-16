@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
@@ -48,6 +49,9 @@ public class RequestHistogramCommand implements Command {
   @Option(name = "-requireIPs", usage = "Comma-separated list of IP addresses to include in results", metaVar = "127.0.0.1,127.0.0.2")
   private String requireIps;
 
+  @Option(name = "-byAccount", usage = "Split analysis between root accounts.")
+  private boolean byAccount = false;
+
   @Override
   public ReturnStatus execute(final Configuration config, final PrintStream out)
       throws IOException {
@@ -70,9 +74,16 @@ public class RequestHistogramCommand implements Command {
       if (in == null) {
         return ReturnStatus.BAD_DATA_SET;
       }
-      final RequestAnalysis analysis = new RequestAnalysis();
-      analysis.analyzeRequests(in);
-      analysis.dumpOutput(output.toPath(), tableFormat);
+
+      if (byAccount) {
+        final Map<Long, RequestAnalysis> perAccount = RequestAnalysis.analyseDataSetPerAccount(in);
+        for (final Long accountId : perAccount.keySet()) {
+          perAccount.get(accountId).dumpOutput(output.toPath().resolve(accountId.toString()), tableFormat);
+        }
+      } else {
+        final RequestAnalysis analysis = RequestAnalysis.analyseDataSet(in);
+        analysis.dumpOutput(output.toPath(), tableFormat);
+      }
     }
     return ReturnStatus.OK;
   }
