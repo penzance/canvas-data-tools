@@ -11,44 +11,44 @@ public class AccountDim implements DataTable {
   private Long id;
   private Long canvasId;
   private String name;
-  private Integer depth;
+  private Long depth;
   private String workflowState;
   private String parentAccount;
-  private Integer parentAccountId;
+  private Long parentAccountId;
   private String grandparentAccount;
-  private Integer grandparentAccountId;
+  private Long grandparentAccountId;
   private String rootAccount;
-  private Integer rootAccountId;
+  private Long rootAccountId;
   private String subaccount1;
-  private Integer subaccount1Id;
+  private Long subaccount1Id;
   private String subaccount2;
-  private Integer subaccount2Id;
+  private Long subaccount2Id;
   private String subaccount3;
-  private Integer subaccount3Id;
+  private Long subaccount3Id;
   private String subaccount4;
-  private Integer subaccount4Id;
+  private Long subaccount4Id;
   private String subaccount5;
-  private Integer subaccount5Id;
+  private Long subaccount5Id;
   private String subaccount6;
-  private Integer subaccount6Id;
+  private Long subaccount6Id;
   private String subaccount7;
-  private Integer subaccount7Id;
+  private Long subaccount7Id;
   private String subaccount8;
-  private Integer subaccount8Id;
+  private Long subaccount8Id;
   private String subaccount9;
-  private Integer subaccount9Id;
+  private Long subaccount9Id;
   private String subaccount10;
-  private Integer subaccount10Id;
+  private Long subaccount10Id;
   private String subaccount11;
-  private Integer subaccount11Id;
+  private Long subaccount11Id;
   private String subaccount12;
-  private Integer subaccount12Id;
+  private Long subaccount12Id;
   private String subaccount13;
-  private Integer subaccount13Id;
+  private Long subaccount13Id;
   private String subaccount14;
-  private Integer subaccount14Id;
+  private Long subaccount14Id;
   private String subaccount15;
-  private Integer subaccount15Id;
+  private Long subaccount15Id;
   private String sisSourceId;
 
   public AccountDim(final TableFormat format, final CSVRecord record) {
@@ -63,98 +63,98 @@ public class AccountDim implements DataTable {
     this.name = record.get(2);
     String $depth = record.get(3);
     if ($depth != null && $depth.length() > 0) {
-      this.depth = Integer.valueOf($depth);
+      this.depth = Long.valueOf($depth);
     }
     this.workflowState = record.get(4);
     this.parentAccount = record.get(5);
     String $parentAccountId = record.get(6);
     if ($parentAccountId != null && $parentAccountId.length() > 0) {
-      this.parentAccountId = Integer.valueOf($parentAccountId);
+      this.parentAccountId = Long.valueOf($parentAccountId);
     }
     this.grandparentAccount = record.get(7);
     String $grandparentAccountId = record.get(8);
     if ($grandparentAccountId != null && $grandparentAccountId.length() > 0) {
-      this.grandparentAccountId = Integer.valueOf($grandparentAccountId);
+      this.grandparentAccountId = Long.valueOf($grandparentAccountId);
     }
     this.rootAccount = record.get(9);
     String $rootAccountId = record.get(10);
     if ($rootAccountId != null && $rootAccountId.length() > 0) {
-      this.rootAccountId = Integer.valueOf($rootAccountId);
+      this.rootAccountId = Long.valueOf($rootAccountId);
     }
     this.subaccount1 = record.get(11);
     String $subaccount1Id = record.get(12);
     if ($subaccount1Id != null && $subaccount1Id.length() > 0) {
-      this.subaccount1Id = Integer.valueOf($subaccount1Id);
+      this.subaccount1Id = Long.valueOf($subaccount1Id);
     }
     this.subaccount2 = record.get(13);
     String $subaccount2Id = record.get(14);
     if ($subaccount2Id != null && $subaccount2Id.length() > 0) {
-      this.subaccount2Id = Integer.valueOf($subaccount2Id);
+      this.subaccount2Id = Long.valueOf($subaccount2Id);
     }
     this.subaccount3 = record.get(15);
     String $subaccount3Id = record.get(16);
     if ($subaccount3Id != null && $subaccount3Id.length() > 0) {
-      this.subaccount3Id = Integer.valueOf($subaccount3Id);
+      this.subaccount3Id = Long.valueOf($subaccount3Id);
     }
     this.subaccount4 = record.get(17);
     String $subaccount4Id = record.get(18);
     if ($subaccount4Id != null && $subaccount4Id.length() > 0) {
-      this.subaccount4Id = Integer.valueOf($subaccount4Id);
+      this.subaccount4Id = Long.valueOf($subaccount4Id);
     }
     this.subaccount5 = record.get(19);
     String $subaccount5Id = record.get(20);
     if ($subaccount5Id != null && $subaccount5Id.length() > 0) {
-      this.subaccount5Id = Integer.valueOf($subaccount5Id);
+      this.subaccount5Id = Long.valueOf($subaccount5Id);
     }
     this.subaccount6 = record.get(21);
     String $subaccount6Id = record.get(22);
     if ($subaccount6Id != null && $subaccount6Id.length() > 0) {
-      this.subaccount6Id = Integer.valueOf($subaccount6Id);
+      this.subaccount6Id = Long.valueOf($subaccount6Id);
     }
     this.subaccount7 = record.get(23);
     String $subaccount7Id = record.get(24);
     if ($subaccount7Id != null && $subaccount7Id.length() > 0) {
-      this.subaccount7Id = Integer.valueOf($subaccount7Id);
+      this.subaccount7Id = Long.valueOf($subaccount7Id);
     }
     this.subaccount8 = record.get(25);
     String $subaccount8Id = record.get(26);
     if ($subaccount8Id != null && $subaccount8Id.length() > 0) {
-      this.subaccount8Id = Integer.valueOf($subaccount8Id);
+      this.subaccount8Id = Long.valueOf($subaccount8Id);
     }
     this.subaccount9 = record.get(27);
     String $subaccount9Id = record.get(28);
     if ($subaccount9Id != null && $subaccount9Id.length() > 0) {
-      this.subaccount9Id = Integer.valueOf($subaccount9Id);
+      this.subaccount9Id = Long.valueOf($subaccount9Id);
     }
     this.subaccount10 = record.get(29);
     String $subaccount10Id = record.get(30);
     if ($subaccount10Id != null && $subaccount10Id.length() > 0) {
-      this.subaccount10Id = Integer.valueOf($subaccount10Id);
+      this.subaccount10Id = Long.valueOf($subaccount10Id);
     }
     this.subaccount11 = record.get(31);
     String $subaccount11Id = record.get(32);
     if ($subaccount11Id != null && $subaccount11Id.length() > 0) {
-      this.subaccount11Id = Integer.valueOf($subaccount11Id);
+      this.subaccount11Id = Long.valueOf($subaccount11Id);
     }
     this.subaccount12 = record.get(33);
     String $subaccount12Id = record.get(34);
     if ($subaccount12Id != null && $subaccount12Id.length() > 0) {
-      this.subaccount12Id = Integer.valueOf($subaccount12Id);
+      this.subaccount12Id = Long.valueOf($subaccount12Id);
     }
     this.subaccount13 = record.get(35);
     String $subaccount13Id = record.get(36);
     if ($subaccount13Id != null && $subaccount13Id.length() > 0) {
-      this.subaccount13Id = Integer.valueOf($subaccount13Id);
+      this.subaccount13Id = Long.valueOf($subaccount13Id);
     }
     this.subaccount14 = record.get(37);
     String $subaccount14Id = record.get(38);
     if ($subaccount14Id != null && $subaccount14Id.length() > 0) {
-      this.subaccount14Id = Integer.valueOf($subaccount14Id);
+      this.subaccount14Id = Long.valueOf($subaccount14Id);
     }
     this.subaccount15 = record.get(39);
     String $subaccount15Id = record.get(40);
     if ($subaccount15Id != null && $subaccount15Id.length() > 0) {
-      this.subaccount15Id = Integer.valueOf($subaccount15Id);
+      this.subaccount15Id = Long.valueOf($subaccount15Id);
     }
     this.sisSourceId = record.get(41);
   }
@@ -171,7 +171,7 @@ public class AccountDim implements DataTable {
     return this.name;
   }
 
-  public Integer getDepth() {
+  public Long getDepth() {
     return this.depth;
   }
 
@@ -183,7 +183,7 @@ public class AccountDim implements DataTable {
     return this.parentAccount;
   }
 
-  public Integer getParentAccountId() {
+  public Long getParentAccountId() {
     return this.parentAccountId;
   }
 
@@ -191,7 +191,7 @@ public class AccountDim implements DataTable {
     return this.grandparentAccount;
   }
 
-  public Integer getGrandparentAccountId() {
+  public Long getGrandparentAccountId() {
     return this.grandparentAccountId;
   }
 
@@ -199,7 +199,7 @@ public class AccountDim implements DataTable {
     return this.rootAccount;
   }
 
-  public Integer getRootAccountId() {
+  public Long getRootAccountId() {
     return this.rootAccountId;
   }
 
@@ -207,7 +207,7 @@ public class AccountDim implements DataTable {
     return this.subaccount1;
   }
 
-  public Integer getSubaccount1Id() {
+  public Long getSubaccount1Id() {
     return this.subaccount1Id;
   }
 
@@ -215,7 +215,7 @@ public class AccountDim implements DataTable {
     return this.subaccount2;
   }
 
-  public Integer getSubaccount2Id() {
+  public Long getSubaccount2Id() {
     return this.subaccount2Id;
   }
 
@@ -223,7 +223,7 @@ public class AccountDim implements DataTable {
     return this.subaccount3;
   }
 
-  public Integer getSubaccount3Id() {
+  public Long getSubaccount3Id() {
     return this.subaccount3Id;
   }
 
@@ -231,7 +231,7 @@ public class AccountDim implements DataTable {
     return this.subaccount4;
   }
 
-  public Integer getSubaccount4Id() {
+  public Long getSubaccount4Id() {
     return this.subaccount4Id;
   }
 
@@ -239,7 +239,7 @@ public class AccountDim implements DataTable {
     return this.subaccount5;
   }
 
-  public Integer getSubaccount5Id() {
+  public Long getSubaccount5Id() {
     return this.subaccount5Id;
   }
 
@@ -247,7 +247,7 @@ public class AccountDim implements DataTable {
     return this.subaccount6;
   }
 
-  public Integer getSubaccount6Id() {
+  public Long getSubaccount6Id() {
     return this.subaccount6Id;
   }
 
@@ -255,7 +255,7 @@ public class AccountDim implements DataTable {
     return this.subaccount7;
   }
 
-  public Integer getSubaccount7Id() {
+  public Long getSubaccount7Id() {
     return this.subaccount7Id;
   }
 
@@ -263,7 +263,7 @@ public class AccountDim implements DataTable {
     return this.subaccount8;
   }
 
-  public Integer getSubaccount8Id() {
+  public Long getSubaccount8Id() {
     return this.subaccount8Id;
   }
 
@@ -271,7 +271,7 @@ public class AccountDim implements DataTable {
     return this.subaccount9;
   }
 
-  public Integer getSubaccount9Id() {
+  public Long getSubaccount9Id() {
     return this.subaccount9Id;
   }
 
@@ -279,7 +279,7 @@ public class AccountDim implements DataTable {
     return this.subaccount10;
   }
 
-  public Integer getSubaccount10Id() {
+  public Long getSubaccount10Id() {
     return this.subaccount10Id;
   }
 
@@ -287,7 +287,7 @@ public class AccountDim implements DataTable {
     return this.subaccount11;
   }
 
-  public Integer getSubaccount11Id() {
+  public Long getSubaccount11Id() {
     return this.subaccount11Id;
   }
 
@@ -295,7 +295,7 @@ public class AccountDim implements DataTable {
     return this.subaccount12;
   }
 
-  public Integer getSubaccount12Id() {
+  public Long getSubaccount12Id() {
     return this.subaccount12Id;
   }
 
@@ -303,7 +303,7 @@ public class AccountDim implements DataTable {
     return this.subaccount13;
   }
 
-  public Integer getSubaccount13Id() {
+  public Long getSubaccount13Id() {
     return this.subaccount13Id;
   }
 
@@ -311,7 +311,7 @@ public class AccountDim implements DataTable {
     return this.subaccount14;
   }
 
-  public Integer getSubaccount14Id() {
+  public Long getSubaccount14Id() {
     return this.subaccount14Id;
   }
 
@@ -319,7 +319,7 @@ public class AccountDim implements DataTable {
     return this.subaccount15;
   }
 
-  public Integer getSubaccount15Id() {
+  public Long getSubaccount15Id() {
     return this.subaccount15Id;
   }
 

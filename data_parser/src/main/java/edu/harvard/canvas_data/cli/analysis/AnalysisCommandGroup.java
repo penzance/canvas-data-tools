@@ -17,7 +17,8 @@ import edu.harvard.data.client.canvas.api.UnexpectedApiResponseException;
 public class AnalysisCommandGroup implements Command {
 
   @Argument(handler = SubCommandHandler.class, usage = "Analysis job commands.")
-  @SubCommands({ @SubCommand(name = "requests", impl = RequestHistogramCommand.class) })
+  @SubCommands({ @SubCommand(name = "requests", impl = RequestHistogramCommand.class),
+    @SubCommand(name = "cloud", impl = WordCloudCommand.class) })
   public Command cmd;
 
   @Override
