@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.csv.CSVRecord;
+
 import edu.harvard.data.client.DataTable;
 import edu.harvard.data.client.TableFormat;
 
@@ -16,47 +17,42 @@ public class SubmissionCommentParticipantFact implements DataTable {
   private Long courseId;
   private Long enrollmentTermId;
   private Long courseAccountId;
-  private Long userAccountId;
   private Long enrollmentRollupId;
 
   public SubmissionCommentParticipantFact(final TableFormat format, final CSVRecord record) {
-    String $submissionCommentParticipantId = record.get(0);
+    final String $submissionCommentParticipantId = record.get(0);
     if ($submissionCommentParticipantId != null && $submissionCommentParticipantId.length() > 0) {
       this.submissionCommentParticipantId = Long.valueOf($submissionCommentParticipantId);
     }
-    String $submissionCommentId = record.get(1);
+    final String $submissionCommentId = record.get(1);
     if ($submissionCommentId != null && $submissionCommentId.length() > 0) {
       this.submissionCommentId = Long.valueOf($submissionCommentId);
     }
-    String $userId = record.get(2);
+    final String $userId = record.get(2);
     if ($userId != null && $userId.length() > 0) {
       this.userId = Long.valueOf($userId);
     }
-    String $submissionId = record.get(3);
+    final String $submissionId = record.get(3);
     if ($submissionId != null && $submissionId.length() > 0) {
       this.submissionId = Long.valueOf($submissionId);
     }
-    String $assignmentId = record.get(4);
+    final String $assignmentId = record.get(4);
     if ($assignmentId != null && $assignmentId.length() > 0) {
       this.assignmentId = Long.valueOf($assignmentId);
     }
-    String $courseId = record.get(5);
+    final String $courseId = record.get(5);
     if ($courseId != null && $courseId.length() > 0) {
       this.courseId = Long.valueOf($courseId);
     }
-    String $enrollmentTermId = record.get(6);
+    final String $enrollmentTermId = record.get(6);
     if ($enrollmentTermId != null && $enrollmentTermId.length() > 0) {
       this.enrollmentTermId = Long.valueOf($enrollmentTermId);
     }
-    String $courseAccountId = record.get(7);
+    final String $courseAccountId = record.get(7);
     if ($courseAccountId != null && $courseAccountId.length() > 0) {
       this.courseAccountId = Long.valueOf($courseAccountId);
     }
-    String $userAccountId = record.get(8);
-    if ($userAccountId != null && $userAccountId.length() > 0) {
-      this.userAccountId = Long.valueOf($userAccountId);
-    }
-    String $enrollmentRollupId = record.get(9);
+    final String $enrollmentRollupId = record.get(8);
     if ($enrollmentRollupId != null && $enrollmentRollupId.length() > 0) {
       this.enrollmentRollupId = Long.valueOf($enrollmentRollupId);
     }
@@ -94,10 +90,6 @@ public class SubmissionCommentParticipantFact implements DataTable {
     return this.courseAccountId;
   }
 
-  public Long getUserAccountId() {
-    return this.userAccountId;
-  }
-
   public Long getEnrollmentRollupId() {
     return this.enrollmentRollupId;
   }
@@ -113,23 +105,21 @@ public class SubmissionCommentParticipantFact implements DataTable {
     fields.add(courseId);
     fields.add(enrollmentTermId);
     fields.add(courseAccountId);
-    fields.add(userAccountId);
     fields.add(enrollmentRollupId);
     return fields;
   }
 
   public static List<String> getFieldNames() {
     final List<String> fields = new ArrayList<String>();
-      fields.add("submission_comment_participant_id");
-      fields.add("submission_comment_id");
-      fields.add("user_id");
-      fields.add("submission_id");
-      fields.add("assignment_id");
-      fields.add("course_id");
-      fields.add("enrollment_term_id");
-      fields.add("course_account_id");
-      fields.add("user_account_id");
-      fields.add("enrollment_rollup_id");
+    fields.add("submission_comment_participant_id");
+    fields.add("submission_comment_id");
+    fields.add("user_id");
+    fields.add("submission_id");
+    fields.add("assignment_id");
+    fields.add("course_id");
+    fields.add("enrollment_term_id");
+    fields.add("course_account_id");
+    fields.add("enrollment_rollup_id");
     return fields;
   }
 }

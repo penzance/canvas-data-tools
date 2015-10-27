@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.csv.CSVRecord;
+
 import edu.harvard.data.client.DataTable;
 import edu.harvard.data.client.TableFormat;
 
@@ -15,7 +16,6 @@ public class SubmissionFact implements DataTable {
   private Long userId;
   private Long graderId;
   private Long courseAccountId;
-  private Long userAccountId;
   private Long enrollmentRollupId;
   private Double score;
   private Double publishedScore;
@@ -23,55 +23,51 @@ public class SubmissionFact implements DataTable {
   private Integer submissionCommentsCount;
 
   public SubmissionFact(final TableFormat format, final CSVRecord record) {
-    String $submissionId = record.get(0);
+    final String $submissionId = record.get(0);
     if ($submissionId != null && $submissionId.length() > 0) {
       this.submissionId = Long.valueOf($submissionId);
     }
-    String $assignmentId = record.get(1);
+    final String $assignmentId = record.get(1);
     if ($assignmentId != null && $assignmentId.length() > 0) {
       this.assignmentId = Long.valueOf($assignmentId);
     }
-    String $courseId = record.get(2);
+    final String $courseId = record.get(2);
     if ($courseId != null && $courseId.length() > 0) {
       this.courseId = Long.valueOf($courseId);
     }
-    String $enrollmentTermId = record.get(3);
+    final String $enrollmentTermId = record.get(3);
     if ($enrollmentTermId != null && $enrollmentTermId.length() > 0) {
       this.enrollmentTermId = Long.valueOf($enrollmentTermId);
     }
-    String $userId = record.get(4);
+    final String $userId = record.get(4);
     if ($userId != null && $userId.length() > 0) {
       this.userId = Long.valueOf($userId);
     }
-    String $graderId = record.get(5);
+    final String $graderId = record.get(5);
     if ($graderId != null && $graderId.length() > 0) {
       this.graderId = Long.valueOf($graderId);
     }
-    String $courseAccountId = record.get(6);
+    final String $courseAccountId = record.get(6);
     if ($courseAccountId != null && $courseAccountId.length() > 0) {
       this.courseAccountId = Long.valueOf($courseAccountId);
     }
-    String $userAccountId = record.get(7);
-    if ($userAccountId != null && $userAccountId.length() > 0) {
-      this.userAccountId = Long.valueOf($userAccountId);
-    }
-    String $enrollmentRollupId = record.get(8);
+    final String $enrollmentRollupId = record.get(7);
     if ($enrollmentRollupId != null && $enrollmentRollupId.length() > 0) {
       this.enrollmentRollupId = Long.valueOf($enrollmentRollupId);
     }
-    String $score = record.get(9);
+    final String $score = record.get(8);
     if ($score != null && $score.length() > 0) {
       this.score = Double.valueOf($score);
     }
-    String $publishedScore = record.get(10);
+    final String $publishedScore = record.get(9);
     if ($publishedScore != null && $publishedScore.length() > 0) {
       this.publishedScore = Double.valueOf($publishedScore);
     }
-    String $whatIfScore = record.get(11);
+    final String $whatIfScore = record.get(10);
     if ($whatIfScore != null && $whatIfScore.length() > 0) {
       this.whatIfScore = Double.valueOf($whatIfScore);
     }
-    String $submissionCommentsCount = record.get(12);
+    final String $submissionCommentsCount = record.get(11);
     if ($submissionCommentsCount != null && $submissionCommentsCount.length() > 0) {
       this.submissionCommentsCount = Integer.valueOf($submissionCommentsCount);
     }
@@ -105,10 +101,6 @@ public class SubmissionFact implements DataTable {
     return this.courseAccountId;
   }
 
-  public Long getUserAccountId() {
-    return this.userAccountId;
-  }
-
   public Long getEnrollmentRollupId() {
     return this.enrollmentRollupId;
   }
@@ -139,7 +131,6 @@ public class SubmissionFact implements DataTable {
     fields.add(userId);
     fields.add(graderId);
     fields.add(courseAccountId);
-    fields.add(userAccountId);
     fields.add(enrollmentRollupId);
     fields.add(score);
     fields.add(publishedScore);
@@ -150,19 +141,18 @@ public class SubmissionFact implements DataTable {
 
   public static List<String> getFieldNames() {
     final List<String> fields = new ArrayList<String>();
-      fields.add("submission_id");
-      fields.add("assignment_id");
-      fields.add("course_id");
-      fields.add("enrollment_term_id");
-      fields.add("user_id");
-      fields.add("grader_id");
-      fields.add("course_account_id");
-      fields.add("user_account_id");
-      fields.add("enrollment_rollup_id");
-      fields.add("score");
-      fields.add("published_score");
-      fields.add("what_if_score");
-      fields.add("submission_comments_count");
+    fields.add("submission_id");
+    fields.add("assignment_id");
+    fields.add("course_id");
+    fields.add("enrollment_term_id");
+    fields.add("user_id");
+    fields.add("grader_id");
+    fields.add("course_account_id");
+    fields.add("enrollment_rollup_id");
+    fields.add("score");
+    fields.add("published_score");
+    fields.add("what_if_score");
+    fields.add("submission_comments_count");
     return fields;
   }
 }
