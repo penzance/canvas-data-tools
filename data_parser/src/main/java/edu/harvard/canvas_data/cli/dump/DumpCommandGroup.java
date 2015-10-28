@@ -20,6 +20,7 @@ public class DumpCommandGroup implements Command {
   @SubCommands({ @SubCommand(name = "info", impl = DumpInfoCommand.class),
     @SubCommand(name = "list", impl = ListDumpsCommand.class),
     @SubCommand(name = "listnew", impl = ListNewDumpsCommand.class),
+    @SubCommand(name = "schema", impl = GetSchemaCommand.class),
     @SubCommand(name = "tablehistory", impl = TableHistoryCommand.class),
     @SubCommand(name = "archive", impl = ArchiveDumpCommand.class),
     @SubCommand(name = "download", impl = DownloadDumpCommand.class),
