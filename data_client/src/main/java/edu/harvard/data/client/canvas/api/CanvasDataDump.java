@@ -18,6 +18,7 @@ public class CanvasDataDump {
   private final Date expires;
   private final Date createdAt;
   private final Date updatedAt;
+  private final String schemaVersion;
   private final Map<String, CanvasDataArtifact> artifactsByTable;
 
   @JsonCreator
@@ -28,6 +29,7 @@ public class CanvasDataDump {
       @JsonProperty("finished") final boolean finished, @JsonProperty("expires") final Date expires,
       @JsonProperty("createdAt") final Date createdAt,
       @JsonProperty("updatedAt") final Date updatedAt,
+      @JsonProperty("schemaVersion") final String schemaVersion,
       @JsonProperty("artifactsByTable") final Map<String, CanvasDataArtifact> artifactsByTable) {
     this.dumpId = dumpId;
     this.sequence = sequence;
@@ -37,6 +39,7 @@ public class CanvasDataDump {
     this.expires = expires;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.schemaVersion = schemaVersion;
     this.artifactsByTable = artifactsByTable;
   }
 
@@ -72,6 +75,10 @@ public class CanvasDataDump {
     return updatedAt;
   }
 
+  public String getSchemaVersion() {
+    return schemaVersion;
+  }
+
   public Map<String, CanvasDataArtifact> getArtifactsByTable() {
     return Collections.unmodifiableMap(artifactsByTable);
   }
@@ -94,9 +101,9 @@ public class CanvasDataDump {
 
   @Override
   public String toString() {
-    String str = "sequence:" + sequence + " id:" + dumpId + " account:" + accountId + " tables:"
-        + numFiles + " finished:" + finished + "\n  created:" + createdAt + "\n  updated:"
-        + updatedAt + "\n  expires:" + expires + "\n";
+    String str = "sequence:" + sequence + " id:" + dumpId + " schema version: " + schemaVersion
+        + " account:" + accountId + " tables:" + numFiles + " finished:" + finished + "\n  created:"
+        + createdAt + "\n  updated:" + updatedAt + "\n  expires:" + expires + "\n";
     if (artifactsByTable != null) {
       for (final String key : artifactsByTable.keySet()) {
         final CanvasDataArtifact table = artifactsByTable.get(key);

@@ -50,8 +50,16 @@ public class CanvasApiClient {
   public CanvasDataTableHistory getTableHistory(final String table)
       throws DataConfigurationException, UnexpectedApiResponseException, IOException {
     final JavaType type = typeFactory.constructType(CanvasDataTableHistory.class);
-    final CanvasDataTableHistory history = rest.makeApiCall("/api/account/self/file/byTable/" + table, 200, type);
+    final CanvasDataTableHistory history = rest
+        .makeApiCall("/api/account/self/file/byTable/" + table, 200, type);
     history.setRestUtils(rest);
     return history;
+  }
+
+  public CanvasDataSchema getSchema(final String version)
+      throws DataConfigurationException, UnexpectedApiResponseException, IOException {
+    final JavaType type = typeFactory.constructType(CanvasDataSchema.class);
+    final CanvasDataSchema schema = rest.makeApiCall("/api/schema/" + version, 200, type);
+    return schema;
   }
 }
