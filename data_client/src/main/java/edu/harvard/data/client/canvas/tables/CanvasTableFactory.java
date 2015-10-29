@@ -1,15 +1,18 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
-  import java.io.IOException;
-  import java.nio.file.Path;
+import java.io.IOException;
+import java.nio.file.Path;
 
-  import edu.harvard.data.client.DataTable;
-  import edu.harvard.data.client.DelimitedTableReader;
-  import edu.harvard.data.client.DelimitedTableWriter;
-  import edu.harvard.data.client.TableFactory;
-  import edu.harvard.data.client.TableFormat;
-  import edu.harvard.data.client.TableReader;
-  import edu.harvard.data.client.TableWriter;
+import edu.harvard.data.client.DataTable;
+import edu.harvard.data.client.DelimitedTableReader;
+import edu.harvard.data.client.DelimitedTableWriter;
+import edu.harvard.data.client.TableFactory;
+import edu.harvard.data.client.TableFormat;
+import edu.harvard.data.client.TableReader;
+import edu.harvard.data.client.TableWriter;
 
 public class CanvasTableFactory implements TableFactory {
 
@@ -34,16 +37,12 @@ public class CanvasTableFactory implements TableFactory {
       return new DelimitedTableReader<CourseSectionDim>(CourseSectionDim.class, format, file, "course_section_dim");
     case "course_ui_canvas_navigation_dim":
       return new DelimitedTableReader<CourseUiCanvasNavigationDim>(CourseUiCanvasNavigationDim.class, format, file, "course_ui_canvas_navigation_dim");
-    case "course_ui_canvas_navigation_expanded_dim":
-      return new DelimitedTableReader<CourseUiCanvasNavigationExpandedDim>(CourseUiCanvasNavigationExpandedDim.class, format, file, "course_ui_canvas_navigation_expanded_dim");
     case "course_ui_navigation_dim_dim":
       return new DelimitedTableReader<CourseUiNavigationDimDim>(CourseUiNavigationDimDim.class, format, file, "course_ui_navigation_dim_dim");
     case "course_ui_navigation_item_dim":
       return new DelimitedTableReader<CourseUiNavigationItemDim>(CourseUiNavigationItemDim.class, format, file, "course_ui_navigation_item_dim");
     case "course_ui_navigation_item_fact":
       return new DelimitedTableReader<CourseUiNavigationItemFact>(CourseUiNavigationItemFact.class, format, file, "course_ui_navigation_item_fact");
-    case "date_dim":
-      return new DelimitedTableReader<DateDim>(DateDim.class, format, file, "date_dim");
     case "discussion_entry_dim":
       return new DelimitedTableReader<DiscussionEntryDim>(DiscussionEntryDim.class, format, file, "discussion_entry_dim");
     case "discussion_entry_fact":
@@ -76,14 +75,32 @@ public class CanvasTableFactory implements TableFactory {
       return new DelimitedTableReader<PseudonymFact>(PseudonymFact.class, format, file, "pseudonym_fact");
     case "quiz_dim":
       return new DelimitedTableReader<QuizDim>(QuizDim.class, format, file, "quiz_dim");
+    case "quiz_fact":
+      return new DelimitedTableReader<QuizFact>(QuizFact.class, format, file, "quiz_fact");
+    case "quiz_question_answer_dim":
+      return new DelimitedTableReader<QuizQuestionAnswerDim>(QuizQuestionAnswerDim.class, format, file, "quiz_question_answer_dim");
+    case "quiz_question_answer_fact":
+      return new DelimitedTableReader<QuizQuestionAnswerFact>(QuizQuestionAnswerFact.class, format, file, "quiz_question_answer_fact");
+    case "quiz_question_dim":
+      return new DelimitedTableReader<QuizQuestionDim>(QuizQuestionDim.class, format, file, "quiz_question_dim");
+    case "quiz_question_fact":
+      return new DelimitedTableReader<QuizQuestionFact>(QuizQuestionFact.class, format, file, "quiz_question_fact");
+    case "quiz_question_group_dim":
+      return new DelimitedTableReader<QuizQuestionGroupDim>(QuizQuestionGroupDim.class, format, file, "quiz_question_group_dim");
+    case "quiz_question_group_fact":
+      return new DelimitedTableReader<QuizQuestionGroupFact>(QuizQuestionGroupFact.class, format, file, "quiz_question_group_fact");
+    case "quiz_submission_dim":
+      return new DelimitedTableReader<QuizSubmissionDim>(QuizSubmissionDim.class, format, file, "quiz_submission_dim");
     case "quiz_submission_fact":
       return new DelimitedTableReader<QuizSubmissionFact>(QuizSubmissionFact.class, format, file, "quiz_submission_fact");
+    case "quiz_submission_historical_dim":
+      return new DelimitedTableReader<QuizSubmissionHistoricalDim>(QuizSubmissionHistoricalDim.class, format, file, "quiz_submission_historical_dim");
+    case "quiz_submission_historical_fact":
+      return new DelimitedTableReader<QuizSubmissionHistoricalFact>(QuizSubmissionHistoricalFact.class, format, file, "quiz_submission_historical_fact");
     case "requests":
       return new DelimitedTableReader<Requests>(Requests.class, format, file, "requests");
     case "role_dim":
       return new DelimitedTableReader<RoleDim>(RoleDim.class, format, file, "role_dim");
-    case "role_expanded_dim":
-      return new DelimitedTableReader<RoleExpandedDim>(RoleExpandedDim.class, format, file, "role_expanded_dim");
     case "submission_comment_dim":
       return new DelimitedTableReader<SubmissionCommentDim>(SubmissionCommentDim.class, format, file, "submission_comment_dim");
     case "submission_comment_fact":
@@ -98,8 +115,6 @@ public class CanvasTableFactory implements TableFactory {
       return new DelimitedTableReader<SubmissionFact>(SubmissionFact.class, format, file, "submission_fact");
     case "user_dim":
       return new DelimitedTableReader<UserDim>(UserDim.class, format, file, "user_dim");
-    case "user_expanded_dim":
-      return new DelimitedTableReader<UserExpandedDim>(UserExpandedDim.class, format, file, "user_expanded_dim");
     case "wiki_dim":
       return new DelimitedTableReader<WikiDim>(WikiDim.class, format, file, "wiki_dim");
     case "wiki_fact":
@@ -133,16 +148,12 @@ public class CanvasTableFactory implements TableFactory {
       return new DelimitedTableWriter<CourseSectionDim>(CourseSectionDim.class, format, directory, "course_section_dim");
     case "course_ui_canvas_navigation_dim":
       return new DelimitedTableWriter<CourseUiCanvasNavigationDim>(CourseUiCanvasNavigationDim.class, format, directory, "course_ui_canvas_navigation_dim");
-    case "course_ui_canvas_navigation_expanded_dim":
-      return new DelimitedTableWriter<CourseUiCanvasNavigationExpandedDim>(CourseUiCanvasNavigationExpandedDim.class, format, directory, "course_ui_canvas_navigation_expanded_dim");
     case "course_ui_navigation_dim_dim":
       return new DelimitedTableWriter<CourseUiNavigationDimDim>(CourseUiNavigationDimDim.class, format, directory, "course_ui_navigation_dim_dim");
     case "course_ui_navigation_item_dim":
       return new DelimitedTableWriter<CourseUiNavigationItemDim>(CourseUiNavigationItemDim.class, format, directory, "course_ui_navigation_item_dim");
     case "course_ui_navigation_item_fact":
       return new DelimitedTableWriter<CourseUiNavigationItemFact>(CourseUiNavigationItemFact.class, format, directory, "course_ui_navigation_item_fact");
-    case "date_dim":
-      return new DelimitedTableWriter<DateDim>(DateDim.class, format, directory, "date_dim");
     case "discussion_entry_dim":
       return new DelimitedTableWriter<DiscussionEntryDim>(DiscussionEntryDim.class, format, directory, "discussion_entry_dim");
     case "discussion_entry_fact":
@@ -175,14 +186,32 @@ public class CanvasTableFactory implements TableFactory {
       return new DelimitedTableWriter<PseudonymFact>(PseudonymFact.class, format, directory, "pseudonym_fact");
     case "quiz_dim":
       return new DelimitedTableWriter<QuizDim>(QuizDim.class, format, directory, "quiz_dim");
+    case "quiz_fact":
+      return new DelimitedTableWriter<QuizFact>(QuizFact.class, format, directory, "quiz_fact");
+    case "quiz_question_answer_dim":
+      return new DelimitedTableWriter<QuizQuestionAnswerDim>(QuizQuestionAnswerDim.class, format, directory, "quiz_question_answer_dim");
+    case "quiz_question_answer_fact":
+      return new DelimitedTableWriter<QuizQuestionAnswerFact>(QuizQuestionAnswerFact.class, format, directory, "quiz_question_answer_fact");
+    case "quiz_question_dim":
+      return new DelimitedTableWriter<QuizQuestionDim>(QuizQuestionDim.class, format, directory, "quiz_question_dim");
+    case "quiz_question_fact":
+      return new DelimitedTableWriter<QuizQuestionFact>(QuizQuestionFact.class, format, directory, "quiz_question_fact");
+    case "quiz_question_group_dim":
+      return new DelimitedTableWriter<QuizQuestionGroupDim>(QuizQuestionGroupDim.class, format, directory, "quiz_question_group_dim");
+    case "quiz_question_group_fact":
+      return new DelimitedTableWriter<QuizQuestionGroupFact>(QuizQuestionGroupFact.class, format, directory, "quiz_question_group_fact");
+    case "quiz_submission_dim":
+      return new DelimitedTableWriter<QuizSubmissionDim>(QuizSubmissionDim.class, format, directory, "quiz_submission_dim");
     case "quiz_submission_fact":
       return new DelimitedTableWriter<QuizSubmissionFact>(QuizSubmissionFact.class, format, directory, "quiz_submission_fact");
+    case "quiz_submission_historical_dim":
+      return new DelimitedTableWriter<QuizSubmissionHistoricalDim>(QuizSubmissionHistoricalDim.class, format, directory, "quiz_submission_historical_dim");
+    case "quiz_submission_historical_fact":
+      return new DelimitedTableWriter<QuizSubmissionHistoricalFact>(QuizSubmissionHistoricalFact.class, format, directory, "quiz_submission_historical_fact");
     case "requests":
       return new DelimitedTableWriter<Requests>(Requests.class, format, directory, "requests");
     case "role_dim":
       return new DelimitedTableWriter<RoleDim>(RoleDim.class, format, directory, "role_dim");
-    case "role_expanded_dim":
-      return new DelimitedTableWriter<RoleExpandedDim>(RoleExpandedDim.class, format, directory, "role_expanded_dim");
     case "submission_comment_dim":
       return new DelimitedTableWriter<SubmissionCommentDim>(SubmissionCommentDim.class, format, directory, "submission_comment_dim");
     case "submission_comment_fact":
@@ -197,8 +226,6 @@ public class CanvasTableFactory implements TableFactory {
       return new DelimitedTableWriter<SubmissionFact>(SubmissionFact.class, format, directory, "submission_fact");
     case "user_dim":
       return new DelimitedTableWriter<UserDim>(UserDim.class, format, directory, "user_dim");
-    case "user_expanded_dim":
-      return new DelimitedTableWriter<UserExpandedDim>(UserExpandedDim.class, format, directory, "user_expanded_dim");
     case "wiki_dim":
       return new DelimitedTableWriter<WikiDim>(WikiDim.class, format, directory, "wiki_dim");
     case "wiki_fact":

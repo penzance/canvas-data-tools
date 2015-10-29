@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -57,38 +60,68 @@ public class DiscussionTopicFact implements DataTable {
     }
   }
 
+  /**
+   * Foreign key to the discussion topic dimension for the associated 
+   * discussion topic. 
+   */
   public Long getDiscussionTopicId() {
     return this.discussionTopicId;
   }
 
+  /**
+   * Foreign key to the course dimension 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * Foreign Key to enrollment term table 
+   */
   public Long getEnrollmentTermId() {
     return this.enrollmentTermId;
   }
 
+  /**
+   * (currently unpopulated) Foreign key to the account dimension for the 
+   * account associated with the associated course 
+   */
   public Long getCourseAccountId() {
     return this.courseAccountId;
   }
 
+  /**
+   * Foreign key to the user dimension for the user that created the discussion 
+   * topic. 
+   */
   public Long getUserId() {
     return this.userId;
   }
 
+  /**
+   * Foreign key to the assignment dimension 
+   */
   public Long getAssignmentId() {
     return this.assignmentId;
   }
 
+  /**
+   * Foreign key to the user dimension. (tbd) 
+   */
   public Long getEditorId() {
     return this.editorId;
   }
 
+  /**
+   * Foreign key to the enrollment rollup dimension table 
+   */
   public Long getEnrollmentRollupId() {
     return this.enrollmentRollupId;
   }
 
+  /**
+   * The length of the message in bytes. 
+   */
   public Integer getMessageLength() {
     return this.messageLength;
   }

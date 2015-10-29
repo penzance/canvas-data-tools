@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -52,34 +55,58 @@ public class EnrollmentFact implements DataTable {
     }
   }
 
+  /**
+   * Foreign key for the attributes of the enrollment 
+   */
   public Long getEnrollmentId() {
     return this.enrollmentId;
   }
 
+  /**
+   * Foreign key to the enrolled user 
+   */
   public Long getUserId() {
     return this.userId;
   }
 
+  /**
+   * Foreign key to the enrolled course 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * Foreign key to the enrollment term table 
+   */
   public Long getEnrollmentTermId() {
     return this.enrollmentTermId;
   }
 
+  /**
+   * Foreign key to the account of the enrolled course 
+   */
   public Long getCourseAccountId() {
     return this.courseAccountId;
   }
 
+  /**
+   * Foreign key to the enrolled section 
+   */
   public Long getCourseSectionId() {
     return this.courseSectionId;
   }
 
+  /**
+   * Final score for the enrollment 
+   */
   public Double getComputedFinalScore() {
     return this.computedFinalScore;
   }
 
+  /**
+   * Current score for the enrollment 
+   */
   public Double getComputedCurrentScore() {
     return this.computedCurrentScore;
   }

@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -124,102 +127,184 @@ public class AssignmentDim implements DataTable {
     }
   }
 
+  /**
+   * Unique surrogate id for the assignment. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key for this record in the Canvas assignments table. 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Foreign key to the course associated with this assignment 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * Title of the assignment 
+   */
   public String getTitle() {
     return this.title;
   }
 
+  /**
+   * Long description of the assignment 
+   */
   public String getDescription() {
     return this.description;
   }
 
+  /**
+   * Timestamp for when the assignment is due 
+   */
   public ZonedDateTime getDueAt() {
     return this.dueAt;
   }
 
+  /**
+   * Timestamp for when the assignment is unlocked or visible to the user 
+   */
   public ZonedDateTime getUnlockAt() {
     return this.unlockAt;
   }
 
+  /**
+   * Timestamp for when the assignment is locked 
+   */
   public ZonedDateTime getLockAt() {
     return this.lockAt;
   }
 
+  /**
+   * Total points possible for the assignment 
+   */
   public Double getPointsPossible() {
     return this.pointsPossible;
   }
 
+  /**
+   * Describes how the assignment will be graded (gpa_scale, pass_fail, 
+   * percent, points, not_graded, letter_grade) 
+   */
   public String getGradingType() {
     return this.gradingType;
   }
 
+  /**
+   * Comma separated list of valid methods for submitting the assignment 
+   * (online_url, media_recording, online_upload, online_quize, external_tool, 
+   * online_text_entry, online_file_upload) 
+   */
   public String getSubmissionTypes() {
     return this.submissionTypes;
   }
 
+  /**
+   * Current worflow state of the assignment.  Possible vaues are unpublished, 
+   * published and deleted 
+   */
   public String getWorkflowState() {
     return this.workflowState;
   }
 
+  /**
+   * Timestamp of the first time the assignment was entered into the system 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Timestamp of the last time the assignment was updated 
+   */
   public ZonedDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
+  /**
+   * The number of pears to assign for review if using algorithmic assignment 
+   */
   public Integer getPeerReviewCount() {
     return this.peerReviewCount;
   }
 
+  /**
+   * Timestamp for when peer reviews should be completed 
+   */
   public ZonedDateTime getPeerReviewsDueAt() {
     return this.peerReviewsDueAt;
   }
 
+  /**
+   * True if all peer reviews have been assigned 
+   */
   public Boolean getPeerReviewsAssigned() {
     return this.peerReviewsAssigned;
   }
 
+  /**
+   * True if peer reviews are enabled for this assignment 
+   */
   public Boolean getPeerReviews() {
     return this.peerReviews;
   }
 
+  /**
+   * True if peer reviews are assigned algorithmically (vs. letting the 
+   * instructor make manual assignments) 
+   */
   public Boolean getAutomaticPeerReviews() {
     return this.automaticPeerReviews;
   }
 
+  /**
+   * True if A specific time for when the assignment is due was not given.  The 
+   * effective due time will be 11:59pm. 
+   */
   public Boolean getAllDay() {
     return this.allDay;
   }
 
+  /**
+   * The date version of the due date if the all_day flag is true. 
+   */
   public LocalDate getAllDayDate() {
     return this.allDayDate;
   }
 
+  /**
+   * tbd 
+   */
   public Boolean getCouldBeLocked() {
     return this.couldBeLocked;
   }
 
+  /**
+   * True if students who submit work as a group will each receive individual 
+   * grades (vs one grade that is copied to all group members) 
+   */
   public Boolean getGradeGroupStudentsIndividually() {
     return this.gradeGroupStudentsIndividually;
   }
 
+  /**
+   * (currently unimplemented, do not use) 
+   */
   public Boolean getAnonymousPeerReviews() {
     return this.anonymousPeerReviews;
   }
 
+  /**
+   * Student cannot see grades left on the assignment. 
+   */
   public Boolean getMuted() {
     return this.muted;
   }

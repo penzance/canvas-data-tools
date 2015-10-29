@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -27,6 +30,7 @@ public class SubmissionDim implements DataTable {
   private Boolean hasRubricAssessment;
   private Integer attempt;
   private Boolean hasAdminComment;
+  private Long assignmentId;
 
   public SubmissionDim(final TableFormat format, final CSVRecord record) {
     String $id = record.get(0);
@@ -83,78 +87,146 @@ public class SubmissionDim implements DataTable {
     if ($hasAdminComment != null && $hasAdminComment.length() > 0) {
       this.hasAdminComment = Boolean.valueOf($hasAdminComment);
     }
+    String $assignmentId = record.get(18);
+    if ($assignmentId != null && $assignmentId.length() > 0) {
+      this.assignmentId = Long.valueOf($assignmentId);
+    }
   }
 
+  /**
+   * Unique surrogate id for the submission. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key of this record in the Canvas submissions table 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Text content for the submission. 
+   */
   public String getBody() {
     return this.body;
   }
 
+  /**
+   * URL content for the submission 
+   */
   public String getUrl() {
     return this.url;
   }
 
+  /**
+   * Letter grade mapped from the score by the grading scheme 
+   */
   public String getGrade() {
     return this.grade;
   }
 
+  /**
+   * Timestamp of when the submission was submitted. 
+   */
   public ZonedDateTime getSubmittedAt() {
     return this.submittedAt;
   }
 
+  /**
+   * Type of subimission  (online_url, media_recording, online_upload, 
+   * online_quize, external_tool, online_text_entry, online_file_upload, 
+   * discussion_topic) 
+   */
   public String getSubmissionType() {
     return this.submissionType;
   }
 
+  /**
+   * Workflow state for submission lifetime values (unsubmitted, submitted, 
+   * graded, pending_review) 
+   */
   public String getWorkflowState() {
     return this.workflowState;
   }
 
+  /**
+   * Timestamp of when the submission was created 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Timestamp of when the submission was last updated 
+   */
   public ZonedDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
+  /**
+   * tbd 
+   */
   public Boolean getProcessed() {
     return this.processed;
   }
 
+  /**
+   * tbd 
+   */
   public Integer getProcessAttempts() {
     return this.processAttempts;
   }
 
+  /**
+   * tbd 
+   */
   public Boolean getGradeMatchesCurrentSubmission() {
     return this.gradeMatchesCurrentSubmission;
   }
 
+  /**
+   * tbd 
+   */
   public String getPublishedGrade() {
     return this.publishedGrade;
   }
 
+  /**
+   * Timestamp of when the submission was graded 
+   */
   public ZonedDateTime getGradedAt() {
     return this.gradedAt;
   }
 
+  /**
+   * tbd 
+   */
   public Boolean getHasRubricAssessment() {
     return this.hasRubricAssessment;
   }
 
+  /**
+   * The number of attempts made including this one. 
+   */
   public Integer getAttempt() {
     return this.attempt;
   }
 
+  /**
+   * tbd 
+   */
   public Boolean getHasAdminComment() {
     return this.hasAdminComment;
+  }
+
+  /**
+   * Foreign key to assignment dimension 
+   */
+  public Long getAssignmentId() {
+    return this.assignmentId;
   }
 
   @Override
@@ -178,6 +250,7 @@ public class SubmissionDim implements DataTable {
     fields.add(hasRubricAssessment);
     fields.add(attempt);
     fields.add(hasAdminComment);
+    fields.add(assignmentId);
     return fields;
   }
 
@@ -201,6 +274,7 @@ public class SubmissionDim implements DataTable {
       fields.add("has_rubric_assessment");
       fields.add("attempt");
       fields.add("has_admin_comment");
+      fields.add("assignment_id");
     return fields;
   }
 }

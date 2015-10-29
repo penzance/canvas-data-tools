@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -42,26 +45,47 @@ public class ExternalToolActivationFact implements DataTable {
     }
   }
 
+  /**
+   * Foreign key to the external_tool_activation_dim dimension with attribute 
+   * for this activation 
+   */
   public Long getExternalToolActivationId() {
     return this.externalToolActivationId;
   }
 
+  /**
+   * Foreign key to the course if this tool was activated in a course 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * Foreign key to the account this tool was activatated in if it was 
+   * activated in an account 
+   */
   public Long getAccountId() {
     return this.accountId;
   }
 
+  /**
+   * Foreign key to the root account for this data 
+   */
   public Long getRootAccountId() {
     return this.rootAccountId;
   }
 
+  /**
+   * Foreign key to the course's enrollment term if this tool was activated in 
+   * a course 
+   */
   public Long getEnrollmentTermId() {
     return this.enrollmentTermId;
   }
 
+  /**
+   * Foreign key to the course's account if this tool was activated in a course 
+   */
   public Long getCourseAccountId() {
     return this.courseAccountId;
   }

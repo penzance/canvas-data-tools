@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -62,58 +65,103 @@ public class GroupDim implements DataTable {
     }
   }
 
+  /**
+   * Unique surrogate id for the group. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key to the groups table in canvas. 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Name of the group. 
+   */
   public String getName() {
     return this.name;
   }
 
+  /**
+   * Description of the group. 
+   */
   public String getDescription() {
     return this.description;
   }
 
+  /**
+   * Timestamp when the group was first saved in the system. 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Timestamp when the group was last updated in the system. 
+   */
   public ZonedDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
+  /**
+   * Timestamp when the group was deleted. 
+   */
   public ZonedDateTime getDeletedAt() {
     return this.deletedAt;
   }
 
+  /**
+   * True if the group contents are accessible to public. 
+   */
   public Boolean getIsPublic() {
     return this.isPublic;
   }
 
+  /**
+   * Workflow state for group.(values: deleted,active) 
+   */
   public String getWorkflowState() {
     return this.workflowState;
   }
 
+  /**
+   * The context type to which the group belongs to. For example- Accounts, 
+   * Courses etc. 
+   */
   public String getContextType() {
     return this.contextType;
   }
 
+  /**
+   * Group description by the users. 
+   */
   public String getCategory() {
     return this.category;
   }
 
+  /**
+   * Permissions required to join a group. For example, it can be 
+   * invitation-only or auto. 
+   */
   public String getJoinLevel() {
     return this.joinLevel;
   }
 
+  /**
+   * Default view for groups is the feed. 
+   */
   public String getDefaultView() {
     return this.defaultView;
   }
 
+  /**
+   * Correlated id for the record for this group in the SIS system (assuming 
+   * SIS integration is configured) 
+   */
   public Long getSisSourceId() {
     return this.sisSourceId;
   }

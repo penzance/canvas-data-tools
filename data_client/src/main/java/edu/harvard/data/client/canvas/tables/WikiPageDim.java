@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -58,50 +61,88 @@ public class WikiPageDim implements DataTable {
     }
   }
 
+  /**
+   * Unique id for the wiki pages. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key for the wiki pages table. 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Title of the wiki page. 
+   */
   public String getTitle() {
     return this.title;
   }
 
+  /**
+   * Body of the wiki page. Redshift will only load the first 256 bytes of the 
+   * body. 
+   */
   public String getBody() {
     return this.body;
   }
 
+  /**
+   * Current state the wiki is in. For Example, active, unpublished, deleted. 
+   */
   public String getWorkflowState() {
     return this.workflowState;
   }
 
+  /**
+   * Timestamp when the wiki page was created in the system. 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Timestamp when the wiki page was last updated in the system. 
+   */
   public ZonedDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
+  /**
+   * URL for the wiki page. 
+   */
   public String getUrl() {
     return this.url;
   }
 
+  /**
+   * Editing protection for the wiki page. It is false by default. 
+   */
   public Boolean getProtectedEditing() {
     return this.protectedEditing;
   }
 
+  /**
+   * Users or roles who can edit a wiki page. 
+   */
   public String getEditingRoles() {
     return this.editingRoles;
   }
 
+  /**
+   * Timestamp the wiki page was last revised in the system. 
+   */
   public ZonedDateTime getRevisedAt() {
     return this.revisedAt;
   }
 
+  /**
+   * True if the wiki page can be locked. This prevents it from being visible 
+   * to others until ready. 
+   */
   public Boolean getCouldBeLocked() {
     return this.couldBeLocked;
   }

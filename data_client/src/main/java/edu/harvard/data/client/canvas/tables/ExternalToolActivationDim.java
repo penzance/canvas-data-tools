@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -62,54 +65,96 @@ public class ExternalToolActivationDim implements DataTable {
     }
   }
 
+  /**
+   * Unique surrogate id for tool activations 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key for this record in the context_external_tools table in the 
+   * Canvas database 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Foreign key to the course if this tool was activated in a course 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * Foreign key to the account this tool was activatated in if it was 
+   * activated in an account 
+   */
   public Long getAccountId() {
     return this.accountId;
   }
 
+  /**
+   * The type of object the tool was activated in, (course or account) 
+   */
   public String getActivationTargetType() {
     return this.activationTargetType;
   }
 
+  /**
+   * The URL to where the tool may launch to 
+   */
   public String getUrl() {
     return this.url;
   }
 
+  /**
+   * The name of tool activation as entered by the user 
+   */
   public String getName() {
     return this.name;
   }
 
+  /**
+   * The description of the tool activation as entered by the user 
+   */
   public String getDescription() {
     return this.description;
   }
 
+  /**
+   * Workflow state for activation (active, deleted) 
+   */
   public String getWorkflowState() {
     return this.workflowState;
   }
 
+  /**
+   * Privacy setting for activation (name_only, email_only, anonymous, public) 
+   */
   public String getPrivacyLevel() {
     return this.privacyLevel;
   }
 
+  /**
+   * Timestamp when the activation was created 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Timestamp when the activation was last updated 
+   */
   public ZonedDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
+  /**
+   * The tool id received from the external tool. May be missing if the tool 
+   * does not send an id. 
+   */
   public String getToolId() {
     return this.toolId;
   }

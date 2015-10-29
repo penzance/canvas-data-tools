@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -47,30 +50,52 @@ public class GroupFact implements DataTable {
     }
   }
 
+  /**
+   * Foreign key to the group dimension for a particular group. 
+   */
   public Long getGroupId() {
     return this.groupId;
   }
 
+  /**
+   * Foreign key to course dimension. 
+   */
   public Long getParentCourseId() {
     return this.parentCourseId;
   }
 
+  /**
+   * Foreign key to accounts table. 
+   */
   public Long getParentAccountId() {
     return this.parentAccountId;
   }
 
+  /**
+   * Foreign key to the account dimension for the account associated with the 
+   * course to which the group belongs to. 
+   */
   public Long getParentCourseAccountId() {
     return this.parentCourseAccountId;
   }
 
+  /**
+   * Foreign key to the enrollment term table for the parent course. 
+   */
   public Long getEnrollmentTermId() {
     return this.enrollmentTermId;
   }
 
+  /**
+   * Maximum number of users that can be accomodated in a group. 
+   */
   public Integer getMaxMembership() {
     return this.maxMembership;
   }
 
+  /**
+   * Storage Limit allowed per group. 
+   */
   public Long getStorageQuota() {
     return this.storageQuota;
   }

@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -23,6 +26,8 @@ public class EnrollmentDim implements DataTable {
   private ZonedDateTime completedAt;
   private Boolean selfEnrolled;
   private String sisSourceId;
+  private Long courseId;
+  private Long userId;
 
   public EnrollmentDim(final TableFormat format, final CSVRecord record) {
     String $id = record.get(0);
@@ -72,62 +77,129 @@ public class EnrollmentDim implements DataTable {
       this.selfEnrolled = Boolean.valueOf($selfEnrolled);
     }
     this.sisSourceId = record.get(13);
+    String $courseId = record.get(14);
+    if ($courseId != null && $courseId.length() > 0) {
+      this.courseId = Long.valueOf($courseId);
+    }
+    String $userId = record.get(15);
+    if ($userId != null && $userId.length() > 0) {
+      this.userId = Long.valueOf($userId);
+    }
   }
 
+  /**
+   * Unique surrogate id for the enrollment. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key for this record in the Canvas enrollments table 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Root account id associated with this enrollment 
+   */
   public Long getRootAccountId() {
     return this.rootAccountId;
   }
 
+  /**
+   * Foreign key to the course section for this enrollment 
+   */
   public Long getCourseSectionId() {
     return this.courseSectionId;
   }
 
+  /**
+   * Foreign key to the role of the person enrolled in the course 
+   */
   public Long getRoleId() {
     return this.roleId;
   }
 
+  /**
+   * Enrollment type: TaEnrollment, DesignerEnrollment, StudentEnrollment, 
+   * TeacherEnrollment, StudentViewEnrollment, ObserverEnrollment 
+   */
   public String getType() {
     return this.type;
   }
 
+  /**
+   * Workflow state for enrollment: active, completed, rejected, deleted, 
+   * invited, creation_pending 
+   */
   public String getWorkflowState() {
     return this.workflowState;
   }
 
+  /**
+   * Timestamp for when this section was entered into the system. 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Timestamp for when the last time the section was updated 
+   */
   public ZonedDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
+  /**
+   * Enrollment start date 
+   */
   public ZonedDateTime getStartAt() {
     return this.startAt;
   }
 
+  /**
+   * Enrollment end date 
+   */
   public ZonedDateTime getEndAt() {
     return this.endAt;
   }
 
+  /**
+   * Enrollment completed date 
+   */
   public ZonedDateTime getCompletedAt() {
     return this.completedAt;
   }
 
+  /**
+   * Enrollment was created via self-enrollment 
+   */
   public Boolean getSelfEnrolled() {
     return this.selfEnrolled;
   }
 
+  /**
+   * Id of correlated enrollment in the SIS (assuming the SIS is configured 
+   * properly) 
+   */
   public String getSisSourceId() {
     return this.sisSourceId;
+  }
+
+  /**
+   * Foreign key to course for this enrollment 
+   */
+  public Long getCourseId() {
+    return this.courseId;
+  }
+
+  /**
+   * Foreign key to user for the enrollment 
+   */
+  public Long getUserId() {
+    return this.userId;
   }
 
   @Override
@@ -147,6 +219,8 @@ public class EnrollmentDim implements DataTable {
     fields.add(formatter.formatTimestamp(completedAt));
     fields.add(selfEnrolled);
     fields.add(sisSourceId);
+    fields.add(courseId);
+    fields.add(userId);
     return fields;
   }
 
@@ -166,6 +240,8 @@ public class EnrollmentDim implements DataTable {
       fields.add("completed_at");
       fields.add("self_enrolled");
       fields.add("sis_source_id");
+      fields.add("course_id");
+      fields.add("user_id");
     return fields;
   }
 }

@@ -11,7 +11,7 @@ import org.apache.commons.csv.CSVRecord;
 import edu.harvard.data.client.DataTable;
 import edu.harvard.data.client.TableFormat;
 
-public class QuizSubmissionFact implements DataTable {
+public class QuizSubmissionHistoricalFact implements DataTable {
   private Double score;
   private Double keptScore;
   private ZonedDateTime date;
@@ -23,7 +23,7 @@ public class QuizSubmissionFact implements DataTable {
   private Long userId;
   private Long submissionId;
   private Long enrollmentRollupId;
-  private Long quizSubmissionId;
+  private Long quizSubmissionHistoricalId;
   private Double quizPointsPossible;
   private Double scoreBeforeRegrade;
   private Double fudgePoints;
@@ -32,7 +32,7 @@ public class QuizSubmissionFact implements DataTable {
   private Integer extraTime;
   private Integer timeTaken;
 
-  public QuizSubmissionFact(final TableFormat format, final CSVRecord record) {
+  public QuizSubmissionHistoricalFact(final TableFormat format, final CSVRecord record) {
     String $score = record.get(0);
     if ($score != null && $score.length() > 0) {
       this.score = Double.valueOf($score);
@@ -77,9 +77,9 @@ public class QuizSubmissionFact implements DataTable {
     if ($enrollmentRollupId != null && $enrollmentRollupId.length() > 0) {
       this.enrollmentRollupId = Long.valueOf($enrollmentRollupId);
     }
-    String $quizSubmissionId = record.get(11);
-    if ($quizSubmissionId != null && $quizSubmissionId.length() > 0) {
-      this.quizSubmissionId = Long.valueOf($quizSubmissionId);
+    String $quizSubmissionHistoricalId = record.get(11);
+    if ($quizSubmissionHistoricalId != null && $quizSubmissionHistoricalId.length() > 0) {
+      this.quizSubmissionHistoricalId = Long.valueOf($quizSubmissionHistoricalId);
     }
     String $quizPointsPossible = record.get(12);
     if ($quizPointsPossible != null && $quizPointsPossible.length() > 0) {
@@ -205,8 +205,8 @@ public class QuizSubmissionFact implements DataTable {
   /**
    * Foreign key to the quiz submission dimension table. 
    */
-  public Long getQuizSubmissionId() {
-    return this.quizSubmissionId;
+  public Long getQuizSubmissionHistoricalId() {
+    return this.quizSubmissionHistoricalId;
   }
 
   /**
@@ -276,7 +276,7 @@ public class QuizSubmissionFact implements DataTable {
     fields.add(userId);
     fields.add(submissionId);
     fields.add(enrollmentRollupId);
-    fields.add(quizSubmissionId);
+    fields.add(quizSubmissionHistoricalId);
     fields.add(quizPointsPossible);
     fields.add(scoreBeforeRegrade);
     fields.add(fudgePoints);
@@ -300,7 +300,7 @@ public class QuizSubmissionFact implements DataTable {
       fields.add("user_id");
       fields.add("submission_id");
       fields.add("enrollment_rollup_id");
-      fields.add("quiz_submission_id");
+      fields.add("quiz_submission_historical_id");
       fields.add("quiz_points_possible");
       fields.add("score_before_regrade");
       fields.add("fudge_points");

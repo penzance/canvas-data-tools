@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -29,18 +32,31 @@ public class CourseUiNavigationItemDim implements DataTable {
     }
   }
 
+  /**
+   * Primary key for navigational item 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Foreign key to root account of the course 
+   */
   public Long getRootAccountId() {
     return this.rootAccountId;
   }
 
+  /**
+   * (visible|hidden) Visible if this element is visible, hidden if hidden/not 
+   * available in the navigation 
+   */
   public String getVisible() {
     return this.visible;
   }
 
+  /**
+   * Position in the navigation.  NULL if hidden. 
+   */
   public Integer getPosition() {
     return this.position;
   }

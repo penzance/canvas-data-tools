@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -72,50 +75,86 @@ public class DiscussionEntryFact implements DataTable {
     }
   }
 
+  /**
+   * Foreign key to this entries attributes. 
+   */
   public Long getDiscussionEntryId() {
     return this.discussionEntryId;
   }
 
+  /**
+   * Foreign key to the reply that it is nested underneath. 
+   */
   public Long getParentDiscussionEntryId() {
     return this.parentDiscussionEntryId;
   }
 
+  /**
+   * Foreign key to the user that created this entry. 
+   */
   public Long getUserId() {
     return this.userId;
   }
 
+  /**
+   * Foreign key to associated discussion topic. 
+   */
   public Long getTopicId() {
     return this.topicId;
   }
 
+  /**
+   * Foreign key to associated course. 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * Foreign Key to enrollment term table 
+   */
   public Long getEnrollmentTermId() {
     return this.enrollmentTermId;
   }
 
+  /**
+   * Foreign key to account for associated course. 
+   */
   public Long getCourseAccountId() {
     return this.courseAccountId;
   }
 
+  /**
+   * Foreign key to user that posted the associated discussion topic. 
+   */
   public Long getTopicUserId() {
     return this.topicUserId;
   }
 
+  /**
+   * Foreign key to assignment associated with the entry's discussion topic. 
+   */
   public Long getTopicAssignmentId() {
     return this.topicAssignmentId;
   }
 
+  /**
+   * Foreign key to editor associated with the entry's discussion topic. 
+   */
   public Long getTopicEditorId() {
     return this.topicEditorId;
   }
 
+  /**
+   * Foreign key to the enrollment rollup dimension table 
+   */
   public Long getEnrollmentRollupId() {
     return this.enrollmentRollupId;
   }
 
+  /**
+   * Length of the message in bytes 
+   */
   public Integer getMessageLength() {
     return this.messageLength;
   }

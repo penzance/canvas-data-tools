@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -55,38 +58,66 @@ public class ConversationMessageDim implements DataTable {
     this.body = record.get(8);
   }
 
+  /**
+   * Unique surrogate id for the message. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Original ID for canvas table. 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Parent conversation for this message. 
+   */
   public Long getConversationId() {
     return this.conversationId;
   }
 
+  /**
+   * User id of the author of the message. 
+   */
   public Long getAuthorId() {
     return this.authorId;
   }
 
+  /**
+   * Date and time this message was created. 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * This attribute is true if the system generated this message (e.g. "John 
+   * was added to this conversation") 
+   */
   public Boolean getGenerated() {
     return this.generated;
   }
 
+  /**
+   * True if the message has attachments. 
+   */
   public Boolean getHasAttachments() {
     return this.hasAttachments;
   }
 
+  /**
+   * True if the message has media objects. 
+   */
   public Boolean getHasMediaObjects() {
     return this.hasMediaObjects;
   }
 
+  /**
+   * The content of the message. 
+   */
   public String getBody() {
     return this.body;
   }

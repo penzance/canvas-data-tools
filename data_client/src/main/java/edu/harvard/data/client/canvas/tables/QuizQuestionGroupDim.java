@@ -11,19 +11,16 @@ import org.apache.commons.csv.CSVRecord;
 import edu.harvard.data.client.DataTable;
 import edu.harvard.data.client.TableFormat;
 
-public class RoleDim implements DataTable {
+public class QuizQuestionGroupDim implements DataTable {
   private Long id;
   private Long canvasId;
-  private Long rootAccountId;
-  private Long accountId;
+  private Long quizId;
   private String name;
-  private String baseRoleType;
-  private String workflowState;
+  private Integer position;
   private ZonedDateTime createdAt;
   private ZonedDateTime updatedAt;
-  private ZonedDateTime deletedAt;
 
-  public RoleDim(final TableFormat format, final CSVRecord record) {
+  public QuizQuestionGroupDim(final TableFormat format, final CSVRecord record) {
     String $id = record.get(0);
     if ($id != null && $id.length() > 0) {
       this.id = Long.valueOf($id);
@@ -32,81 +29,73 @@ public class RoleDim implements DataTable {
     if ($canvasId != null && $canvasId.length() > 0) {
       this.canvasId = Long.valueOf($canvasId);
     }
-    String $rootAccountId = record.get(2);
-    if ($rootAccountId != null && $rootAccountId.length() > 0) {
-      this.rootAccountId = Long.valueOf($rootAccountId);
+    String $quizId = record.get(2);
+    if ($quizId != null && $quizId.length() > 0) {
+      this.quizId = Long.valueOf($quizId);
     }
-    String $accountId = record.get(3);
-    if ($accountId != null && $accountId.length() > 0) {
-      this.accountId = Long.valueOf($accountId);
+    this.name = record.get(3);
+    String $position = record.get(4);
+    if ($position != null && $position.length() > 0) {
+      this.position = Integer.valueOf($position);
     }
-    this.name = record.get(4);
-    this.baseRoleType = record.get(5);
-    this.workflowState = record.get(6);
-    String $createdAt = record.get(7);
+    String $createdAt = record.get(5);
     if ($createdAt != null && $createdAt.length() > 0) {
       this.createdAt = ZonedDateTime.parse($createdAt, format.getTimstampFormat());
     }
-    String $updatedAt = record.get(8);
+    String $updatedAt = record.get(6);
     if ($updatedAt != null && $updatedAt.length() > 0) {
       this.updatedAt = ZonedDateTime.parse($updatedAt, format.getTimstampFormat());
-    }
-    String $deletedAt = record.get(9);
-    if ($deletedAt != null && $deletedAt.length() > 0) {
-      this.deletedAt = ZonedDateTime.parse($deletedAt, format.getTimstampFormat());
     }
   }
 
   /**
-   * Unique surrogate id for the role. 
+   * Unique surrogate ID for the quiz group. 
    */
   public Long getId() {
     return this.id;
   }
 
   /**
-   * Primary key for this record in the Canvas roles table 
+   * Primary key for this quiz group in the 'quiz_question_groups' table. 
    */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
-  public Long getRootAccountId() {
-    return this.rootAccountId;
-  }
-
   /**
-   * The foreign key to the account that is in the role 
+   * Foreign key to quiz dimension. 
    */
-  public Long getAccountId() {
-    return this.accountId;
+  public Long getQuizId() {
+    return this.quizId;
   }
 
   /**
-   * The name of role, previously was "role_name" on the enrollments_dim 
+   * Name of the quiz group. 
    */
   public String getName() {
     return this.name;
   }
 
-  public String getBaseRoleType() {
-    return this.baseRoleType;
+  /**
+   * Order in which the questions from this group will be displayed in the quiz 
+   * relative to other questions in the quiz from other groups. 
+   */
+  public Integer getPosition() {
+    return this.position;
   }
 
-  public String getWorkflowState() {
-    return this.workflowState;
-  }
-
+  /**
+   * Time when the quiz question was created. 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Time when the quiz question was last updated. 
+   */
   public ZonedDateTime getUpdatedAt() {
     return this.updatedAt;
-  }
-
-  public ZonedDateTime getDeletedAt() {
-    return this.deletedAt;
   }
 
   @Override
@@ -114,14 +103,11 @@ public class RoleDim implements DataTable {
     final List<Object> fields = new ArrayList<Object>();
     fields.add(id);
     fields.add(canvasId);
-    fields.add(rootAccountId);
-    fields.add(accountId);
+    fields.add(quizId);
     fields.add(name);
-    fields.add(baseRoleType);
-    fields.add(workflowState);
+    fields.add(position);
     fields.add(formatter.formatTimestamp(createdAt));
     fields.add(formatter.formatTimestamp(updatedAt));
-    fields.add(formatter.formatTimestamp(deletedAt));
     return fields;
   }
 
@@ -129,14 +115,11 @@ public class RoleDim implements DataTable {
     final List<String> fields = new ArrayList<String>();
       fields.add("id");
       fields.add("canvas_id");
-      fields.add("root_account_id");
-      fields.add("account_id");
+      fields.add("quiz_id");
       fields.add("name");
-      fields.add("base_role_type");
-      fields.add("workflow_state");
+      fields.add("position");
       fields.add("created_at");
       fields.add("updated_at");
-      fields.add("deleted_at");
     return fields;
   }
 }

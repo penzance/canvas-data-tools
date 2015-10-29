@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -87,90 +90,164 @@ public class Requests implements DataTable {
     this.webApplicationContextId = record.get(21);
   }
 
+  /**
+   * the request ID assigned by the canvas system 
+   */
   public String getId() {
     return this.id;
   }
 
+  /**
+   * timestamp when the request was made in UTC 
+   */
   public ZonedDateTime getTimestamp() {
     return this.timestamp;
   }
 
+  /**
+   * year when the request was made 
+   */
   public String getTimestampYear() {
     return this.timestampYear;
   }
 
+  /**
+   * month when the request was made 
+   */
   public String getTimestampMonth() {
     return this.timestampMonth;
   }
 
+  /**
+   * day when the request was made 
+   */
   public String getTimestampDay() {
     return this.timestampDay;
   }
 
+  /**
+   * The foreign key in user_dim for the user that made the request. 
+   */
   public Long getUserId() {
     return this.userId;
   }
 
+  /**
+   * The foreign key in course_dim for the course that owned the page requested 
+   * (NULL if not applicable) 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * The foreign key in account_dim for the root account on which this request 
+   * was made 
+   */
   public Long getRootAccountId() {
     return this.rootAccountId;
   }
 
+  /**
+   * The foreign key in account_dim for the account the associated course is 
+   * owned by. 
+   */
   public Long getCourseAccountId() {
     return this.courseAccountId;
   }
 
+  /**
+   * Quiz foreign key if page request is for a quiz, otherwise NULL 
+   */
   public Long getQuizId() {
     return this.quizId;
   }
 
+  /**
+   * Discussion foreign key if page request is for a discussion, otherwise NULL 
+   */
   public Long getDiscussionId() {
     return this.discussionId;
   }
 
+  /**
+   * Conversation foreign key if page request is for a conversation, otherwise 
+   * NULL 
+   */
   public Long getConversationId() {
     return this.conversationId;
   }
 
+  /**
+   * Assignment foreign key if page request is for an assingnment, otherwise 
+   * NULL 
+   */
   public Long getAssignmentId() {
     return this.assignmentId;
   }
 
+  /**
+   * first 256 characters of the requested URL 
+   */
   public String getUrl() {
     return this.url;
   }
 
+  /**
+   * first 256 characters of the User Agent header received from the users 
+   * browser/client software. 
+   */
   public String getUserAgent() {
     return this.userAgent;
   }
 
+  /**
+   * HTTP method/verb (GET,PUT,POST etc.) that was sent with the request 
+   */
   public String getHttpMethod() {
     return this.httpMethod;
   }
 
+  /**
+   * IP address that was recorded from the request. 
+   */
   public String getRemoteIp() {
     return this.remoteIp;
   }
 
+  /**
+   * Total time required to service the request in microseconds. 
+   */
   public Long getInteractionMicros() {
     return this.interactionMicros;
   }
 
+  /**
+   * The controller the Canvas web application used to service this request 
+   */
   public String getWebApplicationController() {
     return this.webApplicationController;
   }
 
+  /**
+   * The controller the Canvas web application used to service this request 
+   */
   public String getWebApplicaitonAction() {
     return this.webApplicaitonAction;
   }
 
+  /**
+   * The containing object type the Canvas web application used to service this 
+   * request 
+   */
   public String getWebApplicationContextType() {
     return this.webApplicationContextType;
   }
 
+  /**
+   * The containing object's id the Canvas web application used to service this 
+   * request 
+   */
   public String getWebApplicationContextId() {
     return this.webApplicationContextId;
   }

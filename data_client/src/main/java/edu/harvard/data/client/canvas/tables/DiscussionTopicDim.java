@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -73,62 +76,111 @@ public class DiscussionTopicDim implements DataTable {
     }
   }
 
+  /**
+   * Unique surrogate id for the discussion topic. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key to the dicussion_topics table in Canvas 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Title of the discussion topic 
+   */
   public String getTitle() {
     return this.title;
   }
 
+  /**
+   * Message text for the discussion topic. 
+   */
   public String getMessage() {
     return this.message;
   }
 
+  /**
+   * Discussion topic type.  Two types are default (blank) and announcement. 
+   */
   public String getType() {
     return this.type;
   }
 
+  /**
+   * Workflow state for this discussion topic.  Valid states are unpublished, 
+   * active, locked, deleted, and post_delayed 
+   */
   public String getWorkflowState() {
     return this.workflowState;
   }
 
+  /**
+   * Timestamp of the last reply to this topic. 
+   */
   public ZonedDateTime getLastReplyAt() {
     return this.lastReplyAt;
   }
 
+  /**
+   * Timestamp when the discussion topic was first saved in the system. 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Timestamp when the discussion topic was last updated in the system. 
+   */
   public ZonedDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
+  /**
+   * Timestamp when the discussion topic was/will be delay-posted 
+   */
   public ZonedDateTime getDelayedPostAt() {
     return this.delayedPostAt;
   }
 
+  /**
+   * Timestamp when the discussion topic was posted 
+   */
   public ZonedDateTime getPostedAt() {
     return this.postedAt;
   }
 
+  /**
+   * Timestamp when the discussion topic was deleted. 
+   */
   public ZonedDateTime getDeletedAt() {
     return this.deletedAt;
   }
 
+  /**
+   * Type of discussion topic: default(blank), side_comment, threaded.  
+   * threaded indicates that replies are threaded where side_comment indicates 
+   * that replies in the discussion are flat.  See related Canvas Guide 
+   * https://guides.instructure.com/m/4152/l/60423-how-do-i-create-a-threaded-discussion 
+   */
   public String getDiscussionType() {
     return this.discussionType;
   }
 
+  /**
+   * True if the discussion topic has been pinned 
+   */
   public Boolean getPinned() {
     return this.pinned;
   }
 
+  /**
+   * True if the discussion topic has been locked 
+   */
   public Boolean getLocked() {
     return this.locked;
   }

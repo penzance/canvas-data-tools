@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -49,34 +52,59 @@ public class ConversationDim implements DataTable {
     }
   }
 
+  /**
+   * Unique surrogate id for the conversation. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Original primary key for conversation in the Canvas table 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * True if the conversation has attachments 
+   */
   public Boolean getHasAttachments() {
     return this.hasAttachments;
   }
 
+  /**
+   * True if the conversation has media objects 
+   */
   public Boolean getHasMediaObjects() {
     return this.hasMediaObjects;
   }
 
+  /**
+   * The subject of the conversation 
+   */
   public String getSubject() {
     return this.subject;
   }
 
+  /**
+   * The course that owns this conversation 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * The group that owns this converation (note the group dimension has not 
+   * been implemented yet) 
+   */
   public Long getGroupId() {
     return this.groupId;
   }
 
+  /**
+   * The account this owns this conversation 
+   */
   public Long getAccountId() {
     return this.accountId;
   }

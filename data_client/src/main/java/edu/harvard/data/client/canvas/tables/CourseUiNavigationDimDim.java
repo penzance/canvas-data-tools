@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -77,126 +80,219 @@ public class CourseUiNavigationDimDim implements DataTable {
     this.position29 = record.get(30);
   }
 
+  /**
+   * Primary key.  This table is 1:1 with course_dim 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * Name of the component in position 0 
+   */
   public String getPosition00() {
     return this.position00;
   }
 
+  /**
+   * Name of the component in position 1 
+   */
   public String getPosition01() {
     return this.position01;
   }
 
+  /**
+   * Name of the component in position 2 
+   */
   public String getPosition02() {
     return this.position02;
   }
 
+  /**
+   * Name of the component in position 3 
+   */
   public String getPosition03() {
     return this.position03;
   }
 
+  /**
+   * Name of the component in position 4 
+   */
   public String getPosition04() {
     return this.position04;
   }
 
+  /**
+   * Name of the component in position 5 
+   */
   public String getPosition05() {
     return this.position05;
   }
 
+  /**
+   * Name of the component in position 6 
+   */
   public String getPosition06() {
     return this.position06;
   }
 
+  /**
+   * Name of the component in position 7 
+   */
   public String getPosition07() {
     return this.position07;
   }
 
+  /**
+   * Name of the component in position 8 
+   */
   public String getPosition08() {
     return this.position08;
   }
 
+  /**
+   * Name of the component in position 9 
+   */
   public String getPosition09() {
     return this.position09;
   }
 
+  /**
+   * Name of the component in position 10 
+   */
   public String getPosition10() {
     return this.position10;
   }
 
+  /**
+   * Name of the component in position 11 
+   */
   public String getPosition11() {
     return this.position11;
   }
 
+  /**
+   * Name of the component in position 12 
+   */
   public String getPosition12() {
     return this.position12;
   }
 
+  /**
+   * Name of the component in position 13 
+   */
   public String getPosition13() {
     return this.position13;
   }
 
+  /**
+   * Name of the component in position 14 
+   */
   public String getPosition14() {
     return this.position14;
   }
 
+  /**
+   * Name of the component in position 15 
+   */
   public String getPosition15() {
     return this.position15;
   }
 
+  /**
+   * Name of the component in position 16 
+   */
   public String getPosition16() {
     return this.position16;
   }
 
+  /**
+   * Name of the component in position 17 
+   */
   public String getPosition17() {
     return this.position17;
   }
 
+  /**
+   * Name of the component in position 18 
+   */
   public String getPosition18() {
     return this.position18;
   }
 
+  /**
+   * Name of the component in position 19 
+   */
   public String getPosition19() {
     return this.position19;
   }
 
+  /**
+   * Name of the component in position 20 
+   */
   public String getPosition20() {
     return this.position20;
   }
 
+  /**
+   * Name of the component in position 21 
+   */
   public String getPosition21() {
     return this.position21;
   }
 
+  /**
+   * Name of the component in position 22 
+   */
   public String getPosition22() {
     return this.position22;
   }
 
+  /**
+   * Name of the component in position 23 
+   */
   public String getPosition23() {
     return this.position23;
   }
 
+  /**
+   * Name of the component in position 24 
+   */
   public String getPosition24() {
     return this.position24;
   }
 
+  /**
+   * Name of the component in position 25 
+   */
   public String getPosition25() {
     return this.position25;
   }
 
+  /**
+   * Name of the component in position 26 
+   */
   public String getPosition26() {
     return this.position26;
   }
 
+  /**
+   * Name of the component in position 27 
+   */
   public String getPosition27() {
     return this.position27;
   }
 
+  /**
+   * Name of the component in position 28 
+   */
   public String getPosition28() {
     return this.position28;
   }
 
+  /**
+   * Name of the component in position 29 
+   */
   public String getPosition29() {
     return this.position29;
   }

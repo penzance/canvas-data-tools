@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
   import edu.harvard.data.client.DataTable;
@@ -12,11 +15,9 @@ public enum CanvasTable {
   CourseDim("course_dim", CourseDim.class),
   CourseSectionDim("course_section_dim", CourseSectionDim.class),
   CourseUiCanvasNavigationDim("course_ui_canvas_navigation_dim", CourseUiCanvasNavigationDim.class),
-  CourseUiCanvasNavigationExpandedDim("course_ui_canvas_navigation_expanded_dim", CourseUiCanvasNavigationExpandedDim.class),
   CourseUiNavigationDimDim("course_ui_navigation_dim_dim", CourseUiNavigationDimDim.class),
   CourseUiNavigationItemDim("course_ui_navigation_item_dim", CourseUiNavigationItemDim.class),
   CourseUiNavigationItemFact("course_ui_navigation_item_fact", CourseUiNavigationItemFact.class),
-  DateDim("date_dim", DateDim.class),
   DiscussionEntryDim("discussion_entry_dim", DiscussionEntryDim.class),
   DiscussionEntryFact("discussion_entry_fact", DiscussionEntryFact.class),
   DiscussionTopicDim("discussion_topic_dim", DiscussionTopicDim.class),
@@ -33,10 +34,19 @@ public enum CanvasTable {
   PseudonymDim("pseudonym_dim", PseudonymDim.class),
   PseudonymFact("pseudonym_fact", PseudonymFact.class),
   QuizDim("quiz_dim", QuizDim.class),
+  QuizFact("quiz_fact", QuizFact.class),
+  QuizQuestionAnswerDim("quiz_question_answer_dim", QuizQuestionAnswerDim.class),
+  QuizQuestionAnswerFact("quiz_question_answer_fact", QuizQuestionAnswerFact.class),
+  QuizQuestionDim("quiz_question_dim", QuizQuestionDim.class),
+  QuizQuestionFact("quiz_question_fact", QuizQuestionFact.class),
+  QuizQuestionGroupDim("quiz_question_group_dim", QuizQuestionGroupDim.class),
+  QuizQuestionGroupFact("quiz_question_group_fact", QuizQuestionGroupFact.class),
+  QuizSubmissionDim("quiz_submission_dim", QuizSubmissionDim.class),
   QuizSubmissionFact("quiz_submission_fact", QuizSubmissionFact.class),
+  QuizSubmissionHistoricalDim("quiz_submission_historical_dim", QuizSubmissionHistoricalDim.class),
+  QuizSubmissionHistoricalFact("quiz_submission_historical_fact", QuizSubmissionHistoricalFact.class),
   Requests("requests", Requests.class),
   RoleDim("role_dim", RoleDim.class),
-  RoleExpandedDim("role_expanded_dim", RoleExpandedDim.class),
   SubmissionCommentDim("submission_comment_dim", SubmissionCommentDim.class),
   SubmissionCommentFact("submission_comment_fact", SubmissionCommentFact.class),
   SubmissionCommentParticipantDim("submission_comment_participant_dim", SubmissionCommentParticipantDim.class),
@@ -44,7 +54,6 @@ public enum CanvasTable {
   SubmissionDim("submission_dim", SubmissionDim.class),
   SubmissionFact("submission_fact", SubmissionFact.class),
   UserDim("user_dim", UserDim.class),
-  UserExpandedDim("user_expanded_dim", UserExpandedDim.class),
   WikiDim("wiki_dim", WikiDim.class),
   WikiFact("wiki_fact", WikiFact.class),
   WikiPageDim("wiki_page_dim", WikiPageDim.class),
@@ -77,11 +86,9 @@ public enum CanvasTable {
     case "course_dim": return CourseDim;
     case "course_section_dim": return CourseSectionDim;
     case "course_ui_canvas_navigation_dim": return CourseUiCanvasNavigationDim;
-    case "course_ui_canvas_navigation_expanded_dim": return CourseUiCanvasNavigationExpandedDim;
     case "course_ui_navigation_dim_dim": return CourseUiNavigationDimDim;
     case "course_ui_navigation_item_dim": return CourseUiNavigationItemDim;
     case "course_ui_navigation_item_fact": return CourseUiNavigationItemFact;
-    case "date_dim": return DateDim;
     case "discussion_entry_dim": return DiscussionEntryDim;
     case "discussion_entry_fact": return DiscussionEntryFact;
     case "discussion_topic_dim": return DiscussionTopicDim;
@@ -98,10 +105,19 @@ public enum CanvasTable {
     case "pseudonym_dim": return PseudonymDim;
     case "pseudonym_fact": return PseudonymFact;
     case "quiz_dim": return QuizDim;
+    case "quiz_fact": return QuizFact;
+    case "quiz_question_answer_dim": return QuizQuestionAnswerDim;
+    case "quiz_question_answer_fact": return QuizQuestionAnswerFact;
+    case "quiz_question_dim": return QuizQuestionDim;
+    case "quiz_question_fact": return QuizQuestionFact;
+    case "quiz_question_group_dim": return QuizQuestionGroupDim;
+    case "quiz_question_group_fact": return QuizQuestionGroupFact;
+    case "quiz_submission_dim": return QuizSubmissionDim;
     case "quiz_submission_fact": return QuizSubmissionFact;
+    case "quiz_submission_historical_dim": return QuizSubmissionHistoricalDim;
+    case "quiz_submission_historical_fact": return QuizSubmissionHistoricalFact;
     case "requests": return Requests;
     case "role_dim": return RoleDim;
-    case "role_expanded_dim": return RoleExpandedDim;
     case "submission_comment_dim": return SubmissionCommentDim;
     case "submission_comment_fact": return SubmissionCommentFact;
     case "submission_comment_participant_dim": return SubmissionCommentParticipantDim;
@@ -109,7 +125,6 @@ public enum CanvasTable {
     case "submission_dim": return SubmissionDim;
     case "submission_fact": return SubmissionFact;
     case "user_dim": return UserDim;
-    case "user_expanded_dim": return UserExpandedDim;
     case "wiki_dim": return WikiDim;
     case "wiki_fact": return WikiFact;
     case "wiki_page_dim": return WikiPageDim;

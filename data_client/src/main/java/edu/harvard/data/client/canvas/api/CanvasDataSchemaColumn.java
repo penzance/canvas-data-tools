@@ -12,9 +12,9 @@ public class CanvasDataSchemaColumn {
   private final CanvasDataSchemaDimension dimension;
   private final int length;
   private final Boolean snowflake; // true for:
-                                   // conversation_message_participant.conversation_message_id,
-                                   // conversation_message_participant.conversation_id,
-                                   // conversation_message_participant.user_id
+  // conversation_message_participant.conversation_message_id,
+  // conversation_message_participant.conversation_id,
+  // conversation_message_participant.user_id
   private final String seeAlso;
   private final Boolean sortKey; // true for requests.timestamp
 
@@ -30,7 +30,7 @@ public class CanvasDataSchemaColumn {
     this.name = name;
     this.description = description;
     this.sortKey = sortKey;
-    this.descripton = descripton;
+    this.descripton = descripton == null ? descripton : description;
     this.type = CanvasDataSchemaType.parse(type);
     this.dimension = dimension;
     this.length = length;

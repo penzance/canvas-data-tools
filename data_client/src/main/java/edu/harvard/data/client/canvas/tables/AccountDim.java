@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:09. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -11,7 +14,7 @@ public class AccountDim implements DataTable {
   private Long id;
   private Long canvasId;
   private String name;
-  private Long depth;
+  private Integer depth;
   private String workflowState;
   private String parentAccount;
   private Long parentAccountId;
@@ -63,7 +66,7 @@ public class AccountDim implements DataTable {
     this.name = record.get(2);
     String $depth = record.get(3);
     if ($depth != null && $depth.length() > 0) {
-      this.depth = Long.valueOf($depth);
+      this.depth = Integer.valueOf($depth);
     }
     this.workflowState = record.get(4);
     this.parentAccount = record.get(5);
@@ -159,170 +162,331 @@ public class AccountDim implements DataTable {
     this.sisSourceId = record.get(41);
   }
 
+  /**
+   * Unique surrogate id for an account 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key for this entry in the Canvas accounts table 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Name of the account 
+   */
   public String getName() {
     return this.name;
   }
 
-  public Long getDepth() {
+  /**
+   * Depth of the account in the heirarchy.  The root node is at 0. 
+   */
+  public Integer getDepth() {
     return this.depth;
   }
 
+  /**
+   * Workflow status indicating that account is [deleted] or [active] 
+   */
   public String getWorkflowState() {
     return this.workflowState;
   }
 
+  /**
+   * Name of this account's parent account.  This field will be NULL for the 
+   * root account. 
+   */
   public String getParentAccount() {
     return this.parentAccount;
   }
 
+  /**
+   * Id of this account's parent account.  This field will be NULL for the root 
+   * account. 
+   */
   public Long getParentAccountId() {
     return this.parentAccountId;
   }
 
+  /**
+   * Name of this account's grand parent account.  This field will be NULL for 
+   * the root account and all accounts at level 1. 
+   */
   public String getGrandparentAccount() {
     return this.grandparentAccount;
   }
 
+  /**
+   * Id of this account's grand parent account.  This field will be NULL for 
+   * the root account and all subaccounts at level 1. 
+   */
   public Long getGrandparentAccountId() {
     return this.grandparentAccountId;
   }
 
+  /**
+   * Name of the root account associated with this account. 
+   */
   public String getRootAccount() {
     return this.rootAccount;
   }
 
+  /**
+   * Id of the root account associated with this account. 
+   */
   public Long getRootAccountId() {
     return this.rootAccountId;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 1.  If this account is a 
+   * level 1 account, this will be the name of this account. 
+   */
   public String getSubaccount1() {
     return this.subaccount1;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 1.  If this account is a 
+   * level 1 account, this will be the id of this account. 
+   */
   public Long getSubaccount1Id() {
     return this.subaccount1Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 2.  If this account is a 
+   * level 2 account, subaccount2 will be the name of this account. 
+   */
   public String getSubaccount2() {
     return this.subaccount2;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 2.  If this account is a 
+   * level 2 account, subaccount2_id will be the id of this account. 
+   */
   public Long getSubaccount2Id() {
     return this.subaccount2Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 3.  If this account is a 
+   * level 3 account, subaccount3 will be the name of this account. 
+   */
   public String getSubaccount3() {
     return this.subaccount3;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 3.  If this account is a 
+   * level 3 account, subaccount3_id will be the id of this account. 
+   */
   public Long getSubaccount3Id() {
     return this.subaccount3Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 4.  If this account is a 
+   * level 4 account, subaccount4 will be the name of this account. 
+   */
   public String getSubaccount4() {
     return this.subaccount4;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 4.  If this account is a 
+   * level 4 account, subaccount4_id will be the id of this account. 
+   */
   public Long getSubaccount4Id() {
     return this.subaccount4Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 5.  If this account is a 
+   * level 5 account, subaccount5 will be the name of this account. 
+   */
   public String getSubaccount5() {
     return this.subaccount5;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 5.  If this account is a 
+   * level 5 account, subaccount5_id will be the id of this account. 
+   */
   public Long getSubaccount5Id() {
     return this.subaccount5Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 6.  If this account is a 
+   * level 6 account, subaccount6 will be the name of this account. 
+   */
   public String getSubaccount6() {
     return this.subaccount6;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 6.  If this account is a 
+   * level 6 account, subaccount6_id will be the id of this account. 
+   */
   public Long getSubaccount6Id() {
     return this.subaccount6Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 7.  If this account is a 
+   * level 7 account, subaccount7 will be the name of this account. 
+   */
   public String getSubaccount7() {
     return this.subaccount7;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 7.  If this account is a 
+   * level 7 account, subaccount7_id will be the id of this account. 
+   */
   public Long getSubaccount7Id() {
     return this.subaccount7Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 8.  If this account is a 
+   * level 8 account, subaccount8 will be the name of this account. 
+   */
   public String getSubaccount8() {
     return this.subaccount8;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 8.  If this account is a 
+   * level 8 account, subaccount8_id will be the id of this account. 
+   */
   public Long getSubaccount8Id() {
     return this.subaccount8Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 9.  If this account is a 
+   * level 9 account, subaccount9 will be the name of this account. 
+   */
   public String getSubaccount9() {
     return this.subaccount9;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 9.  If this account is a 
+   * level 9 account, subaccount9_id will be the id of this account. 
+   */
   public Long getSubaccount9Id() {
     return this.subaccount9Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 10.  If this account is 
+   * a level 10 account, subaccount10 will be the name of this account. 
+   */
   public String getSubaccount10() {
     return this.subaccount10;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 10.  If this account is a 
+   * level 10 account, subaccount10_id will be the id of this account. 
+   */
   public Long getSubaccount10Id() {
     return this.subaccount10Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 11.  If this account is 
+   * a level 11 account, subaccount11 will be the name of this account. 
+   */
   public String getSubaccount11() {
     return this.subaccount11;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 11.  If this account is a 
+   * level 11 account, subaccount11_id will be the id of this account. 
+   */
   public Long getSubaccount11Id() {
     return this.subaccount11Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 12.  If this account is 
+   * a level 12 account, subaccount12 will be the name of this account. 
+   */
   public String getSubaccount12() {
     return this.subaccount12;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 12.  If this account is a 
+   * level 12 account, subaccount12_id will be the id of this account. 
+   */
   public Long getSubaccount12Id() {
     return this.subaccount12Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 13.  If this account is 
+   * a level 13 account, subaccount13 will be the name of this account. 
+   */
   public String getSubaccount13() {
     return this.subaccount13;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 13.  If this account is a 
+   * level 13 account, subaccount13_id will be the id of this account. 
+   */
   public Long getSubaccount13Id() {
     return this.subaccount13Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 14.  If this account is 
+   * a level 14 account, subaccount14 will be the name of this account. 
+   */
   public String getSubaccount14() {
     return this.subaccount14;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 14.  If this account is a 
+   * level 14 account, subaccount14_id will be the id of this account. 
+   */
   public Long getSubaccount14Id() {
     return this.subaccount14Id;
   }
 
+  /**
+   * Name of this account's parent at subaccount level 15.  If this account is 
+   * a level 15 account, subaccount15 will be the name of this account. 
+   */
   public String getSubaccount15() {
     return this.subaccount15;
   }
 
+  /**
+   * Id of this account's parent at subaccount level 15.  If this account is a 
+   * level 15 account, subaccount15_id will be the id of this account. 
+   */
   public Long getSubaccount15Id() {
     return this.subaccount15Id;
   }
 
+  /**
+   * Correlated id for the record for this course in the SIS system (assuming 
+   * SIS integration is configured) 
+   */
   public String getSisSourceId() {
     return this.sisSourceId;
   }

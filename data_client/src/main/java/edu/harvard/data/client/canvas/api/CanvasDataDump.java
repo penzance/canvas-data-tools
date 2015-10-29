@@ -101,7 +101,7 @@ public class CanvasDataDump {
 
   @Override
   public String toString() {
-    String str = "sequence:" + sequence + " id:" + dumpId + " schema version: " + schemaVersion
+    String str = "sequence:" + sequence + " id:" + dumpId + " schema: " + schemaVersion
         + " account:" + accountId + " tables:" + numFiles + " finished:" + finished + "\n  created:"
         + createdAt + "\n  updated:" + updatedAt + "\n  expires:" + expires + "\n";
     if (artifactsByTable != null) {

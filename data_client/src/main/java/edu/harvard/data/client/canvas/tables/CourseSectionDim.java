@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -84,66 +87,116 @@ public class CourseSectionDim implements DataTable {
     this.sisSourceId = record.get(15);
   }
 
+  /**
+   * Unique surrogate id for the course section. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key for this record in the Canvas course_sections table. 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Name of the section 
+   */
   public String getName() {
     return this.name;
   }
 
+  /**
+   * Foreign key to the associated course 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * Foreign key to the associated enrollment term 
+   */
   public Long getEnrollmentTermId() {
     return this.enrollmentTermId;
   }
 
+  /**
+   * True if this is the default section 
+   */
   public Boolean getDefaultSection() {
     return this.defaultSection;
   }
 
+  /**
+   * True if this section is open for enrollment 
+   */
   public Boolean getAcceptingEnrollments() {
     return this.acceptingEnrollments;
   }
 
+  /**
+   * tbd 
+   */
   public Boolean getCanManuallyEnroll() {
     return this.canManuallyEnroll;
   }
 
+  /**
+   * Section start date 
+   */
   public ZonedDateTime getStartAt() {
     return this.startAt;
   }
 
+  /**
+   * Section end date 
+   */
   public ZonedDateTime getEndAt() {
     return this.endAt;
   }
 
+  /**
+   * Timestamp for when this section was entered into the system. 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Timestamp for when the last time the section was updated 
+   */
   public ZonedDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
+  /**
+   * Lifecycle state for section. (active, deleted) 
+   */
   public String getWorkflowState() {
     return this.workflowState;
   }
 
+  /**
+   * True when "Users can only partipate in the course between these dates" is 
+   * checked 
+   */
   public Boolean getRestrictEnrollmentsToSectionDates() {
     return this.restrictEnrollmentsToSectionDates;
   }
 
+  /**
+   * The course id for the original course if this course has been cross listed 
+   */
   public Long getNonxlistCourseId() {
     return this.nonxlistCourseId;
   }
 
+  /**
+   * Id for the correlated record for the section in the SIS (assumming SIS 
+   * integration has been properly configured) 
+   */
   public String getSisSourceId() {
     return this.sisSourceId;
   }

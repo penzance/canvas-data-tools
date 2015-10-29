@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -42,26 +45,45 @@ public class AssignmentFact implements DataTable {
     }
   }
 
+  /**
+   * Foreign key to assignment dimension 
+   */
   public Long getAssignmentId() {
     return this.assignmentId;
   }
 
+  /**
+   * Foreign key to the course associated with this assignment 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * Foreign key to the account associated with the course associated with this 
+   * assignment 
+   */
   public Long getCourseAccountId() {
     return this.courseAccountId;
   }
 
+  /**
+   * Foreign Key to enrollment term table 
+   */
   public Long getEnrollmentTermId() {
     return this.enrollmentTermId;
   }
 
+  /**
+   * Total points possible for the assignment 
+   */
   public Double getPointsPossible() {
     return this.pointsPossible;
   }
 
+  /**
+   * The number of pears to assign for review if using algorithmic assignment 
+   */
   public Integer getPeerReviewCount() {
     return this.peerReviewCount;
   }

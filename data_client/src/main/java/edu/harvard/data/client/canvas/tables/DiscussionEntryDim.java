@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -47,34 +50,58 @@ public class DiscussionEntryDim implements DataTable {
     }
   }
 
+  /**
+   * Unique surrogate id for the discussion entry. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key for this record in the Canvas discussion_entries table 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Full text of the entry's message 
+   */
   public String getMessage() {
     return this.message;
   }
 
+  /**
+   * Workflow state for discussion message (values: deleted, active) 
+   */
   public String getWorkflowState() {
     return this.workflowState;
   }
 
+  /**
+   * Timestamp when the discussion entry was created. 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Timestamp when the discussion entry was upadated. 
+   */
   public ZonedDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
+  /**
+   * Timestamp when the discussion entry was deleted. 
+   */
   public ZonedDateTime getDeletedAt() {
     return this.deletedAt;
   }
 
+  /**
+   * Reply depth for this entry 
+   */
   public Integer getDepth() {
     return this.depth;
   }

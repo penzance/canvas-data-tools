@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:09. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -68,58 +71,102 @@ public class CourseDim implements DataTable {
     this.workflowState = record.get(13);
   }
 
+  /**
+   * Unique surrogate id for a course 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key for this course in the canvas courses table. 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * The root account associated with this course. 
+   */
   public Long getRootAccountId() {
     return this.rootAccountId;
   }
 
+  /**
+   * The parent account for this course. 
+   */
   public Long getAccountId() {
     return this.accountId;
   }
 
+  /**
+   * Foreign key to enrollment term table 
+   */
   public Long getEnrollmentTermId() {
     return this.enrollmentTermId;
   }
 
+  /**
+   * The friendly name of the course. 
+   */
   public String getName() {
     return this.name;
   }
 
+  /**
+   * The code for the course (eg FA12 MATH 2000) 
+   */
   public String getCode() {
     return this.code;
   }
 
+  /**
+   * tbd 
+   */
   public String getType() {
     return this.type;
   }
 
+  /**
+   * Timestamp when the course object was created in Canvas 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Timestamp for when the course starts. 
+   */
   public ZonedDateTime getStartAt() {
     return this.startAt;
   }
 
+  /**
+   * Timestamp for when the course finishes 
+   */
   public ZonedDateTime getConcludeAt() {
     return this.concludeAt;
   }
 
+  /**
+   * True if the course is publically visible 
+   */
   public Boolean getPubliclyVisible() {
     return this.publiclyVisible;
   }
 
+  /**
+   * Correlated id for the record for this course in the SIS system (assuming 
+   * SIS integration is configured) 
+   */
   public String getSisSourceId() {
     return this.sisSourceId;
   }
 
+  /**
+   * Workflow status indicating the current state of the course, valid values 
+   * are: completed, created, deleted, available, claimed 
+   */
   public String getWorkflowState() {
     return this.workflowState;
   }

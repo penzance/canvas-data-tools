@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -77,54 +80,104 @@ public class WikiPageFact implements DataTable {
     }
   }
 
+  /**
+   * Foreign key to the wiki pages dimension. 
+   */
   public Long getWikiPageId() {
     return this.wikiPageId;
   }
 
+  /**
+   * Foreign key to the wikis dimension. 
+   */
   public Long getWikiId() {
     return this.wikiId;
   }
 
+  /**
+   * Foreign key to the courses table if the wiki that owns the wiki page is 
+   * associated with a Course. Otherwise this field is set to NULL. 
+   */
   public Long getParentCourseId() {
     return this.parentCourseId;
   }
 
+  /**
+   * Foreign key to the groups table if the wiki that owns the wiki page is 
+   * associated with a Group. Otherwise this field is set to NULL. 
+   */
   public Long getParentGroupId() {
     return this.parentGroupId;
   }
 
+  /**
+   * Foreign key to the account dimension for the account associated with the 
+   * wiki page's course. If the wiki page is not associated to a Course, this 
+   * field is set to NULL. 
+   */
   public Long getParentCourseAccountId() {
     return this.parentCourseAccountId;
   }
 
+  /**
+   * Foreign key to the account dimension for the account associated with the 
+   * wiki page's group. If the wiki page is not associated to a Group, this 
+   * field is set to NULL. 
+   */
   public Long getParentGroupAccountId() {
     return this.parentGroupAccountId;
   }
 
+  /**
+   * Foreign key to the user table. 
+   */
   public Long getUserId() {
     return this.userId;
   }
 
+  /**
+   * Foreign key to the accounts table that this wiki page belongs to. Helpful 
+   * for directly finding the account associated with the wiki page, 
+   * irrespective of whether it belongs to a Course or a Group. 
+   */
   public Long getAccountId() {
     return this.accountId;
   }
 
+  /**
+   * Root account Id of the account the wiki belongs to. Foreign key to the 
+   * accounts table. 
+   */
   public Long getRootAccountId() {
     return this.rootAccountId;
   }
 
+  /**
+   * Foreign key to the enrollment term table of the course this wiki page is 
+   * associated with. Otherwise this is set to NULL. 
+   */
   public Long getEnrollmentTermId() {
     return this.enrollmentTermId;
   }
 
+  /**
+   * Foreign key to the group categories table of the group this wiki page is 
+   * associated with. Otherwise this is set to NULL. 
+   */
   public Long getGroupCategoryId() {
     return this.groupCategoryId;
   }
 
+  /**
+   * Count of number of comments per wiki page. 
+   */
   public Integer getWikiPageCommentsCount() {
     return this.wikiPageCommentsCount;
   }
 
+  /**
+   * Number of views per wiki page. 
+   */
   public Integer getViewCount() {
     return this.viewCount;
   }

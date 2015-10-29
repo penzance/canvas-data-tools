@@ -62,4 +62,11 @@ public class CanvasApiClient {
     final CanvasDataSchema schema = rest.makeApiCall("/api/schema/" + version, 200, type);
     return schema;
   }
+
+  public List<CanvasDataSchemaSummary> getSchemas() throws DataConfigurationException, UnexpectedApiResponseException, IOException {
+    final CollectionType type = typeFactory.constructCollectionType(List.class,
+        CanvasDataSchemaSummary.class);
+    final List<CanvasDataSchemaSummary> schemas = rest.makeApiCall("/api/schema", 200, type);
+    return schemas;
+  }
 }

@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -42,30 +45,52 @@ public class EnrollmentTermDim implements DataTable {
     this.sisSourceId = record.get(6);
   }
 
+  /**
+   * Unique surrogate id for the enrollment term. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key for this record in the Canvas enrollments table. 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Foreign key to the root account for this enrollment term 
+   */
   public Long getRootAccountId() {
     return this.rootAccountId;
   }
 
+  /**
+   * Name of the enrollment term 
+   */
   public String getName() {
     return this.name;
   }
 
+  /**
+   * Term start date 
+   */
   public ZonedDateTime getDateStart() {
     return this.dateStart;
   }
 
+  /**
+   * Term end date 
+   */
   public ZonedDateTime getDateEnd() {
     return this.dateEnd;
   }
 
+  /**
+   * Correlated SIS id for this enrollment term (assuming SIS has been 
+   * configured properly) 
+   */
   public String getSisSourceId() {
     return this.sisSourceId;
   }

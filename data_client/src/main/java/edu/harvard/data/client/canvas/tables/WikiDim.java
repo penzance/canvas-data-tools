@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.time.ZonedDateTime;
@@ -44,34 +47,58 @@ public class WikiDim implements DataTable {
     }
   }
 
+  /**
+   * Unique id for the wiki. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Primary key to the wikis table in canvas. 
+   */
   public Long getCanvasId() {
     return this.canvasId;
   }
 
+  /**
+   * Type of Parent the wiki belongs to. For example, Groups or Courses. 
+   */
   public String getParentType() {
     return this.parentType;
   }
 
+  /**
+   * Title for the wiki. 
+   */
   public String getTitle() {
     return this.title;
   }
 
+  /**
+   * Timestamp when the wiki was first saved in the system. 
+   */
   public ZonedDateTime getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * Timestamp when the wiki was last updated in the system. 
+   */
   public ZonedDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
+  /**
+   * URL of the front page of the wiki. 
+   */
   public String getFrontPageUrl() {
     return this.frontPageUrl;
   }
 
+  /**
+   * True if the wiki does not have a front page or is set to NULL. 
+   */
   public Boolean getHasNoFrontPage() {
     return this.hasNoFrontPage;
   }

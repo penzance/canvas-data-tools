@@ -19,6 +19,7 @@ import org.kohsuke.args4j.spi.SubCommands;
 import edu.harvard.canvas_data.cli.analysis.AnalysisCommandGroup;
 import edu.harvard.canvas_data.cli.dataset.DataSetCommandGroup;
 import edu.harvard.canvas_data.cli.dump.DumpCommandGroup;
+import edu.harvard.canvas_data.cli.schema.SchemaCommandGroup;
 import edu.harvard.canvas_data.parser.Configuration;
 import edu.harvard.data.client.DataConfigurationException;
 import edu.harvard.data.client.canvas.api.UnexpectedApiResponseException;
@@ -41,6 +42,7 @@ public class CanvasDataCli {
 
   @Argument(handler = SubCommandHandler.class, usage = "Top-level command.")
   @SubCommands({ @SubCommand(name = "dump", impl = DumpCommandGroup.class),
+    @SubCommand(name = "schema", impl = SchemaCommandGroup.class),
     @SubCommand(name = "data", impl = DataSetCommandGroup.class),
     @SubCommand(name = "analysis", impl = AnalysisCommandGroup.class),
   })

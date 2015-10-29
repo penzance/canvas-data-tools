@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -47,30 +50,51 @@ public class CourseUiNavigationItemFact implements DataTable {
     }
   }
 
+  /**
+   * Foreign key to root account of the course 
+   */
   public Long getRootAccountId() {
     return this.rootAccountId;
   }
 
+  /**
+   * Foreign key to course_ui_navigation_item_dim 
+   */
   public Long getCourseUiNavigationItemId() {
     return this.courseUiNavigationItemId;
   }
 
+  /**
+   * Foreign key to navigation function 
+   */
   public Long getCourseUiCanvasNavigationId() {
     return this.courseUiCanvasNavigationId;
   }
 
+  /**
+   * Foreign key toexternal_tool_activation_dim 
+   */
   public Long getExternalToolActivationId() {
     return this.externalToolActivationId;
   }
 
+  /**
+   * Foreign key to course 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * Foreign key to account for course 
+   */
   public Long getCourseAccountId() {
     return this.courseAccountId;
   }
 
+  /**
+   * Foreign key to enrollment term 
+   */
   public Long getEnrollmentTermId() {
     return this.enrollmentTermId;
   }

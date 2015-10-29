@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -37,22 +40,37 @@ public class PseudonymFact implements DataTable {
     }
   }
 
+  /**
+   * Foreign key to pseudonym dimension table 
+   */
   public Long getPseudonymId() {
     return this.pseudonymId;
   }
 
+  /**
+   * Foreign key to user associated with this pseudonym 
+   */
   public Long getUserId() {
     return this.userId;
   }
 
+  /**
+   * Foreign key to account associated with this pseudonym 
+   */
   public Long getAccountId() {
     return this.accountId;
   }
 
+  /**
+   * Number of times a user has logged in with this pseudonym 
+   */
   public Integer getLoginCount() {
     return this.loginCount;
   }
 
+  /**
+   * Number of times failed login attempt to this pseudonym 
+   */
   public Integer getFailedLoginCount() {
     return this.failedLoginCount;
   }

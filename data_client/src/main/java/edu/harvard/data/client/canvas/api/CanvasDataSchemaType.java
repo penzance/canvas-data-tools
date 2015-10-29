@@ -24,7 +24,7 @@ public enum CanvasDataSchemaType {
   public static CanvasDataSchemaType parse(final String type) {
     final CanvasDataSchemaType t = stringToType.get(type);
     if (t == null) {
-      throw new IllegalArgumentException("Unknown type: " + type);
+      return valueOf(type);
     }
     return t;
   }

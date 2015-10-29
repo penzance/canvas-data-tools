@@ -1,3 +1,6 @@
+// This file was generated on 29-10-2015 01:16:10. Do not manually edit. 
+// This class is based on Version 1.0.0 of the Canvas Data schema 
+
 package edu.harvard.data.client.canvas.tables;
 
 import java.util.ArrayList;
@@ -126,98 +129,179 @@ public class EnrollmentRollupDim implements DataTable {
     this.leastPrivilegedRole = record.get(23);
   }
 
+  /**
+   * Unique surrogate id for the user and the course. 
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Foreign key to the enrolled user. 
+   */
   public Long getUserId() {
     return this.userId;
   }
 
+  /**
+   * Foreign key to the enrolled course. 
+   */
   public Long getCourseId() {
     return this.courseId;
   }
 
+  /**
+   * Total number of enrollments associated with the user in the course for 
+   * his/her all roles under all base roles, duplicate or not. 
+   */
   public Integer getEnrollmentCount() {
     return this.enrollmentCount;
   }
 
+  /**
+   * Total number of unique roles associated with the user in the course. 
+   */
   public Integer getRoleCount() {
     return this.roleCount;
   }
 
+  /**
+   * Total number of unique base roles associated with the user in the course. 
+   */
   public Integer getBaseRoleCount() {
     return this.baseRoleCount;
   }
 
+  /**
+   * Total number of 'AccountAdmin' roles associated with the user in the 
+   * course. 
+   */
   public Integer getAccountAdminRoleCount() {
     return this.accountAdminRoleCount;
   }
 
+  /**
+   * Total number of 'TeacherEnrollment' roles associated with the user in the 
+   * course. 
+   */
   public Integer getTeacherEnrollmentRoleCount() {
     return this.teacherEnrollmentRoleCount;
   }
 
+  /**
+   * Total number of 'DesignerEnrollment' roles associated with the user in the 
+   * course. 
+   */
   public Integer getDesignerEnrollmentRoleCount() {
     return this.designerEnrollmentRoleCount;
   }
 
+  /**
+   * Total number of 'TaEnrollment' roles associated with the user in the 
+   * course. 
+   */
   public Integer getTaEnrollmentRoleCount() {
     return this.taEnrollmentRoleCount;
   }
 
+  /**
+   * Total number of 'StudentEnrollment' roles associated with the user in the 
+   * course. 
+   */
   public Integer getStudentEnrollmentRoleCount() {
     return this.studentEnrollmentRoleCount;
   }
 
+  /**
+   * Total number of 'ObserverEnrollment' roles associated with the user in the 
+   * course. 
+   */
   public Integer getObserverEnrollmentRoleCount() {
     return this.observerEnrollmentRoleCount;
   }
 
+  /**
+   * Total number of 'AccountMembership' roles associated with the user in the 
+   * course. 
+   */
   public Integer getAccountMembershipRoleCount() {
     return this.accountMembershipRoleCount;
   }
 
+  /**
+   * Total number of 'NoPermissions' roles associated with the user in the 
+   * course. 
+   */
   public Integer getNoPermissionsRoleCount() {
     return this.noPermissionsRoleCount;
   }
 
+  /**
+   * Enrollment ID if this a valid role for the user in the course, else NULL. 
+   */
   public Long getAccountAdminEnrollmentId() {
     return this.accountAdminEnrollmentId;
   }
 
+  /**
+   * Enrollment ID if this a valid role for the user in the course, else NULL. 
+   */
   public Long getTeacherEnrollmentEnrollmentId() {
     return this.teacherEnrollmentEnrollmentId;
   }
 
+  /**
+   * Enrollment ID if this a valid role for the user in the course, else NULL. 
+   */
   public Long getDesignerEnrollmentEnrollmentId() {
     return this.designerEnrollmentEnrollmentId;
   }
 
+  /**
+   * Enrollment ID if this a valid role for the user in the course, else NULL. 
+   */
   public Long getTaEnrollmentEnrollmentId() {
     return this.taEnrollmentEnrollmentId;
   }
 
+  /**
+   * Enrollment ID if this a valid role for the user in the course, else NULL. 
+   */
   public Long getStudentEnrollmentEnrollmentId() {
     return this.studentEnrollmentEnrollmentId;
   }
 
+  /**
+   * Enrollment ID if this a valid role for the user in the course, else NULL. 
+   */
   public Long getObserverEnrollmentEnrollmentId() {
     return this.observerEnrollmentEnrollmentId;
   }
 
+  /**
+   * Enrollment ID if this a valid role for the user in the course, else NULL. 
+   */
   public Long getAccountMembershipEnrollmentId() {
     return this.accountMembershipEnrollmentId;
   }
 
+  /**
+   * Enrollment ID if this a valid role for the user in the course, else NULL. 
+   */
   public Long getNoPermissionsEnrollmentId() {
     return this.noPermissionsEnrollmentId;
   }
 
+  /**
+   * The most privileged role associated with the user in the course. 
+   */
   public String getMostPrivilegedRole() {
     return this.mostPrivilegedRole;
   }
 
+  /**
+   * The least privileged role associated with the user in the course. 
+   */
   public String getLeastPrivilegedRole() {
     return this.leastPrivilegedRole;
   }
