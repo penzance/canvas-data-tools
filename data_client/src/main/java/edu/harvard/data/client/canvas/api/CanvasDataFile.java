@@ -42,7 +42,7 @@ public class CanvasDataFile {
       throws IOException, UnexpectedApiResponseException {
     Files.createDirectories(dest.getParent());
     rest.downloadFile(url, dest, 200);
-    return new DataSetInfoFile(filename, getLineCount(dest));
+    return new DataSetInfoFile(dest.getFileName().toString(), getLineCount(dest));
   }
 
   private int getLineCount(final Path dest) throws IOException {

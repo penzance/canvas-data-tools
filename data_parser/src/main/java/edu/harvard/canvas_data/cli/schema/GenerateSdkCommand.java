@@ -57,7 +57,7 @@ public class GenerateSdkCommand implements Command {
 
   @Override
   public String getDescription() {
-    return "Output a specific version of the data schema to standard out.";
+    return "Generate the SDK table classes to a specified directory.";
   }
 
 }
